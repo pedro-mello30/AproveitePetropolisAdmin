@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {CategoriasListComponent} from './categorias/categorias-list/categorias-list.component';
+import {CategoriasFormComponent} from './categorias/categorias-form/categorias-form.component';
 
 const routes: Routes = [
   {
@@ -17,7 +19,16 @@ const routes: Routes = [
   },
   {
     path: 'categorias',
-    loadChildren: () => import('./categorias/categorias.module').then( m => m.CategoriasPageModule)
+    component: CategoriasListComponent
+  },
+
+  {
+    path: 'categorias/editar/:id',
+    component: CategoriasFormComponent
+  },
+  {
+    path: 'categorias/adicionar',
+    component: CategoriasFormComponent
   }
 ];
 

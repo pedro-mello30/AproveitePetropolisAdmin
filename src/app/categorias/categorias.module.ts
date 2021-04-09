@@ -4,17 +4,23 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CategoriasPageRoutingModule } from './categorias-routing.module';
 
-import { CategoriasPage } from './categorias.page';
+import {CategoriasFormComponent} from './categorias-form/categorias-form.component';
+import {CategoriasListComponent} from './categorias-list/categorias-list.component';
+import {CategoriasItemComponent} from './categorias-item/categorias-item.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CategoriasPageRoutingModule
+    RouterModule,
   ],
-  declarations: [CategoriasPage]
+  declarations: [
+    CategoriasListComponent,
+    CategoriasItemComponent,
+    CategoriasFormComponent
+  ]
 })
-export class CategoriasPageModule {}
+export class CategoriasModule {}

@@ -1,0 +1,30 @@
+<!--<ion-item>-->
+<!--  <ion-label>-->
+<!--    {{categoria.nome}}-->
+<!--  </ion-label>-->
+<!--</ion-item>-->
+<!--<ion-item-options>-->
+<!--  <ion-item-option color="primary" [routerLink]="['/categorias/editar/', categoria._id]">-->
+<!--    <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>-->
+<!--    Editar-->
+<!--  </ion-item-option>-->
+<!--  <ion-item-option color="danger" (click)="remove(categoria)">-->
+<!--    <ion-icon slot="start" name="trash-outline"></ion-icon>-->
+<!--    Excluir-->
+<!--  </ion-item-option>-->
+<!--</ion-item-options>-->
+
+<ion-item>
+  <!--            <app-categorias-item [categoria]="categoria" (onDeleteCategoria)="onCategoriaDeleted($event)"></app-categorias-item>-->
+
+  <ion-label>{{categoria.nome}}</ion-label>
+  <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', categoria._id]">
+    <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
+    Editar
+  </ion-button>
+  <ion-button slot="end" color="danger" (click)="remove(categoria)">
+    <ion-icon slot="start" name="trash-outline"></ion-icon>
+    Excluir
+  </ion-button>
+
+</ion-item>
