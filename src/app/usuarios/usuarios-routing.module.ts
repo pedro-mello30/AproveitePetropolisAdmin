@@ -10,7 +10,11 @@ const routes: Routes = [
   },
   {
     path: 'adicionar',
-    loadChildren: () => import('./adicionar/adicionar.module').then( m => m.AdicionarPageModule)
+    loadChildren: () => import('./form/form.module').then( m => m.FormPageModule)
+  },
+  {
+    path: 'editar/:id',
+    loadChildren: () => import('./form/form.module').then( m => m.FormPageModule)
   }
 ];
 

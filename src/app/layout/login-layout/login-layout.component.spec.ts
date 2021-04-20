@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AdicionarPage } from './adicionar.page';
+import { LoginLayoutComponent } from './login-layout.component';
 
-describe('AdicionarPage', () => {
-  let component: AdicionarPage;
-  let fixture: ComponentFixture<AdicionarPage>;
+describe('LoginLayoutComponent', () => {
+  let component: LoginLayoutComponent;
+  let fixture: ComponentFixture<LoginLayoutComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdicionarPage ],
+      declarations: [ LoginLayoutComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AdicionarPage);
+    fixture = TestBed.createComponent(LoginLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

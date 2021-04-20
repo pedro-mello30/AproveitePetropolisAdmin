@@ -1,22 +1,3 @@
-<!--<ion-item-sliding *ngFor="let categoria of categorias">-->
-<!--  <ion-item>-->
-<!--    <ion-label>-->
-<!--      {{categoria.nome}}-->
-<!--    </ion-label>-->
-<!--  </ion-item>-->
-<!--  <ion-item-options>-->
-<!--    <ion-item-option color="primary" [routerLink]="['editar/', categoria._id]">-->
-<!--      <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>-->
-<!--      Editar-->
-<!--    </ion-item-option>-->
-<!--    <ion-item-option color="danger" (click)="remove(categoria._id)">-->
-<!--      <ion-icon slot="start" name="trash-outline"></ion-icon>-->
-<!--      Excluir-->
-<!--    </ion-item-option>-->
-<!--  </ion-item-options>-->
-<!--</ion-item-sliding>-->
-
-
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -27,28 +8,9 @@
 </ion-header>
 
 <ion-content>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button [routerLink]="['/categorias/adicionar']">
       <ion-icon name="add"></ion-icon>
-
     </ion-fab-button>
   </ion-fab>
 
@@ -58,62 +20,10 @@
         <div *ngIf="categorias.length == 0" class="alert alert-warning" role="alert">
           Nenhuma categoria cadastrada.
         </div>
-
         <div *ngIf="categorias.length > 0">
-<!--          <ion-item-sliding *ngFor="let categoria of categorias">-->
-<!--            <app-categorias-item [categoria]="categoria" (onDeleteCategoria)="onCategoriaDeleted($event)"></app-categorias-item>-->
-<!--          </ion-item-sliding>-->
-
-
           <app-categorias-item *ngFor="let categoria of categorias" [categoria]="categoria" (onDeleteCategoria)="onCategoriaDeleted($event)"></app-categorias-item>
-<!--          <ion-item *ngFor="let categoria of categorias">-->
-
-<!--            <ion-label>{{categoria.nome}}</ion-label>-->
-<!--            <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', categoria._id]">-->
-<!--              <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>-->
-<!--              Editar-->
-<!--            </ion-button>-->
-<!--            <ion-button slot="end" color="danger" (click)="remove(categoria)">-->
-<!--              <ion-icon slot="start" name="trash-outline"></ion-icon>-->
-<!--              Excluir-->
-<!--            </ion-button>-->
-
-<!--          </ion-item>-->
-
         </div>
-
-
-
-
-<!--        <app-categorias-list></app-categorias-list>-->
-
-<!--                <ion-item-sliding *ngFor="let categoria of categorias">-->
-<!--                  <ion-item>-->
-<!--                    <ion-label>-->
-<!--                      {{categoria.nome}}-->
-<!--                    </ion-label>-->
-<!--                  </ion-item>-->
-<!--                  <ion-item-options>-->
-<!--                    <ion-item-option color="primary" [routerLink]="['editar/', categoria._id]">-->
-<!--                      <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>-->
-<!--                      Editar-->
-<!--                    </ion-item-option>-->
-<!--                    <ion-item-option color="danger" (click)="remove(categoria._id)">-->
-<!--                      <ion-icon slot="start" name="trash-outline"></ion-icon>-->
-<!--                      Excluir-->
-<!--                    </ion-item-option>-->
-<!--                  </ion-item-options>-->
-<!--                </ion-item-sliding>-->
-
-
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-list>
-
-
-
-
-  </ion-list>
-
 </ion-content>

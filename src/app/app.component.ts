@@ -5,10 +5,6 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Usuários', url: '/usuarios', icon: 'people' },
-    { title: 'Estabelecimentos', url: '/estabelecimentos', icon: 'storefront' },
-    { title: 'Categorias', url: '/categorias', icon: 'grid' },
-  ];
+
   constructor() {}
 }
