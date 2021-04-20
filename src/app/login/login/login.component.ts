@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UsuarioService} from '../shared/usuario.service';
+import {UsuarioAuthService} from '../shared/usuario-auth.service';
 import {ToastService} from '../../core/services/toast.service';
 import {Router} from '@angular/router';
 
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private usuarioService: UsuarioService,
+    private usuarioService: UsuarioAuthService,
     private router: Router,
     private toast: ToastService
   ) { }

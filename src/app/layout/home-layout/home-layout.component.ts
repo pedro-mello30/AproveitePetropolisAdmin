@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {UsuarioAuthService} from '../../login/shared/usuario-auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home-layout',
@@ -14,8 +17,15 @@ export class HomeLayoutComponent implements OnInit {
   ];
 
 
-  constructor() { }
+  constructor(private usuarioAuthService: UsuarioAuthService, private router: Router) { }
 
   ngOnInit() {}
+
+  logout(){
+    this.usuarioAuthService.logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+      });
+  }
 
 }
