@@ -1,75 +1,19 @@
-<!--<div class="card card-login mx-auto mt-5">-->
-<!--  <div class="card-header">Login</div>-->
-<!--  <div class="card-body">-->
-<!--    <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">-->
-<!--      <div class="form-group">-->
-<!--        <label for="email">E-mail</label>-->
-<!--        <input type="email" class="form-control" id="email" placeholder="E-mail" formControlName="email">-->
-<!--      </div>-->
-<!--      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">-->
-<!--        <div *ngIf="email.errors.required">-->
-<!--          O e-mail é obrigatório.-->
-<!--        </div>-->
-<!--        <div *ngIf="email.errors.email">-->
-<!--          O e-mail é inválido.-->
-<!--        </div>-->
-<!--      </div>-->
 
-<!--      <div class="form-group">-->
-<!--        <label for="senha">Senha</label>-->
-<!--        <input type="password" class="form-control" id="senha" placeholder="Senha" formControlName="senha">-->
-<!--      </div>-->
-<!--      <div *ngIf="senha.invalid && (senha.dirty || senha.touched)" class="alert alert-danger">-->
-<!--        <div *ngIf="senha.errors.required">-->
-<!--          A senha é obrigatório.-->
-<!--        </div>-->
-<!--      </div>-->
+<form [formGroup]="formLogin" (keydown)="keyDown($event.keyCode)" (ngSubmit)="onSubmit()">
+  <ion-item>
+    <ion-label position="stacked">E-mail</ion-label>
+    <ion-input type="email" formControlName="email"></ion-input>
+  </ion-item>
 
-<!--      <button type="submit" class="btn btn-primary btn-block">Entrar</button>-->
-<!--    </form>-->
-<!--    <div class="text-center">-->
-<!--      <a class="d-block small mt-3" [routerLink]="['/criar-conta']">Criar conta</a>-->
-<!--      <a class="d-block small" [routerLink]="['/esqueci-senha']">Esqueci minha senha</a>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+  <ion-item>
+    <ion-label position="stacked">Senha</ion-label>
+    <ion-input type="password" formControlName="senha"></ion-input>
+  </ion-item>
 
+  <div margin-vertical>
+    <ion-button color="primary" expand="block" type="submit">Entrar</ion-button>
+  </div>
+</form>
 
+<ion-button expand="block" color="dark" fill="clear" margin-top [routerLink]="['/login/esqueci-senha']">Esqueci minha senha</ion-button>
 
-<!--<ion-header>-->
-<!--  <ion-toolbar color="primary">-->
-<!--    <ion-title>login</ion-title>-->
-<!--  </ion-toolbar>-->
-<!--</ion-header>-->
-
-<!--<ion-content>-->
-
-<!--  <ion-grid>-->
-<!--    <ion-row >-->
-<!--      <ion-col size-lg="4" offset-lg="4">-->
-
-<!--        <div class="card-login">-->
-<!--          <img class="logoLogin" src="assets/LogoAproveitePetropolis.PNG">-->
-
-          <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
-            <ion-item>
-              <ion-label position="stacked">E-mail</ion-label>
-              <ion-input type="email" formControlName="email"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="stacked">Senha</ion-label>
-              <ion-input type="password" formControlName="senha"></ion-input>
-            </ion-item>
-
-            <div margin-vertical>
-              <ion-button color="primary" expand="block" type="submit">Entrar</ion-button>
-            </div>
-          </form>
-
-          <ion-button expand="block" color="dark" fill="clear" margin-top [routerLink]="['/login/esqueci-senha']">Esqueci minha senha</ion-button>
-<!--        </div>-->
-<!--      </ion-col>-->
-<!--    </ion-row>-->
-<!--  </ion-grid>-->
-<!--</ion-content>-->

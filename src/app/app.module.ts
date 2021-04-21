@@ -17,6 +17,8 @@ import {LoginComponent} from './login/login/login.component';
 import {EsqueciSenhaComponent} from './login/esqueci-senha/esqueci-senha.component';
 import {SharedModule} from './core/shared.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import {UsuariosFormPageModule} from './usuarios/usuarios-form/usuarios-form.module';
+import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.module';
 
 @NgModule({
   declarations: [
@@ -33,10 +35,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    CategoriasModule
+    UsuariosFormPageModule,
+    UsuariosListaPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

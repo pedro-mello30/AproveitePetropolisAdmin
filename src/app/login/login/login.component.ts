@@ -45,4 +45,8 @@ export class LoginComponent implements OnInit {
         });
     }
   }
+
+  keyDown(key: number){
+    if(key === 13) this.onSubmit();
+  }
 }
