@@ -10,9 +10,31 @@
       <ion-col>
         <form [formGroup]="formSubcategorias" (ngSubmit)="onSubmit()">
           <ion-item>
+            <ion-label position="stacked">Categoria</ion-label>
+
+            <ion-select placeholder="Escolher" formControlName="categoriaKey" (ionChange)="setCategoriaNome($event.target.value)">
+              <ion-select-option *ngFor="let categoria of categorias | async" value="{{categoria.key}}">{{categoria.nome}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
             <ion-label position="stacked">Nome</ion-label>
             <ion-input type="text" formControlName="nome"></ion-input>
           </ion-item>
+          <!--          <app-validation-container [control]="nome"></app-validation-container>-->
+
+          <ion-item *ngIf="imagemUrl ==''">
+            <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
+            <input type="file" #imagemInput formControlName="imagem" (change)="uploadImagem($event)">
+          </ion-item>
+
+          <ion-item *ngIf="imagemUrl !=''">
+            <ion-thumbnail slot="start">
+              <img [src]="imagemUrl">
+            </ion-thumbnail>
+            <ion-button color="danger" (click)="removeImagem()">Remover Imagem</ion-button>
+          </ion-item>
+
           <div margin-vertical>
             <ion-button color="primary" expand="block" type="submit">Salvar</ion-button>
           </div>

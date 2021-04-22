@@ -63,6 +63,27 @@ export class CategoriasFormPage implements OnInit {
     this.filePath = '';
   }
 
+  uploadImagem(event: any){
+    if (event.target.files.length){
+      this.file = event.target.files[0];
+      this.formCategorias.get('imagem').updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagemUrl = reader.result.toString();
+      };
+      reader.readAsDataURL(this.file);
+    }else{
+      this.file = null;
+    }
+  }
+
+  removeImagem(){
+    if (this.key) this.categoriaService.removeImg(this.filePath, this.key);
+
+    this.imagemUrl = '';
+    this.filePath = '';
+  }
+
   onSubmit(){
     if (this.formCategorias.valid){
       let result: Promise<{}>;
@@ -84,26 +105,5 @@ export class CategoriasFormPage implements OnInit {
       this.toast.showSuccess('Categoria salva');
       this.router.navigate(['/categorias']);
     }
-  }
-
-  uploadImagem(event: any){
-    if (event.target.files.length){
-      this.file = event.target.files[0];
-      this.formCategorias.get('imagem').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagemUrl = reader.result.toString();
-      };
-      reader.readAsDataURL(this.file);
-    }else{
-      this.file = null;
-    }
-  }
-
-  removeImagem(){
-    if (this.key) this.categoriaService.removeImg(this.filePath, this.key);
-
-    this.imagemUrl = '';
-    this.filePath = '';
   }
 }

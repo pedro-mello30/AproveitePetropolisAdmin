@@ -17,6 +17,6 @@ import {SharedModule} from '../../core/shared.module';
     SharedModule,
     SubcategoriasFormPageRoutingModule
   ],
-  declarations: [SubcategoriasFormPage]
+  declarations: [SubcategoriasFormPage],
 })
 export class SubcategoriasFormPageModule {}

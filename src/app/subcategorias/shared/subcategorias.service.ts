@@ -7,44 +7,46 @@ import {finalize, map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriasService {
+export class SubcategoriasService {
 
-  categoriasRef: AngularFireList<any>;
+  subcategoriasRef: AngularFireList<any>;
 
   constructor(
     private db: AngularFireDatabase,
     private storage: AngularFireStorage
   ) {
-    this.categoriasRef = this.db.list(FirebasePath.CATEGORIAS);
+    this.subcategoriasRef = this.db.list(FirebasePath.SUBCATEGORIAS);
   }
 
-  insert(categoria: any){
-    return this.save(categoria, null);
+  insert(subcategoria: any){
+    return this.save(subcategoria, null);
   }
 
-  update(categoria: any, key: string){
-    return this.save(categoria, key);
+  update(subcategoria: any, key: string){
+    return this.save(subcategoria, key);
   }
 
-  private save(categoria: any, key: string){
+  private save(subcategoria: any, key: string){
     return new Promise((resolve, reject) => {
-      const categoriaRef = {
-        nome: categoria.nome
+      const subcategoriaRef = {
+        nome: subcategoria.nome,
+        categoriaKey: subcategoria.categoriaKey,
+        categoriaNome: subcategoria.categoriaNome,
       }
 
       if (key) {
-        this.categoriasRef.update(key, categoriaRef)
+        this.subcategoriasRef.update(key, subcategoriaRef)
           .then(() => resolve(key))
           .catch(() => reject());
       } else {
-        this.categoriasRef.push(categoriaRef)
+        this.subcategoriasRef.push(subcategoriaRef)
           .then((result: any) => resolve(result.key));
       }
     });
   }
 
   getAll() {
-    return this.categoriasRef.snapshotChanges().pipe(
+    return this.subcategoriasRef.snapshotChanges().pipe(
       map(changes => {
         return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }));
       })
@@ -52,7 +54,7 @@ export class CategoriasService {
   }
 
   getByKey(key: string) {
-    const path = `${FirebasePath.CATEGORIAS}${key}`;
+    const path = `${FirebasePath.SUBCATEGORIAS}${key}`;
     return this.db.object(path).snapshotChanges().pipe(
       map(change => {
         return ({ key: change.key, ...change.payload.val() as {} });
@@ -61,29 +63,29 @@ export class CategoriasService {
   }
 
   remove(key: string, filePath: string){
-    this.categoriasRef.remove(key);
+    this.subcategoriasRef.remove(key);
     if(filePath)
       this.removeImg(filePath, key, false);
   }
 
   uploadImg(key: string, file: File){
-    const filePath = `${FirebasePath.CATEGORIAS}${key}/${file.name}`;
+    const filePath = `${FirebasePath.SUBCATEGORIAS}${key}/${file.name}`;
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
     task.snapshotChanges().pipe(
       finalize(() => {
         ref.getDownloadURL().subscribe((url => {
-          this.categoriasRef.update(key, {imagem: url, filePath: filePath });
+          this.subcategoriasRef.update(key, {imagem: url, filePath: filePath });
         }))
       })
     ).subscribe();
   }
 
-  removeImg(filePath: string, key: string, atualizarCategoria: boolean = true) {
+  removeImg(filePath: string, key: string, atualizarSubcategoria: boolean = true) {
     const ref = this.storage.ref(filePath);
     ref.delete();
-    if (atualizarCategoria){
-      this.categoriasRef.update(key, {imagem: '', filePath: '' });
+    if (atualizarSubcategoria){
+      this.subcategoriasRef.update(key, {imagem: '', filePath: '' });
     }
   }
 }

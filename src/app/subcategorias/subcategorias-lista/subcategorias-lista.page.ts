@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
+import {SubcategoriasService} from '../shared/subcategorias.service';
+import {ToastService} from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-subcategorias-lista',
@@ -7,12 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubcategoriasListaPage implements OnInit {
 
-  subcategorias = [{nome: 'subcategorias'}];
+  subcategorias: Observable<any[]>;
 
-  constructor() { }
+  constructor(
+    private subcategoriaService: SubcategoriasService,
+    private toast: ToastService
+  ) { }
 
   ngOnInit() {
+    this.subcategorias = this.subcategoriaService.getAll();
   }
 
-  remove(){}
+  remove(key: string, filePath: string){
+    this.subcategoriaService.remove(key, filePath);
+    this.toast.showSuccess('Subcategoria removida');
+  }
 }
