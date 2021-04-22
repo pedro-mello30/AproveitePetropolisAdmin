@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuariosListaPage implements OnInit {
 
+  usuarios = [
+    {nome: 'Usuário'}
+  ];
   constructor() { }
 
   ngOnInit() {
   }
 
+  remove(){}
 }

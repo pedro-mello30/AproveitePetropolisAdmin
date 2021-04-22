@@ -14,6 +14,7 @@ export class HomeLayoutComponent implements OnInit {
     { title: 'Usuários', url: '/usuarios', icon: 'people' },
     { title: 'Estabelecimentos', url: '/estabelecimentos', icon: 'storefront' },
     { title: 'Categorias', url: '/categorias', icon: 'grid' },
+    { title: 'Subcategorias', url: '/subcategorias', icon: 'grid' },
   ];
 
 

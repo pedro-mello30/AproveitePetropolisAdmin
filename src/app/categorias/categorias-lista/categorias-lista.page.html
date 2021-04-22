@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Usuários</ion-title>
-    <ion-button slot="end" class="ion-margin-end" [routerLink]="['/usuarios/novo']">Novo</ion-button>
+    <ion-title>Categorias</ion-title>
+    <ion-button slot="end" class="ion-margin-end" [routerLink]="['/categorias/novo']">Novo</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -9,13 +9,13 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div *ngIf="usuarios.length == 0" class="alert alert-warning" role="alert">
-          Nenhuma usuário cadastrado.
+        <div *ngIf="categorias.length == 0" class="alert alert-warning" role="alert">
+          Nenhuma categoria cadastrado.
         </div>
-        <div *ngIf="usuarios.length > 0">
-          <ion-item *ngFor="let usuario of usuarios">
-            <ion-label>{{usuario.nome}}</ion-label>
-            <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', usuario._id]">
+        <div *ngIf="categorias.length > 0">
+          <ion-item *ngFor="let categoria of categorias">
+            <ion-label>{{categoria.nome}}</ion-label>
+            <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', categoria._id]">
               <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
               Editar
             </ion-button>

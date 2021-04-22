@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Estabelecimento</ion-title>
+    <ion-button slot="end" class="ion-margin-end" [routerLink]="['/estabelecimentos/novo']">Novo</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="estabelecimentos.length == 0" class="alert alert-warning" role="alert">
+          Nenhuma estabelecimento cadastrada.
+        </div>
+        <div *ngIf="estabelecimentos.length > 0">
+          <ion-item *ngFor="let estabelecimento of estabelecimentos">
+            <ion-label>{{estabelecimento.nome}}</ion-label>
+            <ion-button slot="end" color="primary" [routerLink]="['/estabelecimentos/editar/', estabelecimento._id]">
+              <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
+              Editar
+            </ion-button>
+            <ion-button slot="end" color="danger" (click)="remove()">
+              <ion-icon slot="start" name="trash-outline"></ion-icon>
+              Excluir
+            </ion-button>
+          </ion-item>
+
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
