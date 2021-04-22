@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
+import {CategoriasService} from '../shared/categorias.service';
+import {ToastService} from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-categorias-lista',
@@ -7,12 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriasListaPage implements OnInit {
 
-  categorias = [{nome: 'categorias'}];
+  categorias: Observable<any[]>;
 
-  constructor() { }
+  constructor(
+    private categoriasService: CategoriasService,
+    private toast: ToastService
+  ) {}
 
   ngOnInit() {
+      this.categorias = this.categoriasService.getAll();
   }
 
-  remove(){}
+  remove(key: string, filePath: string){
+    this.categoriasService.remove(key, filePath);
+  }
 }

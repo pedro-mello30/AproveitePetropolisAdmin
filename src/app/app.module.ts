@@ -15,9 +15,10 @@ import {LoginLayoutComponent} from './layout/login-layout/login-layout.component
 import {LoginComponent} from './login/login/login.component';
 import {EsqueciSenhaComponent} from './login/esqueci-senha/esqueci-senha.component';
 import {SharedModule} from './core/shared.module';
-import {ReactiveFormsModule} from '@angular/forms';
 import {UsuariosFormPageModule} from './usuarios/usuarios-form/usuarios-form.module';
 import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.module';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.
     SharedModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
     UsuariosFormPageModule,
     UsuariosListaPageModule
   ],

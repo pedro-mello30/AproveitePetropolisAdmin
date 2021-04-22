@@ -13,6 +13,22 @@
             <ion-label position="stacked">Nome</ion-label>
             <ion-input type="text" formControlName="nome"></ion-input>
           </ion-item>
+<!--          <app-validation-container [control]="nome"></app-validation-container>-->
+
+          <ion-item *ngIf="imagemUrl ==''">
+<!--            <ion-label position="stacked">Foto</ion-label>-->
+            <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
+            <input type="file" #imagemInput formControlName="imagem" (change)="uploadImagem($event)">
+          </ion-item>
+
+          <ion-item *ngIf="imagemUrl !=''">
+
+            <ion-thumbnail slot="start">
+              <img [src]="imagemUrl">
+            </ion-thumbnail>
+            <ion-button color="danger" (click)="removeImagem()">Remover Imagem</ion-button>
+          </ion-item>
+
           <div margin-vertical>
             <ion-button color="primary" expand="block" type="submit">Salvar</ion-button>
           </div>

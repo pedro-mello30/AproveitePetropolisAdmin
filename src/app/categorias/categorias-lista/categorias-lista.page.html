@@ -9,23 +9,21 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div *ngIf="categorias.length == 0" class="alert alert-warning" role="alert">
-          Nenhuma categoria cadastrado.
-        </div>
-        <div *ngIf="categorias.length > 0">
-          <ion-item *ngFor="let categoria of categorias">
-            <ion-label>{{categoria.nome}}</ion-label>
-            <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', categoria._id]">
-              <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
-              Editar
-            </ion-button>
-            <ion-button slot="end" color="danger" (click)="remove()">
-              <ion-icon slot="start" name="trash-outline"></ion-icon>
-              Excluir
-            </ion-button>
-          </ion-item>
+          <ion-item *ngFor="let categoria of categorias | async">
+          <ion-thumbnail slot="start">
+            <img src="{{categoria.imagem}}">
+          </ion-thumbnail>
+          <ion-label>{{categoria.nome}}</ion-label>
+          <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', categoria.key]">
+            <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
+            Editar
+          </ion-button>
+          <ion-button slot="end" color="danger" (click)="remove(categoria.key, categoria.filePath)">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Excluir
+          </ion-button>
+        </ion-item>
 
-        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
