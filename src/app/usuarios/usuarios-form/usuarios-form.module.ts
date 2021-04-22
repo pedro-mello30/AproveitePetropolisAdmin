@@ -8,12 +8,13 @@ import { UsuariosFormPageRoutingModule } from './usuarios-form-routing.module';
 import { UsuariosFormPage } from './usuarios-form.page';
 import {SharedModule} from '../../core/shared.module';
 
+
 @NgModule({
   imports: [
     FormsModule,
     SharedModule,
     IonicModule,
-    UsuariosFormPageRoutingModule
+    UsuariosFormPageRoutingModule,
   ],
   declarations: [UsuariosFormPage]
 })

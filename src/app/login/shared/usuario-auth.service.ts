@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase';
+import {FirebasePath} from '../../core/shared/firebase-path';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class UsuarioAuthService {
 
   constructor(private afAuth: AngularFireAuth) { }
-  //
+
   // criarConta(usuario: any) {
   //   return new Promise((resolve, reject) => {
   //     this.afAuth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
@@ -22,7 +24,8 @@ export class UsuarioAuthService {
   //       });
   //   });
   // }
-  //
+
+
   login(email: string, senha: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, senha)
@@ -70,4 +73,15 @@ export class UsuarioAuthService {
 
     return mensagem;
   }
+
+  // updateProfile(values: any) {
+  //   return new Promise((resolve, reject) => {
+  //     this.afAuth.currentUser.updateProfile({ displayName: values.nome, photoURL: this.afAuth.currentUser.photoURL });
+  //
+  //     const path = `${FirebasePath.USUARIOS}${this.afAuth}`
+  //     this.db.object(path).update({ telefone: values.telefone, cpf: values.cpf })
+  //       .then(() => resolve())
+  //       .catch(() => reject());
+  //   });
+  // }
 }
