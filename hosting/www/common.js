@@ -56,6 +56,25 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ "Fpbh":
+/*!**********************************************!*\
+  !*** ./src/app/core/shared/firebase-path.ts ***!
+  \**********************************************/
+/*! exports provided: FirebasePath */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FirebasePath", function() { return FirebasePath; });
+class FirebasePath {
+}
+FirebasePath.CATEGORIAS = 'categorias/';
+FirebasePath.SUBCATEGORIAS = 'subcategorias/';
+FirebasePath.USUARIOS = 'usuarios/';
+
+
+/***/ }),
+
 /***/ "JbSX":
 /*!*********************************************************************!*\
   !*** ./node_modules/@ionic/core/dist/esm/button-active-4927a4c1.js ***!
@@ -182,6 +201,106 @@ const detachComponent = (delegate, element) => {
   return Promise.resolve();
 };
 
+
+
+
+/***/ }),
+
+/***/ "aw4o":
+/*!***************************************************************!*\
+  !*** ./src/app/subcategorias/shared/subcategorias.service.ts ***!
+  \***************************************************************/
+/*! exports provided: SubcategoriasService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubcategoriasService", function() { return SubcategoriasService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/database */ "sSZD");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/storage */ "Vaw3");
+/* harmony import */ var _core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../core/shared/firebase-path */ "Fpbh");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+
+
+
+
+
+
+let SubcategoriasService = class SubcategoriasService {
+    constructor(db, storage) {
+        this.db = db;
+        this.storage = storage;
+        this.subcategoriasRef = this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS);
+    }
+    insert(subcategoria) {
+        return this.save(subcategoria, null);
+    }
+    update(subcategoria, key) {
+        return this.save(subcategoria, key);
+    }
+    save(subcategoria, key) {
+        return new Promise((resolve, reject) => {
+            const subcategoriaRef = {
+                nome: subcategoria.nome,
+                categoriaKey: subcategoria.categoriaKey,
+                categoriaNome: subcategoria.categoriaNome,
+            };
+            if (key) {
+                this.subcategoriasRef.update(key, subcategoriaRef)
+                    .then(() => resolve(key))
+                    .catch(() => reject());
+            }
+            else {
+                this.subcategoriasRef.push(subcategoriaRef)
+                    .then((result) => resolve(result.key));
+            }
+        });
+    }
+    getAll() {
+        return this.subcategoriasRef.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {
+            return changes.map(m => (Object.assign({ key: m.payload.key }, m.payload.val())));
+        }));
+    }
+    getByKey(key) {
+        const path = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS}${key}`;
+        return this.db.object(path).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(change => {
+            return (Object.assign({ key: change.key }, change.payload.val()));
+        }));
+    }
+    remove(key, filePath) {
+        this.subcategoriasRef.remove(key);
+        if (filePath)
+            this.removeImg(filePath, key, false);
+    }
+    uploadImg(key, file) {
+        const filePath = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS}${key}/${file.name}`;
+        const ref = this.storage.ref(filePath);
+        const task = ref.put(file);
+        task.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(() => {
+            ref.getDownloadURL().subscribe((url => {
+                this.subcategoriasRef.update(key, { imagem: url, filePath: filePath });
+            }));
+        })).subscribe();
+    }
+    removeImg(filePath, key, atualizarSubcategoria = true) {
+        const ref = this.storage.ref(filePath);
+        ref.delete();
+        if (atualizarSubcategoria) {
+            this.subcategoriasRef.update(key, { imagem: '', filePath: '' });
+        }
+    }
+};
+SubcategoriasService.ctorParameters = () => [
+    { type: _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__["AngularFireDatabase"] },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_3__["AngularFireStorage"] }
+];
+SubcategoriasService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], SubcategoriasService);
 
 
 
@@ -430,6 +549,168 @@ const hapticImpact = (options) => {
   HapticEngine.impact(options);
 };
 
+
+
+
+/***/ }),
+
+/***/ "xMlV":
+/*!*********************************************************!*\
+  !*** ./src/app/categorias/shared/categorias.service.ts ***!
+  \*********************************************************/
+/*! exports provided: CategoriasService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriasService", function() { return CategoriasService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/database */ "sSZD");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/storage */ "Vaw3");
+/* harmony import */ var _core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../core/shared/firebase-path */ "Fpbh");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+
+
+
+
+
+
+let CategoriasService = class CategoriasService {
+    constructor(db, storage) {
+        this.db = db;
+        this.storage = storage;
+        this.categoriasRef = this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].CATEGORIAS);
+    }
+    insert(categoria) {
+        return new Promise((resolve, reject) => {
+            this.categoriasRef.push(categoria)
+                .then((result) => resolve(result.key));
+        });
+    }
+    update(categoria, key) {
+        return new Promise((resolve, reject) => {
+            const categoriaObj = {
+                nome: categoria.nome
+            };
+            // updateObj[pathCategoria] = categoria;
+            // const pathCategoria = `${FirebasePath.CATEGORIAS}${key}`;
+            const subcategoriaUpdates = {};
+            const subcribe = this.getSubcategoriaByCategoria(key).subscribe(subcategorias => {
+                subcribe.unsubscribe();
+                subcategorias.forEach(subcategoria => {
+                    const pathSubategoria = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS}${subcategoria.key}/categoriaNome`;
+                    subcategoriaUpdates[pathSubategoria] = categoria.nome;
+                });
+                this.db.object('/').update(subcategoriaUpdates);
+            });
+            this.categoriasRef.update(key, categoriaObj)
+                .then(() => resolve(key))
+                .catch(() => reject());
+        });
+    }
+    // insert(categoria: any){
+    //   return this.save(categoria, null);
+    // }
+    //
+    // update(categoria: any, key: string){
+    //   return this.save(categoria, key);
+    // }
+    //
+    // private save(categoria: any, key: string){
+    //   return new Promise((resolve, reject) => {
+    //     const categoriaRef = {
+    //       nome: categoria.nome
+    //     }
+    //
+    //     if (key) {
+    //       this.categoriasRef.update(key, categoriaRef)
+    //         .then(() => resolve(key))
+    //         .catch(() => reject());
+    //     } else {
+    //       this.categoriasRef.push(categoriaRef)
+    //         .then((result: any) => resolve(result.key));
+    //     }
+    //   });
+    // }
+    // updateSubcategoriasByCategoria(updateObj: any, categoria: any, key: string){
+    //   const subcribe = this.getSubcategoriaByCategoria(key).subcribe(subcategorias => {
+    //     subcribe.unsubscribe();
+    //
+    //     subcategorias.forEach(subcategoria => {
+    //       const pathSubategoria = `${FirebasePath.SUBCATEGORIAS}${subcategoria.key}/subcategoriaNome`;
+    //       updateObj[pathSubategoria] = categoria.nome;
+    //     });
+    //
+    //     this.db.object('/').update(updateObj);
+    //   });
+    // }
+    getSubcategoriaByCategoria(key) {
+        return this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS, q => q.orderByChild('categoriaKey').equalTo(key))
+            .snapshotChanges()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {
+            return changes.map(m => ({ key: m.key }));
+        }));
+    }
+    save(categoria, key) {
+        return new Promise((resolve, reject) => {
+            const categoriaRef = {
+                nome: categoria.nome
+            };
+            if (key) {
+                this.categoriasRef.update(key, categoriaRef)
+                    .then(() => resolve(key))
+                    .catch(() => reject());
+            }
+            else {
+                this.categoriasRef.push(categoriaRef)
+                    .then((result) => resolve(result.key));
+            }
+        });
+    }
+    getAll() {
+        return this.categoriasRef.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {
+            return changes.map(m => (Object.assign({ key: m.payload.key }, m.payload.val())));
+        }));
+    }
+    getByKey(key) {
+        const path = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].CATEGORIAS}${key}`;
+        return this.db.object(path).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(change => {
+            return (Object.assign({ key: change.key }, change.payload.val()));
+        }));
+    }
+    remove(key, filePath) {
+        this.categoriasRef.remove(key);
+        if (filePath)
+            this.removeImg(filePath, key, false);
+    }
+    uploadImg(key, file) {
+        const filePath = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].CATEGORIAS}${key}/${file.name}`;
+        const ref = this.storage.ref(filePath);
+        const task = ref.put(file);
+        task.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(() => {
+            ref.getDownloadURL().subscribe((url => {
+                this.categoriasRef.update(key, { imagem: url, filePath: filePath });
+            }));
+        })).subscribe();
+    }
+    removeImg(filePath, key, atualizarCategoria = true) {
+        const ref = this.storage.ref(filePath);
+        ref.delete();
+        if (atualizarCategoria) {
+            this.categoriasRef.update(key, { imagem: '', filePath: '' });
+        }
+    }
+};
+CategoriasService.ctorParameters = () => [
+    { type: _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__["AngularFireDatabase"] },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_3__["AngularFireStorage"] }
+];
+CategoriasService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], CategoriasService);
 
 
 

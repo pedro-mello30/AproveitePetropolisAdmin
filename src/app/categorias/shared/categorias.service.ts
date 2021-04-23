@@ -19,26 +19,62 @@ export class CategoriasService {
   }
 
   insert(categoria: any){
-    return this.categoriasRef.push(categoria);
+    return  new Promise((resolve, reject) => {
+      this.categoriasRef.push(categoria)
+        .then((result: any) => resolve(result.key));
+    });
   }
 
   update(categoria: any, key: string){
-    const updateObj = {};
-    const pathCategoria = `${FirebasePath.CATEGORIAS}${key}`;
+    return new Promise((resolve, reject) => {
+      const categoriaObj = {
+        nome: categoria.nome
+      };
+      // updateObj[pathCategoria] = categoria;
 
-    updateObj[pathCategoria] = categoria;
+      // const pathCategoria = `${FirebasePath.CATEGORIAS}${key}`;
+      const subcategoriaUpdates = {};
+      const subcribe = this.getSubcategoriaByCategoria(key).subscribe(subcategorias => {
+        subcribe.unsubscribe();
 
-    const subcribe = this.getSubcategoriaByCategoria(key).subcribe(subcategorias => {
-      subcribe.unsubscribe();
+        subcategorias.forEach(subcategoria => {
+          const pathSubategoria = `${FirebasePath.SUBCATEGORIAS}${subcategoria.key}/categoriaNome`;
+          subcategoriaUpdates[pathSubategoria] = categoria.nome;
+        });
 
-      subcategorias.forEach(subcategoria => {
-        const pathSubategoria = `${FirebasePath.SUBCATEGORIAS}${subcategoria.key}/subcategoriaNome`;
-        updateObj[pathSubategoria] = categoria.nome;
+        this.db.object('/').update(subcategoriaUpdates);
       });
 
-      this.db.object('/').update(updateObj);
+      this.categoriasRef.update(key, categoriaObj)
+        .then(() => resolve(key))
+        .catch(() => reject());
     });
-  }
+   }
+
+  // insert(categoria: any){
+  //   return this.save(categoria, null);
+  // }
+  //
+  // update(categoria: any, key: string){
+  //   return this.save(categoria, key);
+  // }
+  //
+  // private save(categoria: any, key: string){
+  //   return new Promise((resolve, reject) => {
+  //     const categoriaRef = {
+  //       nome: categoria.nome
+  //     }
+  //
+  //     if (key) {
+  //       this.categoriasRef.update(key, categoriaRef)
+  //         .then(() => resolve(key))
+  //         .catch(() => reject());
+  //     } else {
+  //       this.categoriasRef.push(categoriaRef)
+  //         .then((result: any) => resolve(result.key));
+  //     }
+  //   });
+  // }
 
   // updateSubcategoriasByCategoria(updateObj: any, categoria: any, key: string){
   //   const subcribe = this.getSubcategoriaByCategoria(key).subcribe(subcategorias => {

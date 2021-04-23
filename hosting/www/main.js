@@ -1,18 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
-/***/ "/9Q5":
-/*!***************************************************************************!*\
-  !*** ./src/app/categorias/categorias-item/categorias-item.component.scss ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjYXRlZ29yaWFzLWl0ZW0uY29tcG9uZW50LnNjc3MifQ== */");
-
-/***/ }),
-
 /***/ 0:
 /*!***************************!*\
   !*** multi ./src/main.ts ***!
@@ -21,6 +8,68 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! /mnt/D/Projetos/ProjetosApps/AproveitePetropolis/AproveitePetropolisAdmin/src/main.ts */"zUnb");
+
+
+/***/ }),
+
+/***/ "0R3S":
+/*!**************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-form/usuarios-form.page.ts ***!
+  \**************************************************************/
+/*! exports provided: UsuariosFormPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosFormPage", function() { return UsuariosFormPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_usuarios_form_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./usuarios-form.page.html */ "SeLe");
+/* harmony import */ var _usuarios_form_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usuarios-form.page.scss */ "3iSI");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _login_shared_usuario_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../login/shared/usuario-auth.service */ "E+93");
+
+
+
+
+
+
+// const firebaseAdmin = require('firebase-admin');
+// import {environment} from '../../../environments/environment';
+//
+// firebaseAdmin.initializeApp({
+//   credential: firebaseAdmin.credential.cert(environment.adminFirebaseConfig)
+// });
+let UsuariosFormPage = class UsuariosFormPage {
+    constructor(formBuilder, usuarioAuthService) {
+        this.formBuilder = formBuilder;
+        this.usuarioAuthService = usuarioAuthService;
+        this.title = 'Novo Usuário';
+    }
+    ngOnInit() {
+        this.criarFormulario();
+    }
+    criarFormulario() {
+        this.formUsuario = this.formBuilder.group({
+            nome: [''],
+            email: [''],
+            senha: ['']
+        });
+    }
+    onSubmit() { }
+};
+UsuariosFormPage.ctorParameters = () => [
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"] },
+    { type: _login_shared_usuario_auth_service__WEBPACK_IMPORTED_MODULE_5__["UsuarioAuthService"] }
+];
+UsuariosFormPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-usuarios-form',
+        template: _raw_loader_usuarios_form_page_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_usuarios_form_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], UsuariosFormPage);
+
 
 
 /***/ }),
@@ -60,16 +109,16 @@ LoginLayoutComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
 
 /***/ }),
 
-/***/ "3Tmr":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/categorias/categorias-item/categorias-item.component.html ***!
-  \*****************************************************************************************************************/
+/***/ "3iSI":
+/*!****************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-form/usuarios-form.page.scss ***!
+  \****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-item>\n  <ion-label>{{categoria.nome}}</ion-label>\n  <ion-button slot=\"end\" color=\"primary\" [routerLink]=\"['/categorias/editar/', categoria._id]\">\n    <ion-icon slot=\"start\" ios=\"create-outline\" md=\"create-outline\"></ion-icon>\n    Editar\n  </ion-button>\n  <ion-button slot=\"end\" color=\"danger\" (click)=\"remove(categoria)\">\n    <ion-icon slot=\"start\" name=\"trash-outline\"></ion-icon>\n    Excluir\n  </ion-button>\n</ion-item>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ1c3Vhcmlvcy1mb3JtLnBhZ2Uuc2NzcyJ9 */");
 
 /***/ }),
 
@@ -83,6 +132,74 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-split-pane contentId=\"main-content\">\n    <ion-menu contentId=\"main-content\" type=\"overlay\">\n      <ion-content>\n        <ion-list id=\"inbox-list\">\n          <ion-list-header><img class=\"logo\" src=\"assets/LogoAproveitePetropolis.PNG\"></ion-list-header>\n          <ion-note></ion-note>\n\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages; let i = index\">\n            <ion-item routerDirection=\"root\" [routerLink]=\"[p.url]\" lines=\"none\" detail=\"false\" routerLinkActive=\"selected\">\n              <ion-icon slot=\"start\" [ios]=\"p.icon + '-outline'\" [md]=\"p.icon + '-outline'\"></ion-icon>\n              <ion-label>{{ p.title }}</ion-label>\n            </ion-item>\n          </ion-menu-toggle>\n\n        </ion-list>\n\n        <ion-list>\n          <ion-menu-toggle auto-hide=\"false\">\n            <ion-item routerDirection=\"root\" lines=\"none\" detail=\"false\" routerLink=\"\" (click)=\"logout()\">\n              <ion-icon  slot=\"start\" name=\"log-out-outline\"></ion-icon>\n              <ion-label>Sair</ion-label>\n            </ion-item>\n          </ion-menu-toggle>\n        </ion-list>\n\n\n\n      </ion-content>\n\n    </ion-menu>\n    <ion-router-outlet id=\"main-content\"></ion-router-outlet>\n  </ion-split-pane>\n</ion-app>\n\n\n");
+
+/***/ }),
+
+/***/ "5A7i":
+/*!********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/core/components/validation-container/validation-container.component.html ***!
+  \********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-item *ngIf=\"control.invalid && (control.dirty || control.touched)\" lines=\"none\">\n  <ion-label color=\"danger\" *ngIf=\"control.errors.required\">Esse campo é obrigatório</ion-label>\n</ion-item>\n\n");
+
+/***/ }),
+
+/***/ "6gee":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/usuarios/usuarios-lista/usuarios-lista.page.html ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Usuários</ion-title>\n    <ion-button slot=\"end\" class=\"ion-margin-end\" [routerLink]=\"['/usuarios/novo']\">Novo</ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <div *ngIf=\"usuarios.length == 0\" class=\"alert alert-warning\" role=\"alert\">\n          Nenhuma usuário cadastrado.\n        </div>\n        <div *ngIf=\"usuarios.length > 0\">\n          <ion-item *ngFor=\"let usuario of usuarios\">\n            <ion-label>{{usuario.nome}}</ion-label>\n            <ion-button slot=\"end\" color=\"primary\" [routerLink]=\"['/categorias/editar/', usuario._id]\">\n              <ion-icon slot=\"start\" ios=\"create-outline\" md=\"create-outline\"></ion-icon>\n              Editar\n            </ion-button>\n            <ion-button slot=\"end\" color=\"danger\" (click)=\"remove()\">\n              <ion-icon slot=\"start\" name=\"trash-outline\"></ion-icon>\n              Excluir\n            </ion-button>\n          </ion-item>\n\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+
+/***/ }),
+
+/***/ "9XuG":
+/*!******************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-lista/usuarios-lista.module.ts ***!
+  \******************************************************************/
+/*! exports provided: UsuariosListaPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosListaPageModule", function() { return UsuariosListaPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _usuarios_lista_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./usuarios-lista-routing.module */ "jHOf");
+/* harmony import */ var _usuarios_lista_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./usuarios-lista.page */ "SlJs");
+
+
+
+
+
+
+
+let UsuariosListaPageModule = class UsuariosListaPageModule {
+};
+UsuariosListaPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
+            _usuarios_lista_routing_module__WEBPACK_IMPORTED_MODULE_5__["UsuariosListaPageRoutingModule"]
+        ],
+        declarations: [_usuarios_lista_page__WEBPACK_IMPORTED_MODULE_6__["UsuariosListaPage"]]
+    })
+], UsuariosListaPageModule);
+
+
 
 /***/ }),
 
@@ -110,6 +227,18 @@ const environment = {
         messagingSenderId: "886116317202",
         appId: "1:886116317202:web:d53fc916e42728e6f040cb",
         measurementId: "G-326KSMGZWZ"
+    },
+    adminFirebaseConfig: {
+        "type": "service_account",
+        "project_id": "aproveitepetropolis-748a8",
+        "private_key_id": "74024c0708b9364c5bf4a8e9923cc3338763f063",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC5rOdEK3Civvsa\nnoX3Rp2Cw6mLOpMKS4fmwSi526bk2n1hh8K7kVfhww9KuysyL/MOHpY6J6ekELay\n6cklucfAkh2Tg6uUnV3CkhvN/tORP1fn0+0VZEf4FWFeTam18OZ/YdWU6cnciBbF\nQLhQe5xt9zCkCM42ywl9qo9tDhzGsWexDXVO306hHFWaHNCEi2NNbdrTTd0Q1BQo\nlOBzya5OiceLjdlVhtmP+ryw1zK0ibpE/aATGZ7xjDSMxnD+mHYG5XM8aGzkiNbo\nmDPVTp11Ig8p3gXG1NE7dDI1AiNJg3C7XoYGxMRMShVPY/d+c/MAdofEeYHyb177\nBsSvJjxfAgMBAAECggEAQlRWObAbCMiZA6VlzjRXyIMFakt+g8r/vZt7ZQnm0RKM\nf+7zzfXaIzh/mf7LK56dgYnDuPq5lI6z9a42wVdg2JZaInyDKxAckomHjUtfYR/z\n00mOBHpSi3l30yyDWA+7B/53Qj9ScYncOJMqRPYjp9UKd079++0EcvQfUKId/Yx9\no7PA3Yg7TC1nXVqWq4DJeNsb913aHE4TTpZPkiQLcoKE5zpyHOkHNklusnAapmv4\n6Ig1AI5mjIIf9YaicjT81YLfQ+BA5Dae0D4br/96uUxUzgnfeDFo5ICxqTfk54dr\nUCifDPofdVIXPLK1tgHyvV6sJm3sG9J1PI3umeJvQQKBgQD350h+0HemjmfxY/+M\nIxZC1lJn0k1BFhfMBftsA5V87GvwhBJz+dUyrNRsDTFMb0GwvjrGkh5kfipr+vUL\naJJoNe5ye5jCMQdr9JYgG6b/Pwfl8Ckw24wL+9kAgIz1GGAQatspfsYP4LuLyt6V\nsnaj+K2uaJjLl1AfTa6Gx4K2twKBgQC/vVUeMa0PYNt0aHq8ScHgdU6+xnXxYGzF\nFo3AzOOyeH0yHe1GktBEcKLIhvgHLYvtIoA4MFWlI+b2Gt2DOzque7ji2ZKDKB33\ntx1Ic1UvdSOsSHXra/Pc2KEIC5E8uCeWd5J1tP0gHBx2MtclbiGEDHL5aDB2kQX0\n2g3lYXA/mQKBgGxUzpJUSSUor/WFrGOx5YV5oPMrrITXwbhvmMo/2rCHpDerj2DM\n+US2z/ET5sovCDbTOl4R9mQV2jXrqe+9V9VgU/4FUuDxifu8G2qWiuiZw7rQsz9d\ngZqvCMo2YuKsLzada357ntPLckmJcrFaFoxbHJLNtI+rZOD5El5lixKLAoGAQ/4X\n2QU0oWdvavBB1dMx9S6kJfKqkFXpPFqrGduOQxOHEeaa5ZPaVuq6TvHNsn3sSMMb\nRNGfDViV5l/QfWDbhlRJU+hjlC79sYI12CNN6e5YIBfx+PHnIEGRmRDBCA8luq3c\nOfFcca6GSUPuF0/egr0HaHoR9Xmn6xQIKXdMHsECgYAapODWsdG+PYzRZYHE1f5D\nO7rxszfLTfbChKaaqiuHjXQJn/Eg5Cb//oPy6cRBE+n/pEjKa5FqEHAv8k1QUTCe\nhkSUTbu9Y4rwa3/HOArqvqTOtdBLGdnrUrVaj3T8SBszO4bLdAmcCIaK3NL73T9g\nahzzgNynSXHddmdaoGhUZw==\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-x2ne2@aproveitepetropolis-748a8.iam.gserviceaccount.com",
+        "client_id": "106735602122422429122",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-x2ne2%40aproveitepetropolis-748a8.iam.gserviceaccount.com"
     }
 };
 /*
@@ -121,19 +250,6 @@ const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-
-/***/ }),
-
-/***/ "DAm3":
-/*!***************************************************************************!*\
-  !*** ./src/app/categorias/categorias-list/categorias-list.component.scss ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjYXRlZ29yaWFzLWxpc3QuY29tcG9uZW50LnNjc3MifQ== */");
 
 /***/ }),
 
@@ -157,7 +273,6 @@ let UsuarioAuthService = class UsuarioAuthService {
     constructor(afAuth) {
         this.afAuth = afAuth;
     }
-    //
     // criarConta(usuario: any) {
     //   return new Promise((resolve, reject) => {
     //     this.afAuth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
@@ -172,7 +287,6 @@ let UsuarioAuthService = class UsuarioAuthService {
     //       });
     //   });
     // }
-    //
     login(email, senha) {
         return new Promise((resolve, reject) => {
             this.afAuth.signInWithEmailAndPassword(email, senha)
@@ -229,6 +343,56 @@ UsuarioAuthService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         providedIn: 'root'
     })
 ], UsuarioAuthService);
+
+
+
+/***/ }),
+
+/***/ "Fwh9":
+/*!******************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-lista/usuarios-lista.page.scss ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ1c3Vhcmlvcy1saXN0YS5wYWdlLnNjc3MifQ== */");
+
+/***/ }),
+
+/***/ "H/Xy":
+/*!************************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-form/usuarios-form-routing.module.ts ***!
+  \************************************************************************/
+/*! exports provided: UsuariosFormPageRoutingModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosFormPageRoutingModule", function() { return UsuariosFormPageRoutingModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _usuarios_form_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usuarios-form.page */ "0R3S");
+
+
+
+
+const routes = [
+    {
+        path: '',
+        component: _usuarios_form_page__WEBPACK_IMPORTED_MODULE_3__["UsuariosFormPage"]
+    }
+];
+let UsuariosFormPageRoutingModule = class UsuariosFormPageRoutingModule {
+};
+UsuariosFormPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
+    })
+], UsuariosFormPageRoutingModule);
 
 
 
@@ -294,57 +458,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "Nlx+":
-/*!*************************************************************************!*\
-  !*** ./src/app/categorias/categorias-item/categorias-item.component.ts ***!
-  \*************************************************************************/
-/*! exports provided: CategoriasItemComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriasItemComponent", function() { return CategoriasItemComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _raw_loader_categorias_item_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./categorias-item.component.html */ "3Tmr");
-/* harmony import */ var _categorias_item_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./categorias-item.component.scss */ "/9Q5");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _shared_categoria_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/categoria.service */ "Q29h");
-
-
-
-
-
-let CategoriasItemComponent = class CategoriasItemComponent {
-    constructor(categoriaService) {
-        this.categoriaService = categoriaService;
-        this.onDeleteCategoria = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["EventEmitter"]();
-    }
-    ngOnInit() { }
-    remove(categoria) {
-        this.categoriaService.delete(categoria._id).subscribe(() => {
-            this.onDeleteCategoria.emit(categoria);
-        });
-    }
-};
-CategoriasItemComponent.ctorParameters = () => [
-    { type: _shared_categoria_service__WEBPACK_IMPORTED_MODULE_4__["CategoriaService"] }
-];
-CategoriasItemComponent.propDecorators = {
-    categoria: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    onDeleteCategoria: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Output"] }]
-};
-CategoriasItemComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
-        selector: 'app-categorias-item',
-        template: _raw_loader_categorias_item_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
-        styles: [_categorias_item_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
-    })
-], CategoriasItemComponent);
-
-
-
-/***/ }),
-
 /***/ "Olgc":
 /*!************************************************!*\
   !*** ./src/app/core/services/toast.service.ts ***!
@@ -396,128 +509,6 @@ ToastService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         providedIn: 'root'
     })
 ], ToastService);
-
-
-
-/***/ }),
-
-/***/ "Q29h":
-/*!********************************************************!*\
-  !*** ./src/app/categorias/shared/categoria.service.ts ***!
-  \********************************************************/
-/*! exports provided: CategoriaService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriaService", function() { return CategoriaService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "AytR");
-
-
-
-
-let CategoriaService = class CategoriaService {
-    constructor(http) {
-        this.http = http;
-    }
-    getAll() {
-        return this.http.get(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/categorias`);
-    }
-    getById(id) {
-        return this.http.get(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/categorias/${id}`);
-    }
-    save(categoria) {
-        if (categoria._id) {
-            return this.http.put(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/categorias/${categoria._id}`, categoria);
-        }
-        else {
-            return this.http.post(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/categorias`, categoria);
-        }
-    }
-    delete(id) {
-        return this.http.delete(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/categorias/${id}`);
-    }
-};
-CategoriaService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
-];
-CategoriaService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], CategoriaService);
-
-
-
-/***/ }),
-
-/***/ "Qt4k":
-/*!*************************************************************************!*\
-  !*** ./src/app/categorias/categorias-form/categorias-form.component.ts ***!
-  \*************************************************************************/
-/*! exports provided: CategoriasFormComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriasFormComponent", function() { return CategoriasFormComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _raw_loader_categorias_form_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./categorias-form.component.html */ "S1yn");
-/* harmony import */ var _categorias_form_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./categorias-form.component.scss */ "t3mD");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _shared_categoria__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/categoria */ "hZ8y");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _shared_categoria_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../shared/categoria.service */ "Q29h");
-
-
-
-
-
-
-
-let CategoriasFormComponent = class CategoriasFormComponent {
-    constructor(activatedRoute, router, categoriaService) {
-        this.activatedRoute = activatedRoute;
-        this.router = router;
-        this.categoriaService = categoriaService;
-        this.tituloDaPagina = 'Adicionar Categoria';
-        this.categoria = new _shared_categoria__WEBPACK_IMPORTED_MODULE_4__["Categoria"]();
-        this.onSavedCategoria = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["EventEmitter"]();
-    }
-    ngOnInit() {
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-        if (id) {
-            this.categoriaService.getById(id).subscribe(categoria => {
-                this.categoria = categoria;
-                this.tituloDaPagina = 'Editar Categoria';
-            });
-        }
-    }
-    onSubmit() {
-        this.categoriaService.save(this.categoria).subscribe(categoria => {
-            this.onSavedCategoria.emit(this.categoria);
-            this.router.navigateByUrl('categorias');
-        });
-    }
-};
-CategoriasFormComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
-    { type: _shared_categoria_service__WEBPACK_IMPORTED_MODULE_6__["CategoriaService"] }
-];
-CategoriasFormComponent.propDecorators = {
-    onSavedCategoria: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Output"] }]
-};
-CategoriasFormComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
-        selector: 'app-categorias-form',
-        template: _raw_loader_categorias_form_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
-        styles: [_categorias_form_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
-    })
-], CategoriasFormComponent);
 
 
 
@@ -604,19 +595,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "S1yn":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/categorias/categorias-form/categorias-form.component.html ***!
-  \*****************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{tituloDaPagina}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <form (ngSubmit)=\"onSubmit()\" #formCategoria=\"ngForm\">\n          <ion-item>\n            <ion-label position=\"floating\">Nome Da Categoria</ion-label>\n            <ion-input name=\"nome\" [(ngModel)]=\"categoria.nome\"></ion-input>\n          </ion-item>\n\n          <ion-button color=\"primary\" type=\"submit\" class=\"ion-margin-top\" slot=\"end\">Salvar</ion-button>\n        </form>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
-
-/***/ }),
-
 /***/ "SUeN":
 /*!*************************************************************!*\
   !*** ./src/app/layout/home-layout/home-layout.component.ts ***!
@@ -647,6 +625,7 @@ let HomeLayoutComponent = class HomeLayoutComponent {
             { title: 'Usuários', url: '/usuarios', icon: 'people' },
             { title: 'Estabelecimentos', url: '/estabelecimentos', icon: 'storefront' },
             { title: 'Categorias', url: '/categorias', icon: 'grid' },
+            { title: 'Subcategorias', url: '/subcategorias', icon: 'grid' },
         ];
     }
     ngOnInit() { }
@@ -682,7 +661,61 @@ HomeLayoutComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!--<div class=\"card card-login mx-auto mt-5\">-->\n<!--  <div class=\"card-header\">Login</div>-->\n<!--  <div class=\"card-body\">-->\n<!--    <form [formGroup]=\"formLogin\" (ngSubmit)=\"onSubmit()\">-->\n<!--      <div class=\"form-group\">-->\n<!--        <label for=\"email\">E-mail</label>-->\n<!--        <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"E-mail\" formControlName=\"email\">-->\n<!--      </div>-->\n<!--      <div *ngIf=\"email.invalid && (email.dirty || email.touched)\" class=\"alert alert-danger\">-->\n<!--        <div *ngIf=\"email.errors.required\">-->\n<!--          O e-mail é obrigatório.-->\n<!--        </div>-->\n<!--        <div *ngIf=\"email.errors.email\">-->\n<!--          O e-mail é inválido.-->\n<!--        </div>-->\n<!--      </div>-->\n\n<!--      <div class=\"form-group\">-->\n<!--        <label for=\"senha\">Senha</label>-->\n<!--        <input type=\"password\" class=\"form-control\" id=\"senha\" placeholder=\"Senha\" formControlName=\"senha\">-->\n<!--      </div>-->\n<!--      <div *ngIf=\"senha.invalid && (senha.dirty || senha.touched)\" class=\"alert alert-danger\">-->\n<!--        <div *ngIf=\"senha.errors.required\">-->\n<!--          A senha é obrigatório.-->\n<!--        </div>-->\n<!--      </div>-->\n\n<!--      <button type=\"submit\" class=\"btn btn-primary btn-block\">Entrar</button>-->\n<!--    </form>-->\n<!--    <div class=\"text-center\">-->\n<!--      <a class=\"d-block small mt-3\" [routerLink]=\"['/criar-conta']\">Criar conta</a>-->\n<!--      <a class=\"d-block small\" [routerLink]=\"['/esqueci-senha']\">Esqueci minha senha</a>-->\n<!--    </div>-->\n<!--  </div>-->\n<!--</div>-->\n\n\n\n<!--<ion-header>-->\n<!--  <ion-toolbar color=\"primary\">-->\n<!--    <ion-title>login</ion-title>-->\n<!--  </ion-toolbar>-->\n<!--</ion-header>-->\n\n<!--<ion-content>-->\n\n<!--  <ion-grid>-->\n<!--    <ion-row >-->\n<!--      <ion-col size-lg=\"4\" offset-lg=\"4\">-->\n\n<!--        <div class=\"card-login\">-->\n<!--          <img class=\"logoLogin\" src=\"assets/LogoAproveitePetropolis.PNG\">-->\n\n          <form [formGroup]=\"formLogin\" (ngSubmit)=\"onSubmit()\">\n            <ion-item>\n              <ion-label position=\"stacked\">E-mail</ion-label>\n              <ion-input type=\"email\" formControlName=\"email\"></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-label position=\"stacked\">Senha</ion-label>\n              <ion-input type=\"password\" formControlName=\"senha\"></ion-input>\n            </ion-item>\n\n            <div margin-vertical>\n              <ion-button color=\"primary\" expand=\"block\" type=\"submit\">Entrar</ion-button>\n            </div>\n          </form>\n\n          <ion-button expand=\"block\" color=\"dark\" fill=\"clear\" margin-top [routerLink]=\"['/login/esqueci-senha']\">Esqueci minha senha</ion-button>\n<!--        </div>-->\n<!--      </ion-col>-->\n<!--    </ion-row>-->\n<!--  </ion-grid>-->\n<!--</ion-content>-->\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<form [formGroup]=\"formLogin\" (keydown)=\"keyDown($event.keyCode)\" (ngSubmit)=\"onSubmit()\">\n  <ion-item>\n    <ion-label position=\"stacked\">E-mail</ion-label>\n    <ion-input type=\"email\" formControlName=\"email\"></ion-input>\n  </ion-item>\n\n  <ion-item>\n    <ion-label position=\"stacked\">Senha</ion-label>\n    <ion-input type=\"password\" formControlName=\"senha\"></ion-input>\n  </ion-item>\n\n  <div margin-vertical>\n    <ion-button color=\"primary\" expand=\"block\" type=\"submit\">Entrar</ion-button>\n  </div>\n</form>\n\n<ion-button expand=\"block\" color=\"dark\" fill=\"clear\" margin-top [routerLink]=\"['/login/esqueci-senha']\">Esqueci minha senha</ion-button>\n\n");
+
+/***/ }),
+
+/***/ "SeLe":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/usuarios/usuarios-form/usuarios-form.page.html ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{title}}</ion-title>\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <form [formGroup]=\"formUsuario\" (ngSubmit)=\"onSubmit()\">\n          <ion-item>\n            <ion-label position=\"stacked\">Nome</ion-label>\n            <ion-input type=\"text\" formControlName=\"nome\"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label position=\"stacked\">E-mail</ion-label>\n            <ion-input type=\"email\" formControlName=\"email\"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label position=\"stacked\">Senha</ion-label>\n            <ion-input type=\"password\" formControlName=\"senha\"></ion-input>\n          </ion-item>\n          <div margin-vertical>\n            <ion-button color=\"primary\" expand=\"block\" type=\"submit\">Salvar</ion-button>\n          </div>\n        </form>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n</ion-content>\n");
+
+/***/ }),
+
+/***/ "SlJs":
+/*!****************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-lista/usuarios-lista.page.ts ***!
+  \****************************************************************/
+/*! exports provided: UsuariosListaPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosListaPage", function() { return UsuariosListaPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_usuarios_lista_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./usuarios-lista.page.html */ "6gee");
+/* harmony import */ var _usuarios_lista_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usuarios-lista.page.scss */ "Fwh9");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+
+let UsuariosListaPage = class UsuariosListaPage {
+    constructor() {
+        this.usuarios = [
+            { nome: 'Usuário' }
+        ];
+    }
+    ngOnInit() {
+    }
+    remove() { }
+};
+UsuariosListaPage.ctorParameters = () => [];
+UsuariosListaPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-usuarios-lista',
+        template: _raw_loader_usuarios_lista_page_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_usuarios_lista_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], UsuariosListaPage);
+
+
 
 /***/ }),
 
@@ -733,6 +766,48 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "XbNj":
+/*!****************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-form/usuarios-form.module.ts ***!
+  \****************************************************************/
+/*! exports provided: UsuariosFormPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosFormPageModule", function() { return UsuariosFormPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _usuarios_form_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./usuarios-form-routing.module */ "H/Xy");
+/* harmony import */ var _usuarios_form_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./usuarios-form.page */ "0R3S");
+/* harmony import */ var _core_shared_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../core/shared.module */ "Ymua");
+
+
+
+
+
+
+
+let UsuariosFormPageModule = class UsuariosFormPageModule {
+};
+UsuariosFormPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+            _core_shared_module__WEBPACK_IMPORTED_MODULE_6__["SharedModule"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"],
+            _usuarios_form_routing_module__WEBPACK_IMPORTED_MODULE_4__["UsuariosFormPageRoutingModule"],
+        ],
+        declarations: [_usuarios_form_page__WEBPACK_IMPORTED_MODULE_5__["UsuariosFormPage"]]
+    })
+], UsuariosFormPageModule);
+
+
+
+/***/ }),
+
 /***/ "Ymua":
 /*!***************************************!*\
   !*** ./src/app/core/shared.module.ts ***!
@@ -746,6 +821,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/validation-container/validation-container.component */ "p3/B");
+
+
 
 
 
@@ -753,9 +832,17 @@ let SharedModule = class SharedModule {
 };
 SharedModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        declarations: [],
+        declarations: [
+            _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__["ValidationContainerComponent"]
+        ],
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
+        ],
+        exports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
+            _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__["ValidationContainerComponent"]
         ]
     })
 ], SharedModule);
@@ -782,16 +869,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "Sy1n");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app-routing.module */ "vY5A");
-/* harmony import */ var _categorias_categorias_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./categorias/categorias.module */ "cHTx");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../environments/environment */ "AytR");
-/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/fire */ "spgP");
-/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/fire/auth */ "UbJi");
-/* harmony import */ var _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./layout/home-layout/home-layout.component */ "SUeN");
-/* harmony import */ var _layout_login_layout_login_layout_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./layout/login-layout/login-layout.component */ "0yqV");
-/* harmony import */ var _login_login_login_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./login/login/login.component */ "gEuR");
-/* harmony import */ var _login_esqueci_senha_esqueci_senha_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./login/esqueci-senha/esqueci-senha.component */ "Rnk+");
-/* harmony import */ var _core_shared_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./core/shared.module */ "Ymua");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../environments/environment */ "AytR");
+/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/fire */ "spgP");
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/fire/auth */ "UbJi");
+/* harmony import */ var _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./layout/home-layout/home-layout.component */ "SUeN");
+/* harmony import */ var _layout_login_layout_login_layout_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./layout/login-layout/login-layout.component */ "0yqV");
+/* harmony import */ var _login_login_login_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./login/login/login.component */ "gEuR");
+/* harmony import */ var _login_esqueci_senha_esqueci_senha_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./login/esqueci-senha/esqueci-senha.component */ "Rnk+");
+/* harmony import */ var _core_shared_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./core/shared.module */ "Ymua");
+/* harmony import */ var _usuarios_usuarios_form_usuarios_form_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./usuarios/usuarios-form/usuarios-form.module */ "XbNj");
+/* harmony import */ var _usuarios_usuarios_lista_usuarios_lista_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./usuarios/usuarios-lista/usuarios-lista.module */ "9XuG");
+/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/fire/database */ "sSZD");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/fire/storage */ "Vaw3");
+
+
 
 
 
@@ -816,10 +907,10 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-            _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_12__["HomeLayoutComponent"],
-            _layout_login_layout_login_layout_component__WEBPACK_IMPORTED_MODULE_13__["LoginLayoutComponent"],
-            _login_login_login_component__WEBPACK_IMPORTED_MODULE_14__["LoginComponent"],
-            _login_esqueci_senha_esqueci_senha_component__WEBPACK_IMPORTED_MODULE_15__["EsqueciSenhaComponent"]
+            _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_11__["HomeLayoutComponent"],
+            _layout_login_layout_login_layout_component__WEBPACK_IMPORTED_MODULE_12__["LoginLayoutComponent"],
+            _login_login_login_component__WEBPACK_IMPORTED_MODULE_13__["LoginComponent"],
+            _login_esqueci_senha_esqueci_senha_component__WEBPACK_IMPORTED_MODULE_14__["EsqueciSenhaComponent"]
         ],
         entryComponents: [],
         imports: [
@@ -827,11 +918,13 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"].forRoot(),
             _app_routing_module__WEBPACK_IMPORTED_MODULE_7__["AppRoutingModule"],
-            _core_shared_module__WEBPACK_IMPORTED_MODULE_16__["SharedModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_17__["ReactiveFormsModule"],
-            _angular_fire__WEBPACK_IMPORTED_MODULE_10__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_9__["environment"].firebaseConfig),
-            _angular_fire_auth__WEBPACK_IMPORTED_MODULE_11__["AngularFireAuthModule"],
-            _categorias_categorias_module__WEBPACK_IMPORTED_MODULE_8__["CategoriasModule"]
+            _core_shared_module__WEBPACK_IMPORTED_MODULE_15__["SharedModule"],
+            _angular_fire__WEBPACK_IMPORTED_MODULE_9__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].firebaseConfig),
+            _angular_fire_auth__WEBPACK_IMPORTED_MODULE_10__["AngularFireAuthModule"],
+            _angular_fire_database__WEBPACK_IMPORTED_MODULE_18__["AngularFireDatabaseModule"],
+            _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__["AngularFireStorageModule"],
+            _usuarios_usuarios_form_usuarios_form_module__WEBPACK_IMPORTED_MODULE_16__["UsuariosFormPageModule"],
+            _usuarios_usuarios_lista_usuarios_lista_module__WEBPACK_IMPORTED_MODULE_17__["UsuariosListaPageModule"]
         ],
         providers: [
             { provide: _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicRouteStrategy"] }
@@ -841,56 +934,6 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         ],
     })
 ], AppModule);
-
-
-
-/***/ }),
-
-/***/ "cHTx":
-/*!*************************************************!*\
-  !*** ./src/app/categorias/categorias.module.ts ***!
-  \*************************************************/
-/*! exports provided: CategoriasModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriasModule", function() { return CategoriasModule; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _categorias_form_categorias_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./categorias-form/categorias-form.component */ "Qt4k");
-/* harmony import */ var _categorias_list_categorias_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./categorias-list/categorias-list.component */ "k77z");
-/* harmony import */ var _categorias_item_categorias_item_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./categorias-item/categorias-item.component */ "Nlx+");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "tyNb");
-
-
-
-
-
-
-
-
-
-let CategoriasModule = class CategoriasModule {
-};
-CategoriasModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_8__["RouterModule"],
-        ],
-        declarations: [
-            _categorias_list_categorias_list_component__WEBPACK_IMPORTED_MODULE_6__["CategoriasListComponent"],
-            _categorias_item_categorias_item_component__WEBPACK_IMPORTED_MODULE_7__["CategoriasItemComponent"],
-            _categorias_form_categorias_form_component__WEBPACK_IMPORTED_MODULE_5__["CategoriasFormComponent"]
-        ]
-    })
-], CategoriasModule);
 
 
 
@@ -951,6 +994,10 @@ let LoginComponent = class LoginComponent {
             });
         }
     }
+    keyDown(key) {
+        if (key === 13)
+            this.onSubmit();
+    }
 };
 LoginComponent.ctorParameters = () => [
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"] },
@@ -970,72 +1017,38 @@ LoginComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
-/***/ "hZ8y":
-/*!************************************************!*\
-  !*** ./src/app/categorias/shared/categoria.ts ***!
-  \************************************************/
-/*! exports provided: Categoria */
+/***/ "jHOf":
+/*!**************************************************************************!*\
+  !*** ./src/app/usuarios/usuarios-lista/usuarios-lista-routing.module.ts ***!
+  \**************************************************************************/
+/*! exports provided: UsuariosListaPageRoutingModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Categoria", function() { return Categoria; });
-class Categoria {
-}
-
-
-/***/ }),
-
-/***/ "k77z":
-/*!*************************************************************************!*\
-  !*** ./src/app/categorias/categorias-list/categorias-list.component.ts ***!
-  \*************************************************************************/
-/*! exports provided: CategoriasListComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriasListComponent", function() { return CategoriasListComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosListaPageRoutingModule", function() { return UsuariosListaPageRoutingModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _raw_loader_categorias_list_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./categorias-list.component.html */ "pedn");
-/* harmony import */ var _categorias_list_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./categorias-list.component.scss */ "DAm3");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _shared_categoria_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/categoria.service */ "Q29h");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _usuarios_lista_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usuarios-lista.page */ "SlJs");
 
 
 
 
-
-let CategoriasListComponent = class CategoriasListComponent {
-    constructor(categoriaService) {
-        this.categoriaService = categoriaService;
-        this.categorias = [];
+const routes = [
+    {
+        path: '',
+        component: _usuarios_lista_page__WEBPACK_IMPORTED_MODULE_3__["UsuariosListaPage"]
     }
-    ngOnInit() {
-        this.categoriaService.getAll().subscribe(categorias => {
-            this.categorias = categorias;
-        });
-    }
-    onCategoriaDeleted(categoria) {
-        if (categoria) {
-            const index = this.categorias.findIndex((categoriaItem) => categoriaItem._id === categoria._id);
-            this.categorias.splice(index, 1);
-        }
-    }
-};
-CategoriasListComponent.ctorParameters = () => [
-    { type: _shared_categoria_service__WEBPACK_IMPORTED_MODULE_4__["CategoriaService"] }
 ];
-CategoriasListComponent.propDecorators = {
-    categorias: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+let UsuariosListaPageRoutingModule = class UsuariosListaPageRoutingModule {
 };
-CategoriasListComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
-        selector: 'app-categorias-list',
-        template: _raw_loader_categorias_list_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
-        styles: [_categorias_list_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+UsuariosListaPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
     })
-], CategoriasListComponent);
+], UsuariosListaPageRoutingModule);
 
 
 
@@ -1292,6 +1305,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "oNar":
+/*!******************************************************************************************!*\
+  !*** ./src/app/core/components/validation-container/validation-container.component.scss ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ2YWxpZGF0aW9uLWNvbnRhaW5lci5jb21wb25lbnQuc2NzcyJ9 */");
+
+/***/ }),
+
 /***/ "onFo":
 /*!*******************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/layout/login-layout/login-layout.component.html ***!
@@ -1305,16 +1331,42 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "pedn":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/categorias/categorias-list/categorias-list.component.html ***!
-  \*****************************************************************************************************************/
-/*! exports provided: default */
+/***/ "p3/B":
+/*!****************************************************************************************!*\
+  !*** ./src/app/core/components/validation-container/validation-container.component.ts ***!
+  \****************************************************************************************/
+/*! exports provided: ValidationContainerComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n    </ion-buttons>\n    <ion-title>Categorias</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n    <ion-fab-button [routerLink]=\"['/categorias/adicionar']\">\n      <ion-icon name=\"add\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <div *ngIf=\"categorias.length == 0\" class=\"alert alert-warning\" role=\"alert\">\n          Nenhuma categoria cadastrada.\n        </div>\n        <div *ngIf=\"categorias.length > 0\">\n          <app-categorias-item *ngFor=\"let categoria of categorias\" [categoria]=\"categoria\" (onDeleteCategoria)=\"onCategoriaDeleted($event)\"></app-categorias-item>\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValidationContainerComponent", function() { return ValidationContainerComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_validation_container_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./validation-container.component.html */ "5A7i");
+/* harmony import */ var _validation_container_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./validation-container.component.scss */ "oNar");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+
+let ValidationContainerComponent = class ValidationContainerComponent {
+    constructor() { }
+    ngOnInit() { }
+};
+ValidationContainerComponent.ctorParameters = () => [];
+ValidationContainerComponent.propDecorators = {
+    control: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
+    form: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+ValidationContainerComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-validation-container',
+        template: _raw_loader_validation_container_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_validation_container_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], ValidationContainerComponent);
+
+
 
 /***/ }),
 
@@ -1328,19 +1380,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJlc3F1ZWNpLXNlbmhhLmNvbXBvbmVudC5zY3NzIn0= */");
-
-/***/ }),
-
-/***/ "t3mD":
-/*!***************************************************************************!*\
-  !*** ./src/app/categorias/categorias-form/categorias-form.component.scss ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("ion-button {\n  float: right;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2NhdGVnb3JpYXMtZm9ybS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFlBQUE7QUFDRiIsImZpbGUiOiJjYXRlZ29yaWFzLWZvcm0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJpb24tYnV0dG9ue1xuICBmbG9hdDogcmlnaHQ7XG59XG4iXX0= */");
 
 /***/ }),
 
@@ -1376,9 +1415,42 @@ const routes = [
         component: _layout_home_layout_home_layout_component__WEBPACK_IMPORTED_MODULE_3__["HomeLayoutComponent"],
         canActivate: [_login_shared_auth_guard__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]],
         children: [
-            { path: 'usuarios', loadChildren: () => __webpack_require__.e(/*! import() | usuarios-usuarios-module */ "usuarios-usuarios-module").then(__webpack_require__.bind(null, /*! ./usuarios/usuarios.module */ "0G8V")).then(m => m.UsuariosPageModule) },
+            { path: 'usuarios',
+                loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./usuarios/usuarios-lista/usuarios-lista.module */ "9XuG")).then(m => m.UsuariosListaPageModule)
+            },
+            { path: 'usuarios/novo',
+                loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./usuarios/usuarios-form/usuarios-form.module */ "XbNj")).then(m => m.UsuariosFormPageModule)
+            },
+            { path: 'usuarios/editar/:key',
+                loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./usuarios/usuarios-form/usuarios-form.module */ "XbNj")).then(m => m.UsuariosFormPageModule)
+            },
             { path: 'estabelecimentos',
-                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-module */ "estabelecimentos-estabelecimentos-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos.module */ "ep0g")).then(m => m.EstabelecimentosPageModule) },
+                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-lista-estabelecimentos-lista-module */ "estabelecimentos-estabelecimentos-lista-estabelecimentos-lista-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-lista/estabelecimentos-lista.module */ "37aK")).then(m => m.EstabelecimentosListaPageModule)
+            },
+            { path: 'estabelecimentos/novo',
+                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-form-estabelecimentos-form-module */ "estabelecimentos-estabelecimentos-form-estabelecimentos-form-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-form/estabelecimentos-form.module */ "Fwdu")).then(m => m.EstabelecimentosFormPageModule)
+            },
+            { path: 'estabelecimentos/editar/:key',
+                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-form-estabelecimentos-form-module */ "estabelecimentos-estabelecimentos-form-estabelecimentos-form-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-form/estabelecimentos-form.module */ "Fwdu")).then(m => m.EstabelecimentosFormPageModule)
+            },
+            { path: 'categorias',
+                loadChildren: () => Promise.all(/*! import() | categorias-categorias-lista-categorias-lista-module */[__webpack_require__.e("common"), __webpack_require__.e("categorias-categorias-lista-categorias-lista-module")]).then(__webpack_require__.bind(null, /*! ./categorias/categorias-lista/categorias-lista.module */ "iJ+R")).then(m => m.CategoriasListaPageModule)
+            },
+            { path: 'categorias/novo',
+                loadChildren: () => Promise.all(/*! import() | categorias-categorias-form-categorias-form-module */[__webpack_require__.e("common"), __webpack_require__.e("categorias-categorias-form-categorias-form-module")]).then(__webpack_require__.bind(null, /*! ./categorias/categorias-form/categorias-form.module */ "M5Yi")).then(m => m.CategoriasFormPageModule)
+            },
+            { path: 'categorias/editar/:key',
+                loadChildren: () => Promise.all(/*! import() | categorias-categorias-form-categorias-form-module */[__webpack_require__.e("common"), __webpack_require__.e("categorias-categorias-form-categorias-form-module")]).then(__webpack_require__.bind(null, /*! ./categorias/categorias-form/categorias-form.module */ "M5Yi")).then(m => m.CategoriasFormPageModule)
+            },
+            { path: 'subcategorias',
+                loadChildren: () => Promise.all(/*! import() | subcategorias-subcategorias-lista-subcategorias-lista-module */[__webpack_require__.e("common"), __webpack_require__.e("subcategorias-subcategorias-lista-subcategorias-lista-module")]).then(__webpack_require__.bind(null, /*! ./subcategorias/subcategorias-lista/subcategorias-lista.module */ "HrJg")).then(m => m.SubcategoriasListaPageModule)
+            },
+            { path: 'subcategorias/novo',
+                loadChildren: () => Promise.all(/*! import() | subcategorias-subcategorias-form-subcategorias-form-module */[__webpack_require__.e("common"), __webpack_require__.e("subcategorias-subcategorias-form-subcategorias-form-module")]).then(__webpack_require__.bind(null, /*! ./subcategorias/subcategorias-form/subcategorias-form.module */ "O5uu")).then(m => m.SubcategoriasFormPageModule)
+            },
+            { path: 'subcategorias/editar/:key',
+                loadChildren: () => Promise.all(/*! import() | subcategorias-subcategorias-form-subcategorias-form-module */[__webpack_require__.e("common"), __webpack_require__.e("subcategorias-subcategorias-form-subcategorias-form-module")]).then(__webpack_require__.bind(null, /*! ./subcategorias/subcategorias-form/subcategorias-form.module */ "O5uu")).then(m => m.SubcategoriasFormPageModule)
+            },
         ]
     },
     {

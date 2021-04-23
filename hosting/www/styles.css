@@ -1223,5 +1223,8 @@ sub {
 .ion-align-items-baseline {
   align-items: baseline !important;
 }
+input[type=file] {
+  display: none;
+}
 
 /*# sourceMappingURL=styles.css.map*/

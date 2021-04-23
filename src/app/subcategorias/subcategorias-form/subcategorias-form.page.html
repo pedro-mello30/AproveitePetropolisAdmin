@@ -13,7 +13,7 @@
             <ion-label position="stacked">Categoria</ion-label>
 
             <ion-select placeholder="Escolher" formControlName="categoriaKey" (ionChange)="setCategoriaNome($event.target.value)">
-              <ion-select-option *ngFor="let categoria of categorias | async" value="{{categoria.key}}">{{categoria.nome}}</ion-select-option>
+              <ion-select-option *ngFor="let categoria of categorias | async" value="{{categoria.key}}" selected-text="{{categoria.nome}}">{{categoria.nome}}</ion-select-option>
             </ion-select>
           </ion-item>
 
