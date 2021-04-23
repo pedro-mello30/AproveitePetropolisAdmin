@@ -39,7 +39,7 @@ export class SubcategoriasFormPage implements OnInit {
 
     const key = this.route.snapshot.paramMap.get('key');
     if (key){
-      this.title = 'Editar Subategoria';
+      this.title = 'Editar Subcategoria';
       const subscribe = this.subcategoriaService.getByKey(key).subscribe((subcategoria: any) => {
         subscribe.unsubscribe();
 
