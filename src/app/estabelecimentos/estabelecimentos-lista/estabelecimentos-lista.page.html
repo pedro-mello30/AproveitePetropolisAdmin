@@ -9,23 +9,24 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div *ngIf="estabelecimentos.length == 0" class="alert alert-warning" role="alert">
-          Nenhuma estabelecimento cadastrada.
-        </div>
-        <div *ngIf="estabelecimentos.length > 0">
-          <ion-item *ngFor="let estabelecimento of estabelecimentos">
-            <ion-label>{{estabelecimento.nome}}</ion-label>
-            <ion-button slot="end" color="primary" [routerLink]="['/estabelecimentos/editar/', estabelecimento._id]">
-              <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
-              Editar
-            </ion-button>
-            <ion-button slot="end" color="danger" (click)="remove()">
-              <ion-icon slot="start" name="trash-outline"></ion-icon>
-              Excluir
-            </ion-button>
-          </ion-item>
+        <ion-item *ngFor="let estabelecimento of estabelecimentos | async">
+          <ion-thumbnail slot="start">
+            <img src="{{estabelecimento.imagem}}">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{estabelecimento.nome}}</h2>
+            <h3>{{ estabelecimento.categoriaNome - estabelecimento.subcategoriaNome }}</h3>
+          </ion-label>
+          <ion-button slot="end" color="primary" [routerLink]="['/estabelecimentos/editar/', estabelecimento.key]">
+            <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
+            Editar
+          </ion-button>
+          <ion-button slot="end" color="danger" (click)="remove(estabelecimento.key, estabelecimento.filePath)">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Excluir
+          </ion-button>
+        </ion-item>
 
-        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
+import {EstabelecimentosService} from '../shared/estabelecimentos.service';
+import {ToastService} from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-estabelecimentos-lista',
@@ -8,13 +11,19 @@ import { Component, OnInit } from '@angular/core';
 export class EstabelecimentosListaPage implements OnInit {
 
 
-  estabelecimentos = [{nome: 'estabelecimentos'}];
+  estabelecimentos: Observable<any[]>;
 
-  constructor() { }
+  constructor(
+    private estabelecimentoService: EstabelecimentosService,
+    private toast: ToastService
+  ) { }
 
   ngOnInit() {
+    this.estabelecimentos = this.estabelecimentoService.getAll();
   }
 
-  remove(){}
-
+  remove(key: string, filePath: string){
+    this.estabelecimentoService.remove(key, filePath);
+    this.toast.showSuccess('Estabelecimento removido com sucesso');
+  }
 }

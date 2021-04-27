@@ -23,6 +23,6 @@ export class CategoriasListaPage implements OnInit {
 
   remove(key: string, filePath: string){
     this.categoriasService.remove(key, filePath);
-    this.toast.showSuccess('Categoria removida')
+    this.toast.showSuccess('Categoria removida');
   }
 }

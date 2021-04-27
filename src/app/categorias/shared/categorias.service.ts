@@ -51,45 +51,6 @@ export class CategoriasService {
     });
    }
 
-  // insert(categoria: any){
-  //   return this.save(categoria, null);
-  // }
-  //
-  // update(categoria: any, key: string){
-  //   return this.save(categoria, key);
-  // }
-  //
-  // private save(categoria: any, key: string){
-  //   return new Promise((resolve, reject) => {
-  //     const categoriaRef = {
-  //       nome: categoria.nome
-  //     }
-  //
-  //     if (key) {
-  //       this.categoriasRef.update(key, categoriaRef)
-  //         .then(() => resolve(key))
-  //         .catch(() => reject());
-  //     } else {
-  //       this.categoriasRef.push(categoriaRef)
-  //         .then((result: any) => resolve(result.key));
-  //     }
-  //   });
-  // }
-
-  // updateSubcategoriasByCategoria(updateObj: any, categoria: any, key: string){
-  //   const subcribe = this.getSubcategoriaByCategoria(key).subcribe(subcategorias => {
-  //     subcribe.unsubscribe();
-  //
-  //     subcategorias.forEach(subcategoria => {
-  //       const pathSubategoria = `${FirebasePath.SUBCATEGORIAS}${subcategoria.key}/subcategoriaNome`;
-  //       updateObj[pathSubategoria] = categoria.nome;
-  //     });
-  //
-  //     this.db.object('/').update(updateObj);
-  //   });
-  // }
-
-
   getSubcategoriaByCategoria(key: string){
     return this.db.list(FirebasePath.SUBCATEGORIAS, q => q.orderByChild('categoriaKey').equalTo(key))
       .snapshotChanges()
@@ -98,26 +59,6 @@ export class CategoriasService {
           return changes.map(m => ({ key: m.key }));
         })
       );
-  }
-
-
-
-
-  private save(categoria: any, key: string){
-    return new Promise((resolve, reject) => {
-      const categoriaRef = {
-        nome: categoria.nome
-      }
-
-      if (key) {
-        this.categoriasRef.update(key, categoriaRef)
-          .then(() => resolve(key))
-          .catch(() => reject());
-      } else {
-        this.categoriasRef.push(categoriaRef)
-          .then((result: any) => resolve(result.key));
-      }
-    });
   }
 
   getAll() {
