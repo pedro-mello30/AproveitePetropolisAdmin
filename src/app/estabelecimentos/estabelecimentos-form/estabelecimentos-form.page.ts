@@ -156,8 +156,11 @@ export class EstabelecimentosFormPage implements OnInit {
     this.subcategorias =  this.subcategoriaService.getByCategoriaKey(categoriaKey);
   }
 
-  setSubcategoriaNome(event: any){
-
+  setSubcategoriaNome(subcategoriaKey: any){
+    const subcateg = this.categoriaService.getByKey(subcategoriaKey).subscribe((subcategoria: any) => {
+      subcateg.unsubscribe();
+      this.categoriaNome.setValue(subcategoria.nome);
+    });
   }
 
 
