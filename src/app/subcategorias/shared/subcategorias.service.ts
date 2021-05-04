@@ -62,6 +62,18 @@ export class SubcategoriasService {
     );
   }
 
+  getByCategoriaKey(categoriaKey: string){
+    const subcategoriasRef = this.db.list(FirebasePath.SUBCATEGORIAS, query => query
+      .orderByChild('categoriaKey')
+      .equalTo(categoriaKey));
+
+    return subcategoriasRef.snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.payload.key, ...m.payload.val() as {} }));
+      })
+    );
+  }
+
   remove(key: string, filePath: string){
     this.subcategoriasRef.remove(key);
     if(filePath)

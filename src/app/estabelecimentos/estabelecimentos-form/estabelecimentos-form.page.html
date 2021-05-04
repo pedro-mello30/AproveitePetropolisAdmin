@@ -11,8 +11,8 @@
         <form [formGroup]="formEstabelecimento" (ngSubmit)="onSubmit()">
           <ion-item *ngIf="logoUrl ==''">
             <!--            <ion-label position="stacked">Foto</ion-label>-->
-            <ion-button color="primary" (click)="imagemInput.click()">Adicionar Logo</ion-button>
-            <input type="file" #imagemInput formControlName="logo" (change)="uploadLogo($event)">
+            <ion-button color="primary" (click)="logoInput.click()">Adicionar Logo</ion-button>
+            <input type="file" #logoInput formControlName="logo" (change)="uploadLogo($event)">
           </ion-item>
 
           <ion-item *ngIf="logoUrl !=''">
@@ -36,7 +36,7 @@
             </ion-select>
           </ion-item>
 
-          <ion-item>
+          <ion-item *ngIf="(subcategorias | async)?.length > 0">
             <ion-label position="stacked">Subcategoria</ion-label>
 
             <ion-select placeholder="Escolher" formControlName="subcategoriaKey" (ionChange)="setSubcategoriaNome($event.target.value)">
@@ -49,6 +49,19 @@
 <!--            <ion-checkbox slot="end" formControlName="formaPagamento"></ion-checkbox>-->
 <!--          </ion-item>-->
 
+          <ion-item>
+            <!--            <ion-label position="stacked">Foto</ion-label>-->
+            <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
+            <input type="file" #imagemInput formControlName="imagem" (change)="uploadImagem($event)">
+          </ion-item>
+
+          <ion-item *ngFor="let file of filesUrl">
+
+            <ion-thumbnail slot="start">
+              <img [src]="file">
+            </ion-thumbnail>
+            <ion-button color="danger" (click)="removeImagem()">Remover Imagem</ion-button>
+          </ion-item>
 
 
 

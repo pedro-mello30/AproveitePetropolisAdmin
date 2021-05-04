@@ -6,6 +6,8 @@ import {CategoriasService} from '../../categorias/shared/categorias.service';
 import {ToastService} from '../../core/services/toast.service';
 import {EstabelecimentosService} from '../shared/estabelecimentos.service';
 import {Observable} from 'rxjs';
+import {SubcategoriasService} from '../../subcategorias/shared/subcategorias.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-estabelecimentos-form',
@@ -23,7 +25,9 @@ export class EstabelecimentosFormPage implements OnInit {
   logoUrl: string = '';
   fileLogoPath: string = '';
 
-
+  private files: File[] = null;
+  filesUrl: string[];
+  filesPath: string[];
 
 
   categorias: Observable<any[]>;
@@ -42,13 +46,13 @@ export class EstabelecimentosFormPage implements OnInit {
     private router: Router,
     private estabelecimentosService: EstabelecimentosService,
     private categoriaService: CategoriasService,
+    private subcategoriaService: SubcategoriasService,
     private toast: ToastService
   ) { }
 
   ngOnInit() {
     this.criarFormulario();
     this.categorias = this.categoriaService.getAll();
-    this.subcategorias = this.categoriaService.getAll();
 
     const key = this.route.snapshot.paramMap.get('key');
     if (key){
@@ -73,13 +77,21 @@ export class EstabelecimentosFormPage implements OnInit {
 
   get nome() { return this.formEstabelecimento.get('nome'); }
   get logo() { return this.formEstabelecimento.get('logo'); }
+  get imagem() { return this.formEstabelecimento.get('imagem'); }
+  get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
+  get categoriaNome() { return this.formEstabelecimento.get('categoriaNome'); }
+  get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
+  get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
 
   criarFormulario(){
     this.formEstabelecimento = this.formBuilder.group({
       nome: [''],
       logo: [''],
       categoriaKey: [''],
+      categoriaNome: [''],
       subcategoriaKey: [''],
+      subcategoriaNome: [''],
+      imagem: [''],
       // formaPagamento: ['']
     });
 
@@ -110,8 +122,38 @@ export class EstabelecimentosFormPage implements OnInit {
     this.fileLogoPath = '';
   }
 
-  setCategoriaNome(event: any){
+  uploadImagem(event: any){
+    if (event.target.files.length){
+      this.fileLogo = event.target.files[0];
+      this.formEstabelecimento.get('logo').updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.logoUrl = reader.result.toString();
+      };
+      reader.readAsDataURL(this.fileLogo);
+    }else{
+      this.fileLogo = null;
+    }
+  }
 
+  removeImagem(){
+    if (this.key) this.estabelecimentosService.removeLogo(this.fileLogoPath, this.key);
+
+    this.logoUrl = '';
+    this.fileLogoPath = '';
+  }
+
+
+  setCategoriaNome(categoriaKey: string){
+    const categ = this.categoriaService.getByKey(categoriaKey).subscribe((categoria: any) => {
+      categ.unsubscribe();
+      this.setSubcategoriasByCategoria(categoriaKey);
+      this.categoriaNome.setValue(categoria.nome);
+    });
+  }
+
+  setSubcategoriasByCategoria(categoriaKey: string){
+    this.subcategorias =  this.subcategoriaService.getByCategoriaKey(categoriaKey);
   }
 
   setSubcategoriaNome(event: any){
