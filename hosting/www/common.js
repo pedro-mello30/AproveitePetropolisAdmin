@@ -56,6 +56,98 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ "7OnO":
+/*!*********************************************************************!*\
+  !*** ./src/app/estabelecimentos/shared/estabelecimentos.service.ts ***!
+  \*********************************************************************/
+/*! exports provided: EstabelecimentosService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EstabelecimentosService", function() { return EstabelecimentosService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/database */ "sSZD");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/storage */ "Vaw3");
+/* harmony import */ var _core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../core/shared/firebase-path */ "Fpbh");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+
+
+
+
+
+
+let EstabelecimentosService = class EstabelecimentosService {
+    constructor(db, storage) {
+        this.db = db;
+        this.storage = storage;
+        this.estabelecimentosRef = this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].ESTABELECIMENTOS);
+    }
+    getAll() {
+        return this.estabelecimentosRef.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {
+            return changes.map(m => (Object.assign({ key: m.payload.key }, m.payload.val())));
+        }));
+    }
+    getByKey(key) {
+        const path = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].ESTABELECIMENTOS}${key}`;
+        return this.db.object(path).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(change => {
+            return Object.assign({ key: change.payload.key }, change.payload.val());
+        }));
+    }
+    insert(estabelecimento) {
+        return new Promise(resolve => {
+            this.estabelecimentosRef.push(estabelecimento)
+                .then((result) => resolve(result.key));
+        });
+    }
+    update(key, estabelecimento) {
+        return new Promise((resolve, reject) => {
+            const estabelecimentoObj = {
+                nome: estabelecimento.nome
+            };
+            this.estabelecimentosRef.update(key, estabelecimentoObj)
+                .then(() => resolve(key))
+                .catch(() => reject());
+        });
+    }
+    remove(key, filePath) {
+        return this.estabelecimentosRef.remove(key);
+        if (filePath)
+            this.removeLogo(filePath, key, false);
+    }
+    uploadLogo(key, file) {
+        const filePath = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].ESTABELECIMENTOS}${key}/${file.name}`;
+        const ref = this.storage.ref(filePath);
+        const task = ref.put(file);
+        task.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(() => {
+            ref.getDownloadURL().subscribe((url => {
+                this.estabelecimentosRef.update(key, { imagem: url, filePath: filePath });
+            }));
+        })).subscribe();
+    }
+    removeLogo(filePath, key, atualizarEstabelecimento = true) {
+        const ref = this.storage.ref(filePath);
+        ref.delete();
+        if (atualizarEstabelecimento) {
+            this.estabelecimentosRef.update(key, { imagem: '', filePath: '' });
+        }
+    }
+};
+EstabelecimentosService.ctorParameters = () => [
+    { type: _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__["AngularFireDatabase"] },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_3__["AngularFireStorage"] }
+];
+EstabelecimentosService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], EstabelecimentosService);
+
+
+
+/***/ }),
+
 /***/ "Fpbh":
 /*!**********************************************!*\
   !*** ./src/app/core/shared/firebase-path.ts ***!
@@ -71,6 +163,8 @@ class FirebasePath {
 FirebasePath.CATEGORIAS = 'categorias/';
 FirebasePath.SUBCATEGORIAS = 'subcategorias/';
 FirebasePath.USUARIOS = 'usuarios/';
+FirebasePath.ESTABELECIMENTOS = 'estabelecimentos/';
+FirebasePath.ESTABELECIMENTOS_IMAGENS = 'estabelecimentos_imagens/';
 
 
 /***/ }),
@@ -609,64 +703,12 @@ let CategoriasService = class CategoriasService {
                 .catch(() => reject());
         });
     }
-    // insert(categoria: any){
-    //   return this.save(categoria, null);
-    // }
-    //
-    // update(categoria: any, key: string){
-    //   return this.save(categoria, key);
-    // }
-    //
-    // private save(categoria: any, key: string){
-    //   return new Promise((resolve, reject) => {
-    //     const categoriaRef = {
-    //       nome: categoria.nome
-    //     }
-    //
-    //     if (key) {
-    //       this.categoriasRef.update(key, categoriaRef)
-    //         .then(() => resolve(key))
-    //         .catch(() => reject());
-    //     } else {
-    //       this.categoriasRef.push(categoriaRef)
-    //         .then((result: any) => resolve(result.key));
-    //     }
-    //   });
-    // }
-    // updateSubcategoriasByCategoria(updateObj: any, categoria: any, key: string){
-    //   const subcribe = this.getSubcategoriaByCategoria(key).subcribe(subcategorias => {
-    //     subcribe.unsubscribe();
-    //
-    //     subcategorias.forEach(subcategoria => {
-    //       const pathSubategoria = `${FirebasePath.SUBCATEGORIAS}${subcategoria.key}/subcategoriaNome`;
-    //       updateObj[pathSubategoria] = categoria.nome;
-    //     });
-    //
-    //     this.db.object('/').update(updateObj);
-    //   });
-    // }
     getSubcategoriaByCategoria(key) {
         return this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS, q => q.orderByChild('categoriaKey').equalTo(key))
             .snapshotChanges()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {
             return changes.map(m => ({ key: m.key }));
         }));
-    }
-    save(categoria, key) {
-        return new Promise((resolve, reject) => {
-            const categoriaRef = {
-                nome: categoria.nome
-            };
-            if (key) {
-                this.categoriasRef.update(key, categoriaRef)
-                    .then(() => resolve(key))
-                    .catch(() => reject());
-            }
-            else {
-                this.categoriasRef.push(categoriaRef)
-                    .then((result) => resolve(result.key));
-            }
-        });
     }
     getAll() {
         return this.categoriasRef.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {

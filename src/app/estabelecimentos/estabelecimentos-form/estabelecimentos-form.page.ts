@@ -17,9 +17,14 @@ export class EstabelecimentosFormPage implements OnInit {
   public title = 'Novo Estabelecimento';
   formEstabelecimento: FormGroup;
   key: string;
-  private file: File = null;
-  imagemUrl: string = '';
-  filePath: string = '';
+
+
+  private fileLogo: File = null;
+  logoUrl: string = '';
+  fileLogoPath: string = '';
+
+
+
 
   categorias: Observable<any[]>;
   subcategorias: Observable<any[]>;
@@ -54,55 +59,55 @@ export class EstabelecimentosFormPage implements OnInit {
         this.key = estabelecimento.key;
         this.formEstabelecimento.setValue({
           nome: estabelecimento.nome,
-          imagem: '',
+          logo: '',
           categoriaKey: estabelecimento.categoriaKey,
           subcategoriaKey: estabelecimento.subcategoriaKey,
           // formaPagamento: estabelecimento.formaPagamento
         });
 
-        this.imagemUrl = estabelecimento.imagem || '';
-        this.filePath = estabelecimento.filePath || '';
+        this.logoUrl = estabelecimento.imagem || '';
+        this.fileLogoPath = estabelecimento.filePath || '';
       });
     }
   }
 
   get nome() { return this.formEstabelecimento.get('nome'); }
-  get imagem() { return this.formEstabelecimento.get('imagem'); }
+  get logo() { return this.formEstabelecimento.get('logo'); }
 
   criarFormulario(){
     this.formEstabelecimento = this.formBuilder.group({
       nome: [''],
-      imagem: [''],
+      logo: [''],
       categoriaKey: [''],
       subcategoriaKey: [''],
       // formaPagamento: ['']
     });
 
-    this.file = null;
-    this.imagemUrl = '';
-    this.filePath = '';
+    this.fileLogo = null;
+    this.logoUrl = '';
+    this.fileLogoPath = '';
   }
 
 
-  uploadImagem(event: any){
+  uploadLogo(event: any){
     if (event.target.files.length){
-      this.file = event.target.files[0];
-      this.formEstabelecimento.get('imagem').updateValueAndValidity();
+      this.fileLogo = event.target.files[0];
+      this.formEstabelecimento.get('logo').updateValueAndValidity();
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagemUrl = reader.result.toString();
+        this.logoUrl = reader.result.toString();
       };
-      reader.readAsDataURL(this.file);
+      reader.readAsDataURL(this.fileLogo);
     }else{
-      this.file = null;
+      this.fileLogo = null;
     }
   }
 
-  removeImagem(){
-    if (this.key) this.estabelecimentosService.removeImg(this.filePath, this.key);
+  removeLogo(){
+    if (this.key) this.estabelecimentosService.removeLogo(this.fileLogoPath, this.key);
 
-    this.imagemUrl = '';
-    this.filePath = '';
+    this.logoUrl = '';
+    this.fileLogoPath = '';
   }
 
   setCategoriaNome(event: any){
@@ -124,9 +129,9 @@ export class EstabelecimentosFormPage implements OnInit {
         result = this.estabelecimentosService.insert(this.formEstabelecimento.value);
       }
 
-      if (this.file) {
+      if (this.fileLogo) {
         result.then((key: string) => {
-          this.estabelecimentosService.uploadImg(key, this.file);
+          this.estabelecimentosService.uploadLogo(key, this.fileLogo);
           this.criarFormulario();
         });
       } else {

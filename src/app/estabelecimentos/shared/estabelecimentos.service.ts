@@ -57,10 +57,10 @@ export class EstabelecimentosService {
   remove(key: string, filePath: string){
     return this.estabelecimentosRef.remove(key);
     if(filePath)
-      this.removeImg(filePath, key, false);
+      this.removeLogo(filePath, key, false);
   }
 
-  uploadImg(key: string, file: File){
+  uploadLogo(key: string, file: File){
     const filePath = `${FirebasePath.ESTABELECIMENTOS}${key}/${file.name}`;
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
@@ -73,7 +73,7 @@ export class EstabelecimentosService {
     ).subscribe();
   }
 
-  removeImg(filePath: string, key: string, atualizarEstabelecimento: boolean = true) {
+  removeLogo(filePath: string, key: string, atualizarEstabelecimento: boolean = true) {
     const ref = this.storage.ref(filePath);
     ref.delete();
     if (atualizarEstabelecimento){

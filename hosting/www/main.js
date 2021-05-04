@@ -1425,13 +1425,13 @@ const routes = [
                 loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./usuarios/usuarios-form/usuarios-form.module */ "XbNj")).then(m => m.UsuariosFormPageModule)
             },
             { path: 'estabelecimentos',
-                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-lista-estabelecimentos-lista-module */ "estabelecimentos-estabelecimentos-lista-estabelecimentos-lista-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-lista/estabelecimentos-lista.module */ "37aK")).then(m => m.EstabelecimentosListaPageModule)
+                loadChildren: () => Promise.all(/*! import() | estabelecimentos-estabelecimentos-lista-estabelecimentos-lista-module */[__webpack_require__.e("common"), __webpack_require__.e("estabelecimentos-estabelecimentos-lista-estabelecimentos-lista-module")]).then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-lista/estabelecimentos-lista.module */ "37aK")).then(m => m.EstabelecimentosListaPageModule)
             },
             { path: 'estabelecimentos/novo',
-                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-form-estabelecimentos-form-module */ "estabelecimentos-estabelecimentos-form-estabelecimentos-form-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-form/estabelecimentos-form.module */ "Fwdu")).then(m => m.EstabelecimentosFormPageModule)
+                loadChildren: () => Promise.all(/*! import() | estabelecimentos-estabelecimentos-form-estabelecimentos-form-module */[__webpack_require__.e("common"), __webpack_require__.e("estabelecimentos-estabelecimentos-form-estabelecimentos-form-module")]).then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-form/estabelecimentos-form.module */ "Fwdu")).then(m => m.EstabelecimentosFormPageModule)
             },
             { path: 'estabelecimentos/editar/:key',
-                loadChildren: () => __webpack_require__.e(/*! import() | estabelecimentos-estabelecimentos-form-estabelecimentos-form-module */ "estabelecimentos-estabelecimentos-form-estabelecimentos-form-module").then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-form/estabelecimentos-form.module */ "Fwdu")).then(m => m.EstabelecimentosFormPageModule)
+                loadChildren: () => Promise.all(/*! import() | estabelecimentos-estabelecimentos-form-estabelecimentos-form-module */[__webpack_require__.e("common"), __webpack_require__.e("estabelecimentos-estabelecimentos-form-estabelecimentos-form-module")]).then(__webpack_require__.bind(null, /*! ./estabelecimentos/estabelecimentos-form/estabelecimentos-form.module */ "Fwdu")).then(m => m.EstabelecimentosFormPageModule)
             },
             { path: 'categorias',
                 loadChildren: () => Promise.all(/*! import() | categorias-categorias-lista-categorias-lista-module */[__webpack_require__.e("common"), __webpack_require__.e("categorias-categorias-lista-categorias-lista-module")]).then(__webpack_require__.bind(null, /*! ./categorias/categorias-lista/categorias-lista.module */ "iJ+R")).then(m => m.CategoriasListaPageModule)

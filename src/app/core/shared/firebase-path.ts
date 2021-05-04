@@ -3,4 +3,5 @@ export class FirebasePath {
   public static SUBCATEGORIAS: string = 'subcategorias/';
   public static USUARIOS: string = 'usuarios/';
   public static ESTABELECIMENTOS: string = 'estabelecimentos/';
+  public static ESTABELECIMENTOS_IMAGENS: string = 'estabelecimentos_imagens/';
 }

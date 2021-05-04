@@ -9,18 +9,18 @@
     <ion-row>
       <ion-col>
         <form [formGroup]="formEstabelecimento" (ngSubmit)="onSubmit()">
-          <ion-item *ngIf="imagemUrl ==''">
+          <ion-item *ngIf="logoUrl ==''">
             <!--            <ion-label position="stacked">Foto</ion-label>-->
             <ion-button color="primary" (click)="imagemInput.click()">Adicionar Logo</ion-button>
-            <input type="file" #imagemInput formControlName="imagem" (change)="uploadImagem($event)">
+            <input type="file" #imagemInput formControlName="logo" (change)="uploadLogo($event)">
           </ion-item>
 
-          <ion-item *ngIf="imagemUrl !=''">
+          <ion-item *ngIf="logoUrl !=''">
 
             <ion-thumbnail slot="start">
-              <img [src]="imagemUrl">
+              <img [src]="logoUrl">
             </ion-thumbnail>
-            <ion-button color="danger" (click)="removeImagem()">Remover Imagem</ion-button>
+            <ion-button color="danger" (click)="removeLogo()">Remover Logo</ion-button>
           </ion-item>
 
           <ion-item>

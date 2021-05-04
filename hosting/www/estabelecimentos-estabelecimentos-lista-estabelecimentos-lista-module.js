@@ -56,19 +56,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_estabelecimentos_lista_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./estabelecimentos-lista.page.html */ "iTzk");
 /* harmony import */ var _estabelecimentos_lista_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./estabelecimentos-lista.page.scss */ "OCN3");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _shared_estabelecimentos_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/estabelecimentos.service */ "7OnO");
+/* harmony import */ var _core_services_toast_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../core/services/toast.service */ "Olgc");
+
+
 
 
 
 
 let EstabelecimentosListaPage = class EstabelecimentosListaPage {
-    constructor() {
-        this.estabelecimentos = [{ nome: 'estabelecimentos' }];
+    constructor(estabelecimentoService, toast) {
+        this.estabelecimentoService = estabelecimentoService;
+        this.toast = toast;
     }
     ngOnInit() {
+        this.estabelecimentos = this.estabelecimentoService.getAll();
     }
-    remove() { }
+    remove(key, filePath) {
+        this.estabelecimentoService.remove(key, filePath);
+        this.toast.showSuccess('Estabelecimento removido com sucesso');
+    }
 };
-EstabelecimentosListaPage.ctorParameters = () => [];
+EstabelecimentosListaPage.ctorParameters = () => [
+    { type: _shared_estabelecimentos_service__WEBPACK_IMPORTED_MODULE_4__["EstabelecimentosService"] },
+    { type: _core_services_toast_service__WEBPACK_IMPORTED_MODULE_5__["ToastService"] }
+];
 EstabelecimentosListaPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
         selector: 'app-estabelecimentos-lista',
@@ -140,7 +152,7 @@ EstabelecimentosListaPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Estabelecimento</ion-title>\n    <ion-button slot=\"end\" class=\"ion-margin-end\" [routerLink]=\"['/estabelecimentos/novo']\">Novo</ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <div *ngIf=\"estabelecimentos.length == 0\" class=\"alert alert-warning\" role=\"alert\">\n          Nenhuma estabelecimento cadastrada.\n        </div>\n        <div *ngIf=\"estabelecimentos.length > 0\">\n          <ion-item *ngFor=\"let estabelecimento of estabelecimentos\">\n            <ion-label>{{estabelecimento.nome}}</ion-label>\n            <ion-button slot=\"end\" color=\"primary\" [routerLink]=\"['/estabelecimentos/editar/', estabelecimento._id]\">\n              <ion-icon slot=\"start\" ios=\"create-outline\" md=\"create-outline\"></ion-icon>\n              Editar\n            </ion-button>\n            <ion-button slot=\"end\" color=\"danger\" (click)=\"remove()\">\n              <ion-icon slot=\"start\" name=\"trash-outline\"></ion-icon>\n              Excluir\n            </ion-button>\n          </ion-item>\n\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Estabelecimento</ion-title>\n    <ion-button slot=\"end\" class=\"ion-margin-end\" [routerLink]=\"['/estabelecimentos/novo']\">Novo</ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <ion-item *ngFor=\"let estabelecimento of estabelecimentos | async\">\n          <ion-thumbnail slot=\"start\">\n            <img src=\"{{estabelecimento.imagem}}\">\n          </ion-thumbnail>\n          <ion-label>\n            <h2>{{estabelecimento.nome}}</h2>\n            <h3>{{ estabelecimento.categoriaNome - estabelecimento.subcategoriaNome }}</h3>\n          </ion-label>\n          <ion-button slot=\"end\" color=\"primary\" [routerLink]=\"['/estabelecimentos/editar/', estabelecimento.key]\">\n            <ion-icon slot=\"start\" ios=\"create-outline\" md=\"create-outline\"></ion-icon>\n            Editar\n          </ion-button>\n          <ion-button slot=\"end\" color=\"danger\" (click)=\"remove(estabelecimento.key, estabelecimento.filePath)\">\n            <ion-icon slot=\"start\" name=\"trash-outline\"></ion-icon>\n            Excluir\n          </ion-button>\n        </ion-item>\n\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ })
 
