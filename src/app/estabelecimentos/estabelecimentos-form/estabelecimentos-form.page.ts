@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UsuarioAuthService} from '../../login/shared/usuario-auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CategoriasService} from '../../categorias/shared/categorias.service';
@@ -33,12 +33,22 @@ export class EstabelecimentosFormPage implements OnInit {
   categorias: Observable<any[]>;
   subcategorias: Observable<any[]>;
   formaPagamentos = [
-    {nome: 'dinheiro', value: 0},
-    {nome: 'dinheiro', value: 0},
-    {nome: 'dinheiro', value: 0},
-    {nome: 'dinheiro', value: 0},
-    {nome: 'dinheiro', value: 0},
+    {nome: 'Dinheiro', value: 0},
+    {nome: 'Cartão de crédito', value: 0},
+    {nome: 'Cartão de débito', value: 0},
+    {nome: 'Ticket', value: 0},
+    {nome: 'Pix', value: 0},
     ];
+
+  dias = [
+    {nome: 'Segunda-feira', value: 0},
+    {nome: 'Terça-feira', value: 0},
+    {nome: 'Quarta-feira', value: 0},
+    {nome: 'Quinta-feira', value: 0},
+    {nome: 'Sexta-feira', value: 0},
+    {nome: 'Sábado', value: 0},
+    {nome: 'Domingo', value: 0},
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,9 +74,26 @@ export class EstabelecimentosFormPage implements OnInit {
         this.formEstabelecimento.setValue({
           nome: estabelecimento.nome,
           logo: '',
+
           categoriaKey: estabelecimento.categoriaKey,
           subcategoriaKey: estabelecimento.subcategoriaKey,
-          // formaPagamento: estabelecimento.formaPagamento
+
+          cnpj: estabelecimento.cnpj,
+
+          telefone: estabelecimento.telefone,
+          email: estabelecimento.email,
+          site: estabelecimento.site,
+          facebook: estabelecimento.facebook,
+          instagram: estabelecimento.instagram,
+
+          cep: estabelecimento.cep,
+          estado: estabelecimento.estado,
+          cidade: estabelecimento.cidade,
+          rua: estabelecimento.rua,
+          numero: estabelecimento.numero,
+          complemento: estabelecimento.complemento,
+
+          formaPagamento: estabelecimento.formaPagamento
         });
 
         this.logoUrl = estabelecimento.imagem || '';
@@ -77,11 +104,27 @@ export class EstabelecimentosFormPage implements OnInit {
 
   get nome() { return this.formEstabelecimento.get('nome'); }
   get logo() { return this.formEstabelecimento.get('logo'); }
-  get imagem() { return this.formEstabelecimento.get('imagem'); }
   get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
   get categoriaNome() { return this.formEstabelecimento.get('categoriaNome'); }
   get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
   get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
+  get cnpj() { return this.formEstabelecimento.get('cnpj'); }
+  get telefone() { return this.formEstabelecimento.get('telefone'); }
+  get email() { return this.formEstabelecimento.get('email'); }
+  get site() { return this.formEstabelecimento.get('site'); }
+  get facebook() { return this.formEstabelecimento.get('facebook'); }
+  get instagram() { return this.formEstabelecimento.get('instagram'); }
+  get cep() { return this.formEstabelecimento.get('cep'); }
+  get estado() { return this.formEstabelecimento.get('estado'); }
+  get cidade() { return this.formEstabelecimento.get('cidade'); }
+  get rua() { return this.formEstabelecimento.get('rua'); }
+  get numero() { return this.formEstabelecimento.get('numero'); }
+  get complemento() { return this.formEstabelecimento.get('complemento'); }
+
+
+
+  get formasPagamento() { return this.formEstabelecimento.get('formasPagamento') as FormArray; }
+  get imagens() { return this.formEstabelecimento.get('imagens') as FormArray; }
 
   criarFormulario(){
     this.formEstabelecimento = this.formBuilder.group({
@@ -91,8 +134,32 @@ export class EstabelecimentosFormPage implements OnInit {
       categoriaNome: [''],
       subcategoriaKey: [''],
       subcategoriaNome: [''],
-      imagem: [''],
-      // formaPagamento: ['']
+      cnpj: [''],
+      contato: this.formBuilder.group({
+        telefone: [''],
+        // email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+        email: [''],
+        site: [''],
+        facebook: [''],
+        instagram: [''],
+      }),
+      endereco: this.formBuilder.group({
+        cep: [''],
+        estado: [''],
+        cidade: [''],
+        rua: [''],
+        numero: [''],
+        complemento: ['']
+      }),
+      imagens: this.formBuilder.array([
+        this.formBuilder.control('')
+      ]),
+      formasPagamento: this.formBuilder.array([
+        this.formBuilder.control('')
+      ]),
+      horario: this.formBuilder.array([
+        this.formBuilder.control('')
+      ]),
     });
 
     this.fileLogo = null;
@@ -100,6 +167,23 @@ export class EstabelecimentosFormPage implements OnInit {
     this.fileLogoPath = '';
   }
 
+  onCheckHorarioChange(event) {
+    const formArray: FormArray = this.formEstabelecimento.get('formasPagamento') as FormArray;
+
+    if (event.target.checked) {
+      formArray.push(this.formBuilder.control(event.target.value));
+    }else{
+      let i = 0;
+
+      formArray.controls.forEach((ctrl: FormControl) => {
+        if(ctrl.value === event.target.value) {
+          formArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
 
   uploadLogo(event: any){
     if (event.target.files.length){
@@ -159,7 +243,7 @@ export class EstabelecimentosFormPage implements OnInit {
   setSubcategoriaNome(subcategoriaKey: any){
     const subcateg = this.categoriaService.getByKey(subcategoriaKey).subscribe((subcategoria: any) => {
       subcateg.unsubscribe();
-      this.categoriaNome.setValue(subcategoria.nome);
+      this.subcategoriaNome.setValue(subcategoria.nome);
     });
   }
 
@@ -171,6 +255,7 @@ export class EstabelecimentosFormPage implements OnInit {
       if (this.key) {
         result = this.estabelecimentosService.update(this.formEstabelecimento.value, this.key);
       } else {
+        console.log(this.formEstabelecimento.value);
         result = this.estabelecimentosService.insert(this.formEstabelecimento.value);
       }
 

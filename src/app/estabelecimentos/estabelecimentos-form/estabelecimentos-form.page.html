@@ -9,51 +9,142 @@
     <ion-row>
       <ion-col>
         <form [formGroup]="formEstabelecimento" (ngSubmit)="onSubmit()">
-          <ion-item *ngIf="logoUrl ==''">
-            <!--            <ion-label position="stacked">Foto</ion-label>-->
-            <ion-button color="primary" (click)="logoInput.click()">Adicionar Logo</ion-button>
-            <input type="file" #logoInput formControlName="logo" (change)="uploadLogo($event)">
-          </ion-item>
 
-          <ion-item *ngIf="logoUrl !=''">
+          <ion-list>
+            <ion-list-header>Informações do Estabelecimento</ion-list-header>
+            <ion-item *ngIf="logoUrl ==''">
+<!--              <ion-label position="stacked">Foto</ion-label>-->
+              <ion-button color="primary" (click)="logoInput.click()">Adicionar Logo</ion-button>
+              <input type="file" #logoInput formControlName="logo" (change)="uploadLogo($event)">
+            </ion-item>
 
-            <ion-thumbnail slot="start">
-              <img [src]="logoUrl">
-            </ion-thumbnail>
-            <ion-button color="danger" (click)="removeLogo()">Remover Logo</ion-button>
-          </ion-item>
+            <ion-item *ngIf="logoUrl !=''">
 
-          <ion-item>
-            <ion-label position="stacked">Nome</ion-label>
-            <ion-input type="text" formControlName="nome"></ion-input>
-          </ion-item>
+              <ion-thumbnail slot="start">
+                <img [src]="logoUrl">
+              </ion-thumbnail>
+              <ion-button color="danger" (click)="removeLogo()">Remover Logo</ion-button>
+            </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Categoria</ion-label>
+            <ion-item>
+              <ion-label position="stacked">Nome</ion-label>
+              <ion-input type="text" formControlName="nome"></ion-input>
+            </ion-item>
 
-            <ion-select placeholder="Escolher" formControlName="categoriaKey" (ionChange)="setCategoriaNome($event.target.value)">
-              <ion-select-option *ngFor="let categoria of categorias | async" value="{{categoria.key}}" selected-text="{{categoria.nome}}">{{categoria.nome}}</ion-select-option>
-            </ion-select>
-          </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Categoria</ion-label>
 
-          <ion-item *ngIf="(subcategorias | async)?.length > 0">
-            <ion-label position="stacked">Subcategoria</ion-label>
+              <ion-select placeholder="Escolher" formControlName="categoriaKey" (ionChange)="setCategoriaNome($event.target.value)">
+                <ion-select-option *ngFor="let categoria of categorias | async" value="{{categoria.key}}" selected-text="{{categoria.nome}}">{{categoria.nome}}</ion-select-option>
+              </ion-select>
+            </ion-item>
 
-            <ion-select placeholder="Escolher" formControlName="subcategoriaKey" (ionChange)="setSubcategoriaNome($event.target.value)">
-              <ion-select-option *ngFor="let categoria of subcategorias | async" value="{{categoria.key}}" selected-text="{{categoria.nome}}">{{categoria.nome}}</ion-select-option>
-            </ion-select>
-          </ion-item>
+            <ion-item *ngIf="(subcategorias | async)?.length > 0">
+              <ion-label position="stacked">Subcategoria</ion-label>
 
-<!--          <ion-item *ngFor="let forma of formaPagamentos">-->
-<!--            <ion-label>{{forma.nome}}</ion-label>-->
-<!--            <ion-checkbox slot="end" formControlName="formaPagamento"></ion-checkbox>-->
-<!--          </ion-item>-->
+              <ion-select placeholder="Escolher" formControlName="subcategoriaKey" (ionChange)="setSubcategoriaNome($event.target.value)">
+                <ion-select-option *ngFor="let subcategoria of subcategorias | async" value="{{subcategoria.key}}" selected-text="{{subcategoria.nome}}">{{subcategoria.nome}}</ion-select-option>
+              </ion-select>
+            </ion-item>
 
-          <ion-item>
-            <!--            <ion-label position="stacked">Foto</ion-label>-->
-            <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
-            <input type="file" #imagemInput formControlName="imagem" (change)="uploadImagem($event)">
-          </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">CNPJ</ion-label>
+              <ion-input type="text" formControlName="cnpj"></ion-input>
+            </ion-item>
+          </ion-list>
+
+
+          <ion-list formGroupName="contato">
+            <ion-list-header>Contato</ion-list-header>
+            <ion-item>
+              <ion-label position="stacked">Telefone</ion-label>
+<!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+              <ion-input type="text" formControlName="telefone" mask="(000) 000-0000"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">E-mail</ion-label>
+              <ion-input type="text" formControlName="email"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Site</ion-label>
+              <ion-input type="text" formControlName="site"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Facebook</ion-label>
+              <ion-input type="text" formControlName="facebook"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Instagram</ion-label>
+              <ion-input type="text" formControlName="instagram"></ion-input>
+            </ion-item>
+          </ion-list>
+
+\
+
+          <ion-list  formGroupName="endereco">
+            <ion-list-header>Endereço</ion-list-header>
+            <ion-item>
+              <ion-label position="stacked">Cep</ion-label>
+              <ion-input type="text" formControlName="cep"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Estado</ion-label>
+              <ion-input type="text" formControlName="estado"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Cidade</ion-label>
+              <ion-input type="text" formControlName="cidade"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Rua</ion-label>
+              <ion-input type="text" formControlName="rua"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Numero</ion-label>
+              <ion-input type="text" formControlName="numero"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Complemento</ion-label>
+              <ion-input type="text" formControlName="complemento"></ion-input>
+            </ion-item>
+          </ion-list>
+
+          <ion-list formGroupName="formasPagamento">
+            <ion-list-header>Formas de Pagamento</ion-list-header>
+            <ion-item *ngFor="let forma of formaPagamentos">
+              <ion-label>{{forma.nome}}</ion-label>
+              <ion-checkbox slot="end" [value]="forma.value" (ionChange)="onCheckHorarioChange($event)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+
+          <ion-list formGroupName="horario">
+            <ion-list-header>Horário de funcionamento</ion-list-header>
+
+            <ion-item *ngFor="let dia of dias">
+              <ion-label>{{dia.nome}}</ion-label>
+              <ion-checkbox slot="end" [value]="dia.value" (ionChange)="onCheckHorarioChange($event)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+
+
+          <ion-list formGroupName="imagens">
+            <ion-list-header>Imagens</ion-list-header>
+
+            <ion-item *ngFor="let imagem of imagens.controls; let i=index">
+              <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
+              <input type="file" #imagemInput  (change)="uploadImagem($event)">
+            </ion-item>
+          </ion-list>
 
           <ion-item *ngFor="let file of filesUrl">
 
@@ -62,7 +153,6 @@
             </ion-thumbnail>
             <ion-button color="danger" (click)="removeImagem()">Remover Imagem</ion-button>
           </ion-item>
-
 
 
           <div margin-vertical>

@@ -8,10 +8,12 @@ import { EstabelecimentosFormPageRoutingModule } from './estabelecimentos-form-r
 
 import { EstabelecimentosFormPage } from './estabelecimentos-form.page';
 import {SharedModule} from '../../core/shared.module';
+import {NgxMaskModule} from 'ngx-mask';
 
 @NgModule({
   imports: [
     CommonModule,
+    NgxMaskModule,
     FormsModule,
     IonicModule,
     SharedModule,

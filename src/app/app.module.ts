@@ -19,6 +19,9 @@ import {UsuariosFormPageModule} from './usuarios/usuarios-form/usuarios-form.mod
 import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.module';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
+import {NgxMaskModule} from 'ngx-mask';
+
+
 
 @NgModule({
   declarations: [
@@ -35,12 +38,14 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
+    NgxMaskModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     UsuariosFormPageModule,
     UsuariosListaPageModule
+
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
