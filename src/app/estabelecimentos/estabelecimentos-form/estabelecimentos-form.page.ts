@@ -8,6 +8,8 @@ import {EstabelecimentosService} from '../shared/estabelecimentos.service';
 import {Observable} from 'rxjs';
 import {SubcategoriasService} from '../../subcategorias/shared/subcategorias.service';
 import {map} from 'rxjs/operators';
+import {EstabelecimentosEnderecosService} from '../shared/estabelecimentos-enderecos.service';
+import {EstabelecimentosImagensService} from '../shared/estabelecimentos-imagens.service';
 
 @Component({
   selector: 'app-estabelecimentos-form',
@@ -17,21 +19,19 @@ import {map} from 'rxjs/operators';
 export class EstabelecimentosFormPage implements OnInit {
 
   public title = 'Novo Estabelecimento';
-  formEstabelecimento: FormGroup;
-  key: string;
 
+  formEstabelecimento: FormGroup;
+  enderecos: FormArray;
+
+  key: string;
 
   private fileLogo: File = null;
   logoUrl: string = '';
   fileLogoPath: string = '';
 
-  private files: File[] = null;
-  filesUrl: string[];
-  filesPath: string[];
-
-
   categorias: Observable<any[]>;
   subcategorias: Observable<any[]>;
+
   formaPagamentos = [
     {nome: 'Dinheiro', value: 0},
     {nome: 'Cartão de crédito', value: 0},
@@ -50,11 +50,17 @@ export class EstabelecimentosFormPage implements OnInit {
     {nome: 'Domingo', value: 0},
   ];
 
+  private files: File[] = [];
+  filesUrl: string[] = [];
+  filesPath: string[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private estabelecimentosService: EstabelecimentosService,
+    private estabelecimentosImagensService: EstabelecimentosImagensService,
+    private estabelecimentosEnderecosService: EstabelecimentosEnderecosService,
     private categoriaService: CategoriasService,
     private subcategoriaService: SubcategoriasService,
     private toast: ToastService
@@ -103,27 +109,11 @@ export class EstabelecimentosFormPage implements OnInit {
   }
 
   get nome() { return this.formEstabelecimento.get('nome'); }
-  get logo() { return this.formEstabelecimento.get('logo'); }
-  get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
   get categoriaNome() { return this.formEstabelecimento.get('categoriaNome'); }
-  get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
+  get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
   get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
-  get cnpj() { return this.formEstabelecimento.get('cnpj'); }
-  get telefone() { return this.formEstabelecimento.get('telefone'); }
-  get email() { return this.formEstabelecimento.get('email'); }
-  get site() { return this.formEstabelecimento.get('site'); }
-  get facebook() { return this.formEstabelecimento.get('facebook'); }
-  get instagram() { return this.formEstabelecimento.get('instagram'); }
-  get cep() { return this.formEstabelecimento.get('cep'); }
-  get estado() { return this.formEstabelecimento.get('estado'); }
-  get cidade() { return this.formEstabelecimento.get('cidade'); }
-  get rua() { return this.formEstabelecimento.get('rua'); }
-  get numero() { return this.formEstabelecimento.get('numero'); }
-  get complemento() { return this.formEstabelecimento.get('complemento'); }
-
-
-
-  get formasPagamento() { return this.formEstabelecimento.get('formasPagamento') as FormArray; }
+  get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
+  get endereco() { return this.formEstabelecimento.get('endereco') as FormGroup; }
   get imagens() { return this.formEstabelecimento.get('imagens') as FormArray; }
 
   criarFormulario(){
@@ -143,17 +133,8 @@ export class EstabelecimentosFormPage implements OnInit {
         facebook: [''],
         instagram: [''],
       }),
-      endereco: this.formBuilder.group({
-        cep: [''],
-        estado: [''],
-        cidade: [''],
-        rua: [''],
-        numero: [''],
-        complemento: ['']
-      }),
-      imagens: this.formBuilder.array([
-        this.formBuilder.control('')
-      ]),
+      enderecos: this.formBuilder.array([ this.criarFormularioEndereco() ]),
+      imagens: this.formBuilder.array([ this.criarFormularioImagem() ]),
       formasPagamento: this.formBuilder.array([
         this.formBuilder.control('')
       ]),
@@ -167,22 +148,21 @@ export class EstabelecimentosFormPage implements OnInit {
     this.fileLogoPath = '';
   }
 
-  onCheckHorarioChange(event) {
-    const formArray: FormArray = this.formEstabelecimento.get('formasPagamento') as FormArray;
+  criarFormularioEndereco(): FormGroup{
+    return this.formBuilder.group({
+      cep: [''],
+      estado: [''],
+      cidade: [''],
+      rua: [''],
+      numero: [''],
+      complemento: ['']
+    });
+  }
 
-    if (event.target.checked) {
-      formArray.push(this.formBuilder.control(event.target.value));
-    }else{
-      let i = 0;
-
-      formArray.controls.forEach((ctrl: FormControl) => {
-        if(ctrl.value === event.target.value) {
-          formArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
+  criarFormularioImagem(): FormGroup{
+    return this.formBuilder.group({
+      imagem: ['']
+    });
   }
 
   uploadLogo(event: any){
@@ -206,28 +186,6 @@ export class EstabelecimentosFormPage implements OnInit {
     this.fileLogoPath = '';
   }
 
-  uploadImagem(event: any){
-    if (event.target.files.length){
-      this.fileLogo = event.target.files[0];
-      this.formEstabelecimento.get('logo').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.logoUrl = reader.result.toString();
-      };
-      reader.readAsDataURL(this.fileLogo);
-    }else{
-      this.fileLogo = null;
-    }
-  }
-
-  removeImagem(){
-    if (this.key) this.estabelecimentosService.removeLogo(this.fileLogoPath, this.key);
-
-    this.logoUrl = '';
-    this.fileLogoPath = '';
-  }
-
-
   setCategoriaNome(categoriaKey: string){
     const categ = this.categoriaService.getByKey(categoriaKey).subscribe((categoria: any) => {
       categ.unsubscribe();
@@ -247,17 +205,81 @@ export class EstabelecimentosFormPage implements OnInit {
     });
   }
 
+  addEndereco(){
+    this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
+    this.enderecos.push(this.criarFormularioEndereco());
+  }
+
+  removeEndereco(i: number){
+    this.enderecos.removeAt(i);
+  }
+
+  uploadImagem(event: any){
+    if (event.target.files.length){
+      this.files.push(event.target.files[0]);
+
+      this.formEstabelecimento.get('imagens').updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.filesUrl.push(reader.result.toString());
+      };
+      reader.readAsDataURL(this.files[this.files.length-1]);
+    }else{
+      // this.fileLogo = null;
+    }
+  }
+
+  removeImagem(i: number, key: string){
+    // if (this.key) this.estabelecimentosService.removeLogo(this.fileLogoPath, this.key);
+
+    this.filesUrl.splice(i, 1);
+    this.filesPath.splice(i, 1);
+  }
+
+
+
+
+
+
+
+
+  onCheckHorarioChange(event) {
+    const formArray: FormArray = this.formEstabelecimento.get('formasPagamento') as FormArray;
+
+    if (event.target.checked) {
+      formArray.push(this.formBuilder.control(event.target.value));
+    }else{
+      let i = 0;
+
+      formArray.controls.forEach((ctrl: FormControl) => {
+        if(ctrl.value === event.target.value) {
+          formArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
 
   onSubmit(){
     if (this.formEstabelecimento.valid){
       let result: Promise<{}>;
 
+      // const estabelecimentoObj = this.formEstabelecimento.value;
+      // estabelecimentoObj.contato
+
       if (this.key) {
         result = this.estabelecimentosService.update(this.formEstabelecimento.value, this.key);
       } else {
-        console.log(this.formEstabelecimento.value);
         result = this.estabelecimentosService.insert(this.formEstabelecimento.value);
       }
+
+      result.then((key: string) => {
+        const enderecoObj = this.formEstabelecimento.get('endereco').value;
+        enderecoObj.estabelecimentoKey = key;
+        this.estabelecimentosEnderecosService.insert(enderecoObj);
+      });
+
 
       if (this.fileLogo) {
         result.then((key: string) => {
@@ -267,6 +289,16 @@ export class EstabelecimentosFormPage implements OnInit {
       } else {
         this.criarFormulario();
       }
+
+      if (this.files.length) {
+        result.then((key: string) => {
+          this.files.forEach(file => this.estabelecimentosImagensService.insert(file));
+          this.criarFormulario();
+        });
+      } else {
+        this.criarFormulario();
+      }
+
       this.toast.showSuccess('Estabelecimento salvo');
       this.router.navigate(['/estabelecimentos']);
     }

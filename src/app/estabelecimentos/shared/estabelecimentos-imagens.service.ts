@@ -10,14 +10,14 @@ import {AngularFireStorage} from '@angular/fire/storage';
 export class EstabelecimentosImagensService {
 
   imagensRef: AngularFireList<any>;
-  const path: string = '';
+  path: string = `${FirebasePath.ESTABELECIMENTOS_IMAGENS}`;
 
   constructor(
-    keyEstabelecimento: string,
+    // keyEstabelecimento: string,
     private db: AngularFireDatabase,
     private storage: AngularFireStorage
   ) {
-    this.setPath(keyEstabelecimento);
+    // this.setPath(keyEstabelecimento);
     this.imagensRef = this.db.list(this.path);
   }
 
@@ -27,6 +27,7 @@ export class EstabelecimentosImagensService {
 
   insert(file: File){
     const imagem = this.uploadImg(file);
+    console.log(imagem);
     return new Promise(resolve => {
       this.imagensRef.push(imagem)
         .then((result: any) => resolve(result.key));
@@ -54,11 +55,11 @@ export class EstabelecimentosImagensService {
   }
 
 
-  uploadImg(file: File){
+  async uploadImg(file: File){
     const filePath = `${this.path}/${file.name}`;
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
-    task.snapshotChanges().pipe(
+    await task.snapshotChanges().pipe(
       finalize(() => {
         ref.getDownloadURL().subscribe((url => {
           // this.estabelecimentosRef.update(key, { imagem: url, filePath: filePath });

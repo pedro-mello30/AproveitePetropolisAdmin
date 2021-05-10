@@ -55,69 +55,91 @@
           </ion-list>
 
 
-          <ion-list formGroupName="contato">
-            <ion-list-header>Contato</ion-list-header>
-            <ion-item>
-              <ion-label position="stacked">Telefone</ion-label>
-<!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
-              <ion-input type="text" formControlName="telefone" mask="(000) 000-0000"></ion-input>
-            </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">E-mail</ion-label>
-              <ion-input type="text" formControlName="email"></ion-input>
-            </ion-item>
+<!--          <div class="enderecos-content">-->
+<!--            <div formArrayName="enderecos" *ngFor="let endereco of formEstabelecimento.get('enderecos')['controls']; let i = index;">-->
+<!--              <ion-list  [formGroupName]="i" >-->
+<!--                <ion-list-header>Endereço {{ i+1 }}</ion-list-header>-->
+<!--&lt;!&ndash;                <ion-button color="danger" (click)="removeEndereco(i)">Remover Endereço</ion-button>&ndash;&gt;-->
+<!--                <ion-item>-->
+<!--                  <ion-label position="stacked">Cep</ion-label>-->
+<!--                  <ion-input type="text" formControlName="cep"></ion-input>-->
+<!--                </ion-item>-->
 
-            <ion-item>
-              <ion-label position="stacked">Site</ion-label>
-              <ion-input type="text" formControlName="site"></ion-input>
-            </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">Facebook</ion-label>
-              <ion-input type="text" formControlName="facebook"></ion-input>
-            </ion-item>
+                <ion-list formGroupName="contato">
+                  <ion-list-header>Contato</ion-list-header>
+                  <ion-item>
+                    <ion-label position="stacked">Telefone</ion-label>
+      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                    <ion-input type="text" formControlName="telefone" mask="(000) 000-0000"></ion-input>
+                  </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">Instagram</ion-label>
-              <ion-input type="text" formControlName="instagram"></ion-input>
-            </ion-item>
-          </ion-list>
+                  <ion-item>
+                    <ion-label position="stacked">E-mail</ion-label>
+                    <ion-input type="text" formControlName="email"></ion-input>
+                  </ion-item>
 
-\
+                  <ion-item>
+                    <ion-label position="stacked">Site</ion-label>
+                    <ion-input type="text" formControlName="site"></ion-input>
+                  </ion-item>
 
-          <ion-list  formGroupName="endereco">
-            <ion-list-header>Endereço</ion-list-header>
-            <ion-item>
-              <ion-label position="stacked">Cep</ion-label>
-              <ion-input type="text" formControlName="cep"></ion-input>
-            </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Facebook</ion-label>
+                    <ion-input type="text" formControlName="facebook"></ion-input>
+                  </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">Estado</ion-label>
-              <ion-input type="text" formControlName="estado"></ion-input>
-            </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">Instagram</ion-label>
+                    <ion-input type="text" formControlName="instagram"></ion-input>
+                  </ion-item>
+                </ion-list>
+<!--              </ion-list>-->
+<!--            </div>-->
+<!--          </div>-->
 
-            <ion-item>
-              <ion-label position="stacked">Cidade</ion-label>
-              <ion-input type="text" formControlName="cidade"></ion-input>
-            </ion-item>
+          <ion-list-header>Endereços</ion-list-header>
+          <ion-button class="btn-add-end ion-margin-start" color="primary" (click)="addEndereco()">Adicionar Endereco</ion-button>
+          <div class="enderecos-content">
+            <div formArrayName="enderecos" *ngFor="let endereco of formEstabelecimento.get('enderecos')['controls']; let i = index;">
+              <ion-list  [formGroupName]="i" >
+                <ion-button *ngIf="i != 0" class="btn-rmv-end" color="danger" (click)="removeEndereco(i)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+                <ion-list-header>Endereço {{ i+1 }}</ion-list-header>
+                <ion-item>
+                  <ion-label position="stacked">Cep</ion-label>
+                  <ion-input type="text" formControlName="cep"></ion-input>
+                </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">Rua</ion-label>
-              <ion-input type="text" formControlName="rua"></ion-input>
-            </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Estado</ion-label>
+                  <ion-input type="text" formControlName="estado"></ion-input>
+                </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">Numero</ion-label>
-              <ion-input type="text" formControlName="numero"></ion-input>
-            </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Cidade</ion-label>
+                  <ion-input type="text" formControlName="cidade"></ion-input>
+                </ion-item>
 
-            <ion-item>
-              <ion-label position="stacked">Complemento</ion-label>
-              <ion-input type="text" formControlName="complemento"></ion-input>
-            </ion-item>
-          </ion-list>
+                <ion-item>
+                  <ion-label position="stacked">Rua</ion-label>
+                  <ion-input type="text" formControlName="rua"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Numero</ion-label>
+                  <ion-input type="text" formControlName="numero"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Complemento</ion-label>
+                  <ion-input type="text" formControlName="complemento"></ion-input>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+
+
 
           <ion-list formGroupName="formasPagamento">
             <ion-list-header>Formas de Pagamento</ion-list-header>
@@ -127,33 +149,35 @@
             </ion-item>
           </ion-list>
 
-          <ion-list formGroupName="horario">
-            <ion-list-header>Horário de funcionamento</ion-list-header>
+<!--          <ion-list formGroupName="horario">-->
+<!--            <ion-list-header>Horário de funcionamento</ion-list-header>-->
 
-            <ion-item *ngFor="let dia of dias">
-              <ion-label>{{dia.nome}}</ion-label>
-              <ion-checkbox slot="end" [value]="dia.value" (ionChange)="onCheckHorarioChange($event)"></ion-checkbox>
+<!--            <ion-item *ngFor="let dia of dias">-->
+<!--              <ion-label>{{dia.nome}}</ion-label>-->
+<!--              <ion-checkbox slot="end" [value]="dia.value" (ionChange)="onCheckHorarioChange($event)"></ion-checkbox>-->
+<!--            </ion-item>-->
+<!--          </ion-list>-->
+
+          <div class="enderecos-content">
+            <div formArrayName="imagens" *ngFor="let imagem of formEstabelecimento.get('imagens')['controls']; let i = index;">
+              <ion-list [formGroupName]="i">
+                <ion-list-header>Imagens</ion-list-header>
+
+                <ion-item *ngFor="let imagem of imagens.controls; let i=index">
+                  <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
+                  <input type="file" #imagemInput  (change)="uploadImagem($event)">
+                </ion-item>
+              </ion-list>
+            </div>
+
+            <ion-item *ngFor="let file of filesUrl; let i = index">
+
+              <ion-thumbnail slot="start">
+                <img [src]="file">
+              </ion-thumbnail>
+              <ion-button color="danger" (click)="removeImagem(i, 'file.key')">Remover Imagem</ion-button>
             </ion-item>
-          </ion-list>
-
-
-          <ion-list formGroupName="imagens">
-            <ion-list-header>Imagens</ion-list-header>
-
-            <ion-item *ngFor="let imagem of imagens.controls; let i=index">
-              <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
-              <input type="file" #imagemInput  (change)="uploadImagem($event)">
-            </ion-item>
-          </ion-list>
-
-          <ion-item *ngFor="let file of filesUrl">
-
-            <ion-thumbnail slot="start">
-              <img [src]="file">
-            </ion-thumbnail>
-            <ion-button color="danger" (click)="removeImagem()">Remover Imagem</ion-button>
-          </ion-item>
-
+          </div>
 
           <div margin-vertical>
             <ion-button color="primary" expand="block" type="submit">Salvar</ion-button>

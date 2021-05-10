@@ -15,7 +15,7 @@
           </ion-thumbnail>
           <ion-label>
             <h2>{{estabelecimento.nome}}</h2>
-            <h3>{{ estabelecimento.categoriaNome - estabelecimento.subcategoriaNome }}</h3>
+            <h3>{{ estabelecimento.categoriaNome }} - {{ estabelecimento.subcategoriaNome }}</h3>
           </ion-label>
           <ion-button slot="end" color="primary" [routerLink]="['/estabelecimentos/editar/', estabelecimento.key]">
             <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
