@@ -21,13 +21,8 @@ export class EstabelecimentosImagensService {
     this.imagensRef = this.db.list(this.path);
   }
 
-  setPath(keyEstabelecimento: string){
-    this.path = `${FirebasePath.ESTABELECIMENTOS_IMAGENS}${keyEstabelecimento}`;
-  }
 
-  insert(file: File){
-    const imagem = this.uploadImg(file);
-    console.log(imagem);
+  private insert(imagem: any){
     return new Promise(resolve => {
       this.imagensRef.push(imagem)
         .then((result: any) => resolve(result.key));
@@ -55,16 +50,21 @@ export class EstabelecimentosImagensService {
   }
 
 
-  async uploadImg(file: File){
-    const filePath = `${this.path}/${file.name}`;
+  async uploadImg(keyEstabelecimento: string, file: File){
+    const filePath = `${this.path}/${keyEstabelecimento}/${file.name}`;
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
-    await task.snapshotChanges().pipe(
+    task.snapshotChanges().pipe(
       finalize(() => {
         ref.getDownloadURL().subscribe((url => {
-          // this.estabelecimentosRef.update(key, { imagem: url, filePath: filePath });
-          return { imagem: url, filePath: filePath };
-        }))
+          const img = {
+            keyEstabelecimento: keyEstabelecimento,
+            imagem: url,
+            filePath: filePath
+          };
+          this.insert(img);
+          // return { imagem: url, filePath: filePath };
+        }));
       })
     ).subscribe();
   }

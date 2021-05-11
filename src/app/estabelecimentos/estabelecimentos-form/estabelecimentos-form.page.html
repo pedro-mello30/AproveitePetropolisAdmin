@@ -108,7 +108,7 @@
                 <ion-list-header>Endereço {{ i+1 }}</ion-list-header>
                 <ion-item>
                   <ion-label position="stacked">Cep</ion-label>
-                  <ion-input type="text" formControlName="cep"></ion-input>
+                  <ion-input type="text" formControlName="cep" (ionBlur)="buscaCEP(i)"></ion-input>
                 </ion-item>
 
                 <ion-item>
@@ -165,7 +165,7 @@
 
                 <ion-item *ngFor="let imagem of imagens.controls; let i=index">
                   <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
-                  <input type="file" #imagemInput  (change)="uploadImagem($event)">
+                  <input type="file" multiple #imagemInput  (change)="uploadImagem($event)">
                 </ion-item>
               </ion-list>
             </div>

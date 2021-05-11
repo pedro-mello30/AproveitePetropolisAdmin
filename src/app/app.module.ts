@@ -20,7 +20,7 @@ import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {NgxMaskModule} from 'ngx-mask';
-
+import { NgxViacepModule } from "@brunoc/ngx-viacep";
 
 
 @NgModule({
@@ -44,7 +44,8 @@ import {NgxMaskModule} from 'ngx-mask';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     UsuariosFormPageModule,
-    UsuariosListaPageModule
+    UsuariosListaPageModule,
+    NgxViacepModule
 
   ],
   providers: [

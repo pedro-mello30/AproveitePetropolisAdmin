@@ -11,6 +11,8 @@ import {map} from 'rxjs/operators';
 import {EstabelecimentosEnderecosService} from '../shared/estabelecimentos-enderecos.service';
 import {EstabelecimentosImagensService} from '../shared/estabelecimentos-imagens.service';
 
+import { NgxViacepService } from "@brunoc/ngx-viacep";
+
 @Component({
   selector: 'app-estabelecimentos-form',
   templateUrl: './estabelecimentos-form.page.html',
@@ -63,7 +65,8 @@ export class EstabelecimentosFormPage implements OnInit {
     private estabelecimentosEnderecosService: EstabelecimentosEnderecosService,
     private categoriaService: CategoriasService,
     private subcategoriaService: SubcategoriasService,
-    private toast: ToastService
+    private toast: ToastService,
+    private viacep: NgxViacepService
   ) { }
 
   ngOnInit() {
@@ -214,8 +217,23 @@ export class EstabelecimentosFormPage implements OnInit {
     this.enderecos.removeAt(i);
   }
 
+  buscaCEP(i: number){
+    this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
+    const endereco = this.enderecos.at(i).value;
+    this.viacep
+      .buscarPorCep(endereco.cep)
+      .subscribe((response: any) => {
+        console.log(response);
+        this.enderecos.at(i).patchValue({
+          estado: response.uf,
+          cidade: response.localidade,
+          rua: response.logradouro,
+        });
+      });
+  }
+
   uploadImagem(event: any){
-    if (event.target.files.length){
+    if (event.target.files.length == 1){
       this.files.push(event.target.files[0]);
 
       this.formEstabelecimento.get('imagens').updateValueAndValidity();
@@ -225,7 +243,16 @@ export class EstabelecimentosFormPage implements OnInit {
       };
       reader.readAsDataURL(this.files[this.files.length-1]);
     }else{
-      // this.fileLogo = null;
+      Array.prototype.forEach.call(event.target.files, file => {
+        this.files.push(file);
+
+        this.formEstabelecimento.get('imagens').updateValueAndValidity();
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.filesUrl.push(reader.result.toString());
+        };
+        reader.readAsDataURL(this.files[this.files.length-1]);
+      });
     }
   }
 
@@ -292,7 +319,7 @@ export class EstabelecimentosFormPage implements OnInit {
 
       if (this.files.length) {
         result.then((key: string) => {
-          this.files.forEach(file => this.estabelecimentosImagensService.insert(file));
+          this.files.forEach(file => this.estabelecimentosImagensService.uploadImg(key, file));
           this.criarFormulario();
         });
       } else {
