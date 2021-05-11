@@ -67,8 +67,8 @@ export class EstabelecimentosService {
     task.snapshotChanges().pipe(
       finalize(() => {
         ref.getDownloadURL().subscribe((url => {
-          this.estabelecimentosRef.update(key, {imagem: url, filePath: filePath });
-        }))
+          this.estabelecimentosRef.update(key, {logo: url, fileLogoPath: filePath });
+        }));
       })
     ).subscribe();
   }
@@ -77,7 +77,7 @@ export class EstabelecimentosService {
     const ref = this.storage.ref(filePath);
     ref.delete();
     if (atualizarEstabelecimento){
-      this.estabelecimentosRef.update(key, {imagem: '', filePath: '' });
+      this.estabelecimentosRef.update(key, {logo: '', fileLogoPath: '' });
     }
   }
 }

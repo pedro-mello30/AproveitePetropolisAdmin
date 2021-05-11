@@ -35,6 +35,18 @@ export class EstabelecimentosEnderecosService {
     );
   }
 
+  getByField(field: string , value: string){
+    const enderecosRef = this.db.list(FirebasePath.ESTABELECIMENTOS_ENDERECOS, query => query
+      .orderByChild(field)
+      .equalTo(value));
+
+    return enderecosRef.snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.payload.key, ...m.payload.val() as {} }));
+      })
+    );
+  }
+
   insert(endereco: any){
     return new Promise(resolve => {
       this.enderecosRef.push(endereco)

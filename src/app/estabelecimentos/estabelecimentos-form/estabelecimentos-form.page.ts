@@ -12,6 +12,8 @@ import {EstabelecimentosEnderecosService} from '../shared/estabelecimentos-ender
 import {EstabelecimentosImagensService} from '../shared/estabelecimentos-imagens.service';
 
 import { NgxViacepService } from "@brunoc/ngx-viacep";
+import {DiasTypeEnum} from '../shared/dias.type.enum';
+import {FormaPagamentoTypeEnum} from '../shared/forma-pagamento.type.enum';
 
 @Component({
   selector: 'app-estabelecimentos-form',
@@ -23,7 +25,7 @@ export class EstabelecimentosFormPage implements OnInit {
   public title = 'Novo Estabelecimento';
 
   formEstabelecimento: FormGroup;
-  enderecos: FormArray;
+  // enderecos: FormArray;
 
   key: string;
 
@@ -35,21 +37,21 @@ export class EstabelecimentosFormPage implements OnInit {
   subcategorias: Observable<any[]>;
 
   formaPagamentos = [
-    {nome: 'Dinheiro', value: 0},
-    {nome: 'Cartão de crédito', value: 0},
-    {nome: 'Cartão de débito', value: 0},
-    {nome: 'Ticket', value: 0},
-    {nome: 'Pix', value: 0},
+    {nome: 'Dinheiro', value: FormaPagamentoTypeEnum.Dinheiro},
+    {nome: 'Cartão de crédito', value: FormaPagamentoTypeEnum.Credito},
+    {nome: 'Cartão de débito', value: FormaPagamentoTypeEnum.Debito},
+    {nome: 'Ticket', value: FormaPagamentoTypeEnum.Ticket},
+    {nome: 'Pix', value: FormaPagamentoTypeEnum.Pix},
     ];
 
   dias = [
-    {nome: 'Segunda-feira', value: 0},
-    {nome: 'Terça-feira', value: 0},
-    {nome: 'Quarta-feira', value: 0},
-    {nome: 'Quinta-feira', value: 0},
-    {nome: 'Sexta-feira', value: 0},
-    {nome: 'Sábado', value: 0},
-    {nome: 'Domingo', value: 0},
+    {nome: 'Segunda-feira', value: DiasTypeEnum.Segunda},
+    {nome: 'Terça-feira', value: DiasTypeEnum.Terca},
+    {nome: 'Quarta-feira', value: DiasTypeEnum.Quarta},
+    {nome: 'Quinta-feira', value: DiasTypeEnum.Quinta},
+    {nome: 'Sexta-feira', value: DiasTypeEnum.Sexta},
+    {nome: 'Sábado', value: DiasTypeEnum.Sabado},
+    {nome: 'Domingo', value: DiasTypeEnum.Domingo},
   ];
 
   private files: File[] = [];
@@ -80,33 +82,56 @@ export class EstabelecimentosFormPage implements OnInit {
         subscribe.unsubscribe();
 
         this.key = estabelecimento.key;
-        this.formEstabelecimento.setValue({
+        this.formEstabelecimento.patchValue({
           nome: estabelecimento.nome,
           logo: '',
 
           categoriaKey: estabelecimento.categoriaKey,
+          categoriaNome: estabelecimento.categoriaNome,
           subcategoriaKey: estabelecimento.subcategoriaKey,
+          subcategoriaNome: estabelecimento.subcategoriaNome,
 
           cnpj: estabelecimento.cnpj,
 
-          telefone: estabelecimento.telefone,
-          email: estabelecimento.email,
-          site: estabelecimento.site,
-          facebook: estabelecimento.facebook,
-          instagram: estabelecimento.instagram,
-
-          cep: estabelecimento.cep,
-          estado: estabelecimento.estado,
-          cidade: estabelecimento.cidade,
-          rua: estabelecimento.rua,
-          numero: estabelecimento.numero,
-          complemento: estabelecimento.complemento,
+          contato: {
+            telefone: estabelecimento.contato.telefone,
+            email: estabelecimento.contato.email,
+            site: estabelecimento.contato.site,
+            facebook: estabelecimento.contato.facebook,
+            instagram: estabelecimento.contato.instagram,
+          },
 
           formaPagamento: estabelecimento.formaPagamento
         });
 
-        this.logoUrl = estabelecimento.imagem || '';
-        this.fileLogoPath = estabelecimento.filePath || '';
+        const sub = this.estabelecimentosEnderecosService.getByField('estabelecimentoKey', this.key).subscribe((enderecos: any) => {
+          sub.unsubscribe();
+          var i;
+          for (i = 0; i< enderecos.length; i++){
+            if (i != 0)
+              this.addEndereco();
+
+            this.enderecos.at(i).setValue({
+              cep: enderecos[i].cep,
+              estado: enderecos[i].estado,
+              cidade: enderecos[i].cidade,
+              rua: enderecos[i].rua,
+              numero: enderecos[i].numero,
+              complemento: enderecos[i].complemento
+            });
+          }
+        });
+
+        const subi = this.estabelecimentosImagensService.getByField('estabelecimentoKey', this.key).subscribe((imagens: any) => {
+          subi.unsubscribe();
+          imagens.forEach((imagem) => {
+            this.filesUrl.push(imagem.imagem);
+            this.filesPath.push(imagem.filePath);
+          });
+        });
+
+        this.logoUrl = estabelecimento.logo || '';
+        this.fileLogoPath = estabelecimento.fileLogoPath || '';
       });
     }
   }
@@ -116,7 +141,7 @@ export class EstabelecimentosFormPage implements OnInit {
   get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
   get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
   get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
-  get endereco() { return this.formEstabelecimento.get('endereco') as FormGroup; }
+  get enderecos() { return this.formEstabelecimento.get('enderecos') as FormArray; }
   get imagens() { return this.formEstabelecimento.get('imagens') as FormArray; }
 
   criarFormulario(){
@@ -209,7 +234,7 @@ export class EstabelecimentosFormPage implements OnInit {
   }
 
   addEndereco(){
-    this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
+    // this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
     this.enderecos.push(this.criarFormularioEndereco());
   }
 
@@ -218,7 +243,7 @@ export class EstabelecimentosFormPage implements OnInit {
   }
 
   buscaCEP(i: number){
-    this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
+    // this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
     const endereco = this.enderecos.at(i).value;
     this.viacep
       .buscarPorCep(endereco.cep)
@@ -292,8 +317,8 @@ export class EstabelecimentosFormPage implements OnInit {
     if (this.formEstabelecimento.valid){
       let result: Promise<{}>;
 
-      // const estabelecimentoObj = this.formEstabelecimento.value;
-      // estabelecimentoObj.contato
+      const estabelecimentoObj = this.formEstabelecimento.value;
+      estabelecimentoObj.contato
 
       if (this.key) {
         result = this.estabelecimentosService.update(this.formEstabelecimento.value, this.key);
@@ -301,30 +326,29 @@ export class EstabelecimentosFormPage implements OnInit {
         result = this.estabelecimentosService.insert(this.formEstabelecimento.value);
       }
 
+      const enderecos = this.formEstabelecimento.get('enderecos').value;
       result.then((key: string) => {
-        const enderecoObj = this.formEstabelecimento.get('endereco').value;
-        enderecoObj.estabelecimentoKey = key;
-        this.estabelecimentosEnderecosService.insert(enderecoObj);
+        var i;
+        for (i = 0; i< enderecos.length; i++){
+          enderecos[i].estabelecimentoKey = key;
+          this.estabelecimentosEnderecosService.insert(enderecos[i]);
+        }
       });
 
 
       if (this.fileLogo) {
         result.then((key: string) => {
           this.estabelecimentosService.uploadLogo(key, this.fileLogo);
-          this.criarFormulario();
         });
-      } else {
-        this.criarFormulario();
       }
 
       if (this.files.length) {
         result.then((key: string) => {
           this.files.forEach(file => this.estabelecimentosImagensService.uploadImg(key, file));
-          this.criarFormulario();
         });
-      } else {
-        this.criarFormulario();
       }
+
+      this.criarFormulario();
 
       this.toast.showSuccess('Estabelecimento salvo');
       this.router.navigate(['/estabelecimentos']);

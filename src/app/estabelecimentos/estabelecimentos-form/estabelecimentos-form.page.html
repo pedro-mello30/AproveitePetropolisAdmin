@@ -159,11 +159,13 @@
 <!--          </ion-list>-->
 
           <div class="enderecos-content">
-            <div formArrayName="imagens" *ngFor="let imagem of formEstabelecimento.get('imagens')['controls']; let i = index;">
-              <ion-list [formGroupName]="i">
+<!--            <div formArrayName="imagens" *ngFor="let imagem of formEstabelecimento.get('imagens')['controls']; let i = index;">-->
+            <div formArrayName="imagens">
+              <ion-list [formGroupName]="0">
                 <ion-list-header>Imagens</ion-list-header>
 
-                <ion-item *ngFor="let imagem of imagens.controls; let i=index">
+                <ion-item>
+<!--                <ion-item *ngFor="let imagem of imagens.controls; let i=index">-->
                   <ion-button color="primary" (click)="imagemInput.click()">Adicionar Imagem</ion-button>
                   <input type="file" multiple #imagemInput  (change)="uploadImagem($event)">
                 </ion-item>

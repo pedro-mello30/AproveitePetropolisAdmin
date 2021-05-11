@@ -49,6 +49,19 @@ export class EstabelecimentosImagensService {
 
   }
 
+  getByField(field: string , value: string){
+    const subcategoriasRef = this.db.list(FirebasePath.SUBCATEGORIAS, query => query
+      .orderByChild(field)
+      .equalTo(value));
+
+    return this.imagensRef.snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.payload.key, ...m.payload.val() as {} }));
+      })
+    );
+  }
+
+
 
   async uploadImg(keyEstabelecimento: string, file: File){
     const filePath = `${this.path}/${keyEstabelecimento}/${file.name}`;
