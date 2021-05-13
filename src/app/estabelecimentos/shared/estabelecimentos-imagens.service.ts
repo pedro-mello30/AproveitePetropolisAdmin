@@ -50,11 +50,11 @@ export class EstabelecimentosImagensService {
   }
 
   getByField(field: string , value: string){
-    const subcategoriasRef = this.db.list(FirebasePath.SUBCATEGORIAS, query => query
+    const imagensRef = this.db.list(FirebasePath.ESTABELECIMENTOS_IMAGENS, query => query
       .orderByChild(field)
       .equalTo(value));
 
-    return this.imagensRef.snapshotChanges().pipe(
+    return imagensRef.snapshotChanges().pipe(
       map(changes => {
         return changes.map(m => ({ key: m.payload.key, ...m.payload.val() as {} }));
       })
@@ -71,7 +71,7 @@ export class EstabelecimentosImagensService {
       finalize(() => {
         ref.getDownloadURL().subscribe((url => {
           const img = {
-            keyEstabelecimento: keyEstabelecimento,
+            estabelecimentoKey: keyEstabelecimento,
             imagem: url,
             filePath: filePath
           };

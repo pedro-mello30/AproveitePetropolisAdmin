@@ -73,6 +73,7 @@ export class EstabelecimentosFormPage implements OnInit {
 
   ngOnInit() {
     this.criarFormulario();
+    this.criarGroupFormLogo();
     this.categorias = this.categoriaService.getAll();
 
     const key = this.route.snapshot.paramMap.get('key');
@@ -80,11 +81,10 @@ export class EstabelecimentosFormPage implements OnInit {
       this.title = 'Editar Estabelecimento';
       const subscribe = this.estabelecimentosService.getByKey(key).subscribe((estabelecimento: any) => {
         subscribe.unsubscribe();
-
+        console.log(estabelecimento);
         this.key = estabelecimento.key;
         this.formEstabelecimento.patchValue({
           nome: estabelecimento.nome,
-          logo: '',
 
           categoriaKey: estabelecimento.categoriaKey,
           categoriaNome: estabelecimento.categoriaNome,
@@ -101,7 +101,7 @@ export class EstabelecimentosFormPage implements OnInit {
             instagram: estabelecimento.contato.instagram,
           },
 
-          formaPagamento: estabelecimento.formaPagamento
+          formasPagamento: estabelecimento.formasPagamento
         });
 
         const sub = this.estabelecimentosEnderecosService.getByField('estabelecimentoKey', this.key).subscribe((enderecos: any) => {
@@ -146,17 +146,17 @@ export class EstabelecimentosFormPage implements OnInit {
 
   criarFormulario(){
     this.formEstabelecimento = this.formBuilder.group({
-      nome: [''],
-      logo: [''],
-      categoriaKey: [''],
-      categoriaNome: [''],
+      nome: ['', Validators.required],
+      logo: ['', Validators.required],
+      categoriaKey: ['', Validators.required],
+      categoriaNome: ['', Validators.required],
       subcategoriaKey: [''],
       subcategoriaNome: [''],
-      cnpj: [''],
+      cnpj: ['', Validators.required],
       contato: this.formBuilder.group({
-        telefone: [''],
+        telefone: ['', Validators.required],
         // email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-        email: [''],
+        email: ['', [Validators.required, Validators.email]],
         site: [''],
         facebook: [''],
         instagram: [''],
@@ -164,13 +164,17 @@ export class EstabelecimentosFormPage implements OnInit {
       enderecos: this.formBuilder.array([ this.criarFormularioEndereco() ]),
       imagens: this.formBuilder.array([ this.criarFormularioImagem() ]),
       formasPagamento: this.formBuilder.array([
-        this.formBuilder.control('')
+
       ]),
       horario: this.formBuilder.array([
         this.formBuilder.control('')
       ]),
     });
 
+
+  }
+
+  criarGroupFormLogo(){
     this.fileLogo = null;
     this.logoUrl = '';
     this.fileLogoPath = '';
@@ -178,11 +182,11 @@ export class EstabelecimentosFormPage implements OnInit {
 
   criarFormularioEndereco(): FormGroup{
     return this.formBuilder.group({
-      cep: [''],
-      estado: [''],
-      cidade: [''],
-      rua: [''],
-      numero: [''],
+      cep: ['', Validators.required],
+      estado: ['', Validators.required],
+      cidade: ['', Validators.required],
+      rua: ['', Validators.required],
+      numero: ['', Validators.required],
       complemento: ['']
     });
   }
@@ -339,6 +343,7 @@ export class EstabelecimentosFormPage implements OnInit {
       if (this.fileLogo) {
         result.then((key: string) => {
           this.estabelecimentosService.uploadLogo(key, this.fileLogo);
+          this.criarGroupFormLogo();
         });
       }
 
@@ -349,6 +354,7 @@ export class EstabelecimentosFormPage implements OnInit {
       }
 
       this.criarFormulario();
+
 
       this.toast.showSuccess('Estabelecimento salvo');
       this.router.navigate(['/estabelecimentos']);
