@@ -44,11 +44,8 @@ export class EstabelecimentosService {
 
   update(key: string, estabelecimento: any){
     return new Promise((resolve, reject) => {
-      const estabelecimentoObj = {
-        nome: estabelecimento.nome
-      };
 
-      this.estabelecimentosRef.update(key, estabelecimentoObj)
+      this.estabelecimentosRef.update(key, estabelecimento)
         .then(() => resolve(key))
         .catch(() => reject());
     });

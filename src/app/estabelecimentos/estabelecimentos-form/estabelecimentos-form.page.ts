@@ -81,9 +81,11 @@ export class EstabelecimentosFormPage implements OnInit {
       this.title = 'Editar Estabelecimento';
       const subscribe = this.estabelecimentosService.getByKey(key).subscribe((estabelecimento: any) => {
         subscribe.unsubscribe();
+        console.log(estabelecimento);
         this.key = estabelecimento.key;
         this.formEstabelecimento.patchValue({
           nome: estabelecimento.nome,
+          logo: '',
 
           categoriaKey: estabelecimento.categoriaKey,
           categoriaNome: estabelecimento.categoriaNome,
@@ -110,7 +112,8 @@ export class EstabelecimentosFormPage implements OnInit {
             if (i != 0)
               this.addEndereco();
 
-            this.enderecos.at(i).setValue({
+            this.enderecos.at(i).patchValue({
+              keyEndereco: enderecos[i].key,
               cep: enderecos[i].cep,
               estado: enderecos[i].estado,
               cidade: enderecos[i].cidade,
@@ -132,7 +135,6 @@ export class EstabelecimentosFormPage implements OnInit {
         this.logoUrl = estabelecimento.logo || '';
         this.fileLogoPath = estabelecimento.fileLogoPath || '';
         this.formEstabelecimento.updateValueAndValidity();
-
       });
     }
   }
@@ -183,6 +185,7 @@ export class EstabelecimentosFormPage implements OnInit {
 
   criarFormularioEndereco(): FormGroup{
     return this.formBuilder.group({
+      keyEndereco: [''],
       cep: ['', Validators.required],
       estado: ['', Validators.required],
       cidade: ['', Validators.required],
@@ -244,6 +247,9 @@ export class EstabelecimentosFormPage implements OnInit {
   }
 
   removeEndereco(i: number){
+    if(this.key)
+      this.estabelecimentosEnderecosService.remove(this.enderecos.at(i).get('keyEndereco').value);
+
     this.enderecos.removeAt(i);
   }
 
@@ -295,11 +301,6 @@ export class EstabelecimentosFormPage implements OnInit {
 
 
 
-
-
-
-
-
   onCheckHorarioChange(event) {
     const formArray: FormArray = this.formEstabelecimento.get('formasPagamento') as FormArray;
 
@@ -321,22 +322,29 @@ export class EstabelecimentosFormPage implements OnInit {
   onSubmit(){
     if (this.formEstabelecimento.valid){
       let result: Promise<{}>;
-
       const estabelecimentoObj = this.formEstabelecimento.value;
-      estabelecimentoObj.contato
+      delete estabelecimentoObj.logo;
 
       if (this.key) {
-        result = this.estabelecimentosService.update(this.formEstabelecimento.value, this.key);
+        result = this.estabelecimentosService.update(this.key, estabelecimentoObj);
       } else {
-        result = this.estabelecimentosService.insert(this.formEstabelecimento.value);
+        result = this.estabelecimentosService.insert(estabelecimentoObj);
       }
 
       const enderecos = this.formEstabelecimento.get('enderecos').value;
       result.then((key: string) => {
         var i;
         for (i = 0; i< enderecos.length; i++){
+          console.log(enderecos[i]);
+          const keyEndereco = enderecos[i].keyEndereco;
           enderecos[i].estabelecimentoKey = key;
-          this.estabelecimentosEnderecosService.insert(enderecos[i]);
+          delete enderecos[i].keyEndereco;
+
+          if(keyEndereco){
+            this.estabelecimentosEnderecosService.update(keyEndereco, enderecos[i]);
+          }else{
+            this.estabelecimentosEnderecosService.insert(enderecos[i]);
+          }
         }
       });
 

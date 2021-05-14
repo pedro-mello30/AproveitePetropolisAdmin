@@ -56,11 +56,8 @@ export class EstabelecimentosEnderecosService {
 
   update(key: string, endereco: any){
     return new Promise((resolve, reject) => {
-      const enderecoObj = {
-        nome: endereco.nome
-      };
 
-      this.enderecosRef.update(key, enderecoObj)
+      this.enderecosRef.update(key, endereco)
         .then(() => resolve(key))
         .catch(() => reject());
     });

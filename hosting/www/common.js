@@ -103,10 +103,7 @@ let EstabelecimentosService = class EstabelecimentosService {
     }
     update(key, estabelecimento) {
         return new Promise((resolve, reject) => {
-            const estabelecimentoObj = {
-                nome: estabelecimento.nome
-            };
-            this.estabelecimentosRef.update(key, estabelecimentoObj)
+            this.estabelecimentosRef.update(key, estabelecimento)
                 .then(() => resolve(key))
                 .catch(() => reject());
         });
@@ -122,7 +119,7 @@ let EstabelecimentosService = class EstabelecimentosService {
         const task = ref.put(file);
         task.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(() => {
             ref.getDownloadURL().subscribe((url => {
-                this.estabelecimentosRef.update(key, { imagem: url, filePath: filePath });
+                this.estabelecimentosRef.update(key, { logo: url, fileLogoPath: filePath });
             }));
         })).subscribe();
     }
@@ -130,7 +127,7 @@ let EstabelecimentosService = class EstabelecimentosService {
         const ref = this.storage.ref(filePath);
         ref.delete();
         if (atualizarEstabelecimento) {
-            this.estabelecimentosRef.update(key, { imagem: '', filePath: '' });
+            this.estabelecimentosRef.update(key, { logo: '', fileLogoPath: '' });
         }
     }
 };
@@ -165,6 +162,8 @@ FirebasePath.SUBCATEGORIAS = 'subcategorias/';
 FirebasePath.USUARIOS = 'usuarios/';
 FirebasePath.ESTABELECIMENTOS = 'estabelecimentos/';
 FirebasePath.ESTABELECIMENTOS_IMAGENS = 'estabelecimentos_imagens/';
+FirebasePath.ESTABELECIMENTOS_ENDERECOS = 'estabelecimentos_enderecos/';
+FirebasePath.ESTABELECIMENTOS_CONTATOS = 'estabelecimentos_contatos/';
 
 
 /***/ }),
@@ -361,6 +360,14 @@ let SubcategoriasService = class SubcategoriasService {
         const path = `${_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS}${key}`;
         return this.db.object(path).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(change => {
             return (Object.assign({ key: change.key }, change.payload.val()));
+        }));
+    }
+    getByCategoriaKey(categoriaKey) {
+        const subcategoriasRef = this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_4__["FirebasePath"].SUBCATEGORIAS, query => query
+            .orderByChild('categoriaKey')
+            .equalTo(categoriaKey));
+        return subcategoriasRef.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(changes => {
+            return changes.map(m => (Object.assign({ key: m.payload.key }, m.payload.val())));
         }));
     }
     remove(key, filePath) {

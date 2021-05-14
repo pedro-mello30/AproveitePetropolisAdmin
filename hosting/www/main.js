@@ -823,6 +823,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
 /* harmony import */ var _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/validation-container/validation-container.component */ "p3/B");
+/* harmony import */ var _shared_ionic_mask_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shared/ionic-mask.directive */ "xIym");
+
 
 
 
@@ -833,7 +835,8 @@ let SharedModule = class SharedModule {
 SharedModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [
-            _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__["ValidationContainerComponent"]
+            _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__["ValidationContainerComponent"],
+            _shared_ionic_mask_directive__WEBPACK_IMPORTED_MODULE_5__["IonicMaskDirective"]
         ],
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
@@ -842,7 +845,8 @@ SharedModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         exports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
-            _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__["ValidationContainerComponent"]
+            _components_validation_container_validation_container_component__WEBPACK_IMPORTED_MODULE_4__["ValidationContainerComponent"],
+            _shared_ionic_mask_directive__WEBPACK_IMPORTED_MODULE_5__["IonicMaskDirective"]
         ]
     })
 ], SharedModule);
@@ -881,6 +885,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _usuarios_usuarios_lista_usuarios_lista_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./usuarios/usuarios-lista/usuarios-lista.module */ "9XuG");
 /* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/fire/database */ "sSZD");
 /* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/fire/storage */ "Vaw3");
+/* harmony import */ var _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @brunoc/ngx-viacep */ "bhdO");
+
 
 
 
@@ -924,7 +930,8 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _angular_fire_database__WEBPACK_IMPORTED_MODULE_18__["AngularFireDatabaseModule"],
             _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__["AngularFireStorageModule"],
             _usuarios_usuarios_form_usuarios_form_module__WEBPACK_IMPORTED_MODULE_16__["UsuariosFormPageModule"],
-            _usuarios_usuarios_lista_usuarios_lista_module__WEBPACK_IMPORTED_MODULE_17__["UsuariosListaPageModule"]
+            _usuarios_usuarios_lista_usuarios_lista_module__WEBPACK_IMPORTED_MODULE_17__["UsuariosListaPageModule"],
+            _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_20__["NgxViacepModule"],
         ],
         providers: [
             { provide: _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicRouteStrategy"] }
@@ -1487,6 +1494,49 @@ AppRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (".logoLogin {\n  display: block;\n  width: 50%;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.card-login {\n  width: 100%;\n  margin-top: 15%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xvZ2luLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsY0FBQTtFQUNBLFVBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7QUFDRjs7QUFFQTtFQUNFLFdBQUE7RUFDQSxlQUFBO0FBQ0YiLCJmaWxlIjoibG9naW4uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubG9nb0xvZ2lue1xuICBkaXNwbGF5OiBibG9jaztcbiAgd2lkdGg6IDUwJTtcbiAgbWFyZ2luLWJvdHRvbTogNTBweDtcbiAgbWFyZ2luLWxlZnQ6IGF1dG87XG4gIG1hcmdpbi1yaWdodDogYXV0bztcbn1cblxuLmNhcmQtbG9naW57XG4gIHdpZHRoOiAxMDAlO1xuICBtYXJnaW4tdG9wOiAxNSU7XG59XG4iXX0= */");
+
+/***/ }),
+
+/***/ "xIym":
+/*!*****************************************************!*\
+  !*** ./src/app/core/shared/ionic-mask.directive.ts ***!
+  \*****************************************************/
+/*! exports provided: IonicMaskDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IonicMaskDirective", function() { return IonicMaskDirective; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var ngx_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-mask */ "tmjD");
+
+
+
+
+
+let IonicMaskDirective = class IonicMaskDirective extends ngx_mask__WEBPACK_IMPORTED_MODULE_3__["MaskDirective"] {
+    constructor(ionDocument, _ionMaskService, _config) {
+        super(ionDocument, _ionMaskService, _config);
+        this.ionDocument = ionDocument;
+        this._ionMaskService = _ionMaskService;
+        this._config = _config;
+    }
+};
+IonicMaskDirective.ctorParameters = () => [
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"],] }] },
+    { type: ngx_mask__WEBPACK_IMPORTED_MODULE_3__["MaskService"] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_mask__WEBPACK_IMPORTED_MODULE_3__["config"],] }] }
+];
+IonicMaskDirective = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
+        selector: 'ion-input[mask]',
+        providers: [ngx_mask__WEBPACK_IMPORTED_MODULE_3__["MaskService"]]
+    })
+], IonicMaskDirective);
+
+
 
 /***/ }),
 
