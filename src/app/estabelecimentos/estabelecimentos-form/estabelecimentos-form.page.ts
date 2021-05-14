@@ -81,7 +81,6 @@ export class EstabelecimentosFormPage implements OnInit {
       this.title = 'Editar Estabelecimento';
       const subscribe = this.estabelecimentosService.getByKey(key).subscribe((estabelecimento: any) => {
         subscribe.unsubscribe();
-        console.log(estabelecimento);
         this.key = estabelecimento.key;
         this.formEstabelecimento.patchValue({
           nome: estabelecimento.nome,
@@ -132,6 +131,8 @@ export class EstabelecimentosFormPage implements OnInit {
 
         this.logoUrl = estabelecimento.logo || '';
         this.fileLogoPath = estabelecimento.fileLogoPath || '';
+        this.formEstabelecimento.updateValueAndValidity();
+
       });
     }
   }
@@ -147,7 +148,7 @@ export class EstabelecimentosFormPage implements OnInit {
   criarFormulario(){
     this.formEstabelecimento = this.formBuilder.group({
       nome: ['', Validators.required],
-      logo: ['', Validators.required],
+      logo: [''],
       categoriaKey: ['', Validators.required],
       categoriaNome: ['', Validators.required],
       subcategoriaKey: [''],

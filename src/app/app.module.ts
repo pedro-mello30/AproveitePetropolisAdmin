@@ -19,9 +19,7 @@ import {UsuariosFormPageModule} from './usuarios/usuarios-form/usuarios-form.mod
 import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.module';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
-import {NgxMaskModule} from 'ngx-mask';
 import { NgxViacepModule } from "@brunoc/ngx-viacep";
-
 
 @NgModule({
   declarations: [
@@ -38,14 +36,13 @@ import { NgxViacepModule } from "@brunoc/ngx-viacep";
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    NgxMaskModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     UsuariosFormPageModule,
     UsuariosListaPageModule,
-    NgxViacepModule
+    NgxViacepModule,
 
   ],
   providers: [
