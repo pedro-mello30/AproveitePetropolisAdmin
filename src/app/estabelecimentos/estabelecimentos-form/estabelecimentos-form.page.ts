@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CategoriasService} from '../../categorias/shared/categorias.service';
 import {ToastService} from '../../core/services/toast.service';
 import {EstabelecimentosService} from '../shared/estabelecimentos.service';
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {SubcategoriasService} from '../../subcategorias/shared/subcategorias.service';
 import {map} from 'rxjs/operators';
 import {EstabelecimentosEnderecosService} from '../shared/estabelecimentos-enderecos.service';
@@ -14,6 +14,7 @@ import {EstabelecimentosImagensService} from '../shared/estabelecimentos-imagens
 import { NgxViacepService } from "@brunoc/ngx-viacep";
 import {DiasTypeEnum} from '../shared/dias.type.enum';
 import {FormaPagamentoTypeEnum} from '../shared/forma-pagamento.type.enum';
+import {UsuarioService} from '../../usuarios/shared/usuario.service';
 
 @Component({
   selector: 'app-estabelecimentos-form',
@@ -35,6 +36,8 @@ export class EstabelecimentosFormPage implements OnInit {
 
   categorias: Observable<any[]>;
   subcategorias: Observable<any[]>;
+  membros: Observable<any[]>;
+  proprietarios: string[] = [];
 
   formaPagamentos = [
     {nome: 'Dinheiro', value: FormaPagamentoTypeEnum.Dinheiro},
@@ -67,6 +70,7 @@ export class EstabelecimentosFormPage implements OnInit {
     private estabelecimentosEnderecosService: EstabelecimentosEnderecosService,
     private categoriaService: CategoriasService,
     private subcategoriaService: SubcategoriasService,
+    private usuarioService: UsuarioService,
     private toast: ToastService,
     private viacep: NgxViacepService
   ) { }
@@ -75,6 +79,7 @@ export class EstabelecimentosFormPage implements OnInit {
     this.criarFormulario();
     this.criarGroupFormLogo();
     this.categorias = this.categoriaService.getAll();
+    this.membros = from(this.usuarioService.getAll());
 
     const key = this.route.snapshot.paramMap.get('key');
     if (key){
@@ -91,6 +96,9 @@ export class EstabelecimentosFormPage implements OnInit {
           categoriaNome: estabelecimento.categoriaNome,
           subcategoriaKey: estabelecimento.subcategoriaKey,
           subcategoriaNome: estabelecimento.subcategoriaNome,
+
+          proprietariosUid: estabelecimento.proprietariosUid,
+          proprietariosEmail: estabelecimento.proprietariosEmail,
 
           cnpj: estabelecimento.cnpj,
 
@@ -144,6 +152,8 @@ export class EstabelecimentosFormPage implements OnInit {
   get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
   get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
   get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
+  get proprietariosUid() { return this.formEstabelecimento.get('proprietariosUid') as FormArray; }
+  get proprietariosEmail() { return this.formEstabelecimento.get('proprietariosEmail') as FormArray; }
   get enderecos() { return this.formEstabelecimento.get('enderecos') as FormArray; }
   get imagens() { return this.formEstabelecimento.get('imagens') as FormArray; }
 
@@ -155,6 +165,8 @@ export class EstabelecimentosFormPage implements OnInit {
       categoriaNome: ['', Validators.required],
       subcategoriaKey: [''],
       subcategoriaNome: [''],
+      proprietariosUid: ['', Validators.required],
+      proprietariosEmail: ['', Validators.required],
       cnpj: ['', Validators.required],
       contato: this.formBuilder.group({
         telefone: ['', Validators.required],
@@ -239,6 +251,20 @@ export class EstabelecimentosFormPage implements OnInit {
       subcateg.unsubscribe();
       this.subcategoriaNome.setValue(subcategoria.nome);
     });
+  }
+
+  setProprietariosEmail(event){
+    if (event){
+      this.proprietariosUid.patchValue(event);
+      const nomes = [];
+      this.proprietariosUid.value.forEach(id => {
+        const sub = this.usuarioService.getById(id).subscribe((user: any) => {
+          sub.unsubscribe();
+          nomes.push(user.email);
+        });
+      });
+      this.proprietariosEmail.patchValue(nomes);
+    }
   }
 
   addEndereco(){

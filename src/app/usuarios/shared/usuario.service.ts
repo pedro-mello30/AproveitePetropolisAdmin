@@ -14,22 +14,22 @@ export class UsuarioService {
   }
 
   getAll(){
-    return this.http.get<Usuario[]>(`${environment.api}/usuarios`);
+    return this.http.get<Usuario[]>(`${environment.api}/membros`).toPromise();
   }
 
   getById(id: string){
-    return this.http.get<Usuario>(`${environment.api}/usuarios/${id}`);
+    return this.http.get<Usuario>(`${environment.api}/membros/${id}`);
   }
 
-  save(categoria: Usuario){
-    if(categoria._id){
-      return this.http.put(`${environment.api}/usuarios/${categoria._id}`, categoria);
-    }else{
-      return this.http.post(`${environment.api}/usuarios`, categoria);
-    }
+  create(usuario: any){
+    return this.http.post(`${environment.api}/membros`, usuario);
+  }
+
+  update(usuario: any){
+    return this.http.put(`${environment.api}/membros/${usuario.uid}`, usuario);
   }
 
   delete(id: string){
-    return this.http.delete(`${environment.api}/usuarios/${id}`);
+    return this.http.delete(`${environment.api}/membros/${id}`);
   }
 }

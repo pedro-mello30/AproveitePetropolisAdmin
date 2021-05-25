@@ -9,20 +9,20 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div *ngIf="usuarios.length == 0" class="alert alert-warning" role="alert">
-          Nenhuma usuário cadastrado.
+        <div *ngIf="(usuarios | async)?.length === 0" class="alert alert-warning" role="alert">
+          Carregando membros...
         </div>
-        <div *ngIf="usuarios.length > 0">
-          <ion-item *ngFor="let usuario of usuarios">
-            <ion-label>{{usuario.nome}}</ion-label>
-            <ion-button slot="end" color="primary" [routerLink]="['/categorias/editar/', usuario._id]">
+        <div *ngIf="(usuarios | async)?.length > 0">
+          <ion-item *ngFor="let usuario of usuarios | async">
+            <ion-label>{{usuario.displayName}}</ion-label>
+            <ion-button slot="end" color="primary" [routerLink]="['/usuarios/editar/', usuario.uid]">
               <ion-icon slot="start" ios="create-outline" md="create-outline"></ion-icon>
               Editar
             </ion-button>
-            <ion-button slot="end" color="danger" (click)="remove()">
-              <ion-icon slot="start" name="trash-outline"></ion-icon>
-              Excluir
-            </ion-button>
+<!--            <ion-button slot="end" color="danger" (click)="remove()">-->
+<!--              <ion-icon slot="start" name="trash-outline"></ion-icon>-->
+<!--              Excluir-->
+<!--            </ion-button>-->
           </ion-item>
 
         </div>

@@ -20,6 +20,7 @@ import {UsuariosListaPageModule} from './usuarios/usuarios-lista/usuarios-lista.
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { NgxViacepModule } from "@brunoc/ngx-viacep";
+import {httpInterceptorProviders} from './http-interceptors';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { NgxViacepModule } from "@brunoc/ngx-viacep";
 
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    httpInterceptorProviders
     ],
   bootstrap: [
     AppComponent,
