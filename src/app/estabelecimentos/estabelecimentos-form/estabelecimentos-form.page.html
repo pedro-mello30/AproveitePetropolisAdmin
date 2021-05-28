@@ -57,7 +57,7 @@
           <ion-item>
             <ion-label position="stacked">Proprietários</ion-label>
 
-            <ion-select placeholder="Escolher" formControlName="proprietariosUid" [selectedText]="" multiple="true" (ionChange)="setProprietariosEmail($event.target.value)">
+            <ion-select placeholder="Escolher" formControlName="proprietariosUid" multiple="true" (ionChange)="setProprietariosEmail($event.target.value)">
               <ion-select-option *ngFor="let membro of membros | async" value="{{membro.uid}}" >{{membro.email}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -149,11 +149,11 @@
 
 
 
-          <ion-list formGroupName="formasPagamento">
+          <ion-list formArrayName="formasPagamento">
             <ion-list-header>Formas de Pagamento</ion-list-header>
-            <ion-item *ngFor="let forma of formaPagamentos">
-              <ion-label>{{forma.nome}}</ion-label>
-              <ion-checkbox slot="end" [value]="forma.value" (ionChange)="onCheckHorarioChange($event)"></ion-checkbox>
+            <ion-item *ngFor="let forma of formasPagamento.controls; let i = index" formGroupName="{{ i }}">
+              <ion-label>{{ forma.get('nome').value }}</ion-label>
+              <ion-checkbox slot="end" [formControl]="forma.get('isChecked')"></ion-checkbox>
             </ion-item>
           </ion-list>
 
@@ -180,14 +180,179 @@
               </ion-list>
             </div>
 
-            <ion-item *ngFor="let file of filesUrl; let i = index">
+            <ion-item *ngFor="let file of imagensEstabelecimento; let i = index">
 
               <ion-thumbnail slot="start">
-                <img [src]="file">
+                <img [src]="file.imagem">
               </ion-thumbnail>
-              <ion-button color="danger" (click)="removeImagem(i, 'file.key')">Remover Imagem</ion-button>
+              <ion-button color="danger" (click)="removeImagem(i, file.key)">Remover Imagem</ion-button>
             </ion-item>
           </div>
+
+
+
+          <ion-list formGroupName="horario">
+            <ion-list-header>Horário</ion-list-header>
+
+            <div formGroupName="segunda">
+              <p class="sub-title">Segunda-feira</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div formGroupName="terca">
+              <p class="sub-title">Terça-feira</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div formGroupName="quarta">
+              <p class="sub-title">Quarta-feira</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div formGroupName="quinta">
+              <p class="sub-title">Quinta-feira</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div formGroupName="sexta">
+              <p class="sub-title">Sexta-feira</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div formGroupName="sabado">
+              <p class="sub-title">Sábado</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <div formGroupName="domingo">
+              <p class="sub-title">Domingo</p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Abre às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="de"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-item>
+                      <ion-label position="stacked">Fecha às:</ion-label>
+                      <!--              <input type="text" formControlName="telefone" mask="(000) 000-0000">-->
+                      <ion-input type="text" formControlName="as"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+
+
+
+          </ion-list>
+
 
           <div margin-vertical>
             <ion-button color="primary" expand="block" type="submit" [disabled]="formEstabelecimento.invalid">Salvar</ion-button>

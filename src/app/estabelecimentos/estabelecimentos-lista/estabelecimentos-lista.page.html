@@ -11,7 +11,8 @@
       <ion-col>
         <ion-item *ngFor="let estabelecimento of estabelecimentos | async">
           <ion-thumbnail slot="start">
-            <img src="{{estabelecimento.logo}}">
+            <img *ngIf="estabelecimento.logo" src="{{estabelecimento.logo}}">
+            <img *ngIf="!estabelecimento.logo" src="assets/no_image.jpg">
           </ion-thumbnail>
           <ion-label>
             <h2>{{estabelecimento.nome}}</h2>

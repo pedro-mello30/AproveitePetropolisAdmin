@@ -40,19 +40,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   }
 
-  private isValidRequestForInterceptor(requestUrl: string): boolean {
-    const positionIndicator: string = 'api/';
-    const position = requestUrl.indexOf(positionIndicator);
-    if (position > 0) {
-      const destination: string = requestUrl.substr(position + positionIndicator.length);
-      for (const address of this.urlsToNotUse) {
-        if (new RegExp(address).test(destination)) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
 
   private handlerError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

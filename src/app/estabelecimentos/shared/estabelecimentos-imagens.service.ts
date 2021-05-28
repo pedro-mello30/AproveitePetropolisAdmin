@@ -45,8 +45,10 @@ export class EstabelecimentosImagensService {
 
   }
 
-  remove(key: string){
-
+  remove(key: string, filePath: string){
+    const ref = this.storage.ref(filePath);
+    ref.delete();
+    this.imagensRef.remove(key);
   }
 
   getByField(field: string , value: string){

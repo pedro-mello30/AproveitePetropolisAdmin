@@ -11,7 +11,8 @@
       <ion-col>
         <ion-item *ngFor="let subcategoria of subcategorias | async">
           <ion-thumbnail slot="start">
-            <img src="{{subcategoria.imagem}}">
+            <img *ngIf="subcategoria.imagem" src="{{subcategoria.imagem}}">
+            <img *ngIf="!subcategoria.imagem" src="assets/no_image.jpg">
           </ion-thumbnail>
           <ion-label>{{subcategoria.categoriaNome}} - {{subcategoria.nome}}</ion-label>
           <ion-button slot="end" color="primary" [routerLink]="['/subcategorias/editar/', subcategoria.key]">

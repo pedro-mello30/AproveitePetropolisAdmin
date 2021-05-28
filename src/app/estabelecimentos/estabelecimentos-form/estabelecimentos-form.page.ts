@@ -39,13 +39,13 @@ export class EstabelecimentosFormPage implements OnInit {
   membros: Observable<any[]>;
   proprietarios: string[] = [];
 
-  formaPagamentos = [
-    {nome: 'Dinheiro', value: FormaPagamentoTypeEnum.Dinheiro},
-    {nome: 'Cartão de crédito', value: FormaPagamentoTypeEnum.Credito},
-    {nome: 'Cartão de débito', value: FormaPagamentoTypeEnum.Debito},
-    {nome: 'Ticket', value: FormaPagamentoTypeEnum.Ticket},
-    {nome: 'Pix', value: FormaPagamentoTypeEnum.Pix},
-    ];
+  // formaPagamentos = [
+  //   {nome: 'Dinheiro', value: FormaPagamentoTypeEnum.Dinheiro, isChecked: false},
+  //   {nome: 'Cartão de crédito', value: FormaPagamentoTypeEnum.Credito, isChecked: false},
+  //   {nome: 'Cartão de débito', value: FormaPagamentoTypeEnum.Debito, isChecked: false},
+  //   {nome: 'Ticket', value: FormaPagamentoTypeEnum.Ticket, isChecked: false},
+  //   {nome: 'Pix', value: FormaPagamentoTypeEnum.Pix, isChecked: false},
+  //   ];
 
   dias = [
     {nome: 'Segunda-feira', value: DiasTypeEnum.Segunda},
@@ -60,6 +60,7 @@ export class EstabelecimentosFormPage implements OnInit {
   private files: File[] = [];
   filesUrl: string[] = [];
   filesPath: string[] = [];
+  imagensEstabelecimento = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -110,8 +111,40 @@ export class EstabelecimentosFormPage implements OnInit {
             instagram: estabelecimento.contato.instagram,
           },
 
-          formasPagamento: estabelecimento.formasPagamento
+          formasPagamento: estabelecimento.formasPagamento,
+
+          horario: {
+            segunda: {
+              de: estabelecimento.horario.segunda.de,
+              as: estabelecimento.horario.segunda.as
+            },
+            terca: {
+              de: estabelecimento.horario.terca.de,
+              as: estabelecimento.horario.terca.as
+            },
+            quarta: {
+              de: estabelecimento.horario.quarta.de,
+              as: estabelecimento.horario.quarta.as
+            },
+            quinta: {
+              de: estabelecimento.horario.quinta.de,
+              as: estabelecimento.horario.quinta.as
+            },
+            sexta: {
+              de: estabelecimento.horario.sexta.de,
+              as: estabelecimento.horario.sexta.as
+            },
+            sabado: {
+              de: estabelecimento.horario.sabado.de,
+              as: estabelecimento.horario.sabado.as
+            },
+            domingo: {
+              de: estabelecimento.horario.domingo.de,
+              as: estabelecimento.horario.domingo.as
+            }
+          }
         });
+
 
         const sub = this.estabelecimentosEnderecosService.getByField('estabelecimentoKey', this.key).subscribe((enderecos: any) => {
           sub.unsubscribe();
@@ -134,6 +167,7 @@ export class EstabelecimentosFormPage implements OnInit {
 
         const subi = this.estabelecimentosImagensService.getByField('estabelecimentoKey', this.key).subscribe((imagens: any) => {
           subi.unsubscribe();
+          this.imagensEstabelecimento = imagens;
           imagens.forEach((imagem) => {
             this.filesUrl.push(imagem.imagem);
             this.filesPath.push(imagem.filePath);
@@ -152,9 +186,10 @@ export class EstabelecimentosFormPage implements OnInit {
   get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
   get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
   get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
-  get proprietariosUid() { return this.formEstabelecimento.get('proprietariosUid') as FormArray; }
-  get proprietariosEmail() { return this.formEstabelecimento.get('proprietariosEmail') as FormArray; }
+  get proprietariosUid() { return this.formEstabelecimento.get('proprietariosUid'); }
+  get proprietariosEmail() { return this.formEstabelecimento.get('proprietariosEmail'); }
   get enderecos() { return this.formEstabelecimento.get('enderecos') as FormArray; }
+  get formasPagamento() { return this.formEstabelecimento.get('formasPagamento') as FormArray; }
   get imagens() { return this.formEstabelecimento.get('imagens') as FormArray; }
 
   criarFormulario(){
@@ -165,8 +200,8 @@ export class EstabelecimentosFormPage implements OnInit {
       categoriaNome: ['', Validators.required],
       subcategoriaKey: [''],
       subcategoriaNome: [''],
-      proprietariosUid: ['', Validators.required],
-      proprietariosEmail: ['', Validators.required],
+      proprietariosUid: [''],
+      proprietariosEmail: [''],
       cnpj: ['', Validators.required],
       contato: this.formBuilder.group({
         telefone: ['', Validators.required],
@@ -178,12 +213,8 @@ export class EstabelecimentosFormPage implements OnInit {
       }),
       enderecos: this.formBuilder.array([ this.criarFormularioEndereco() ]),
       imagens: this.formBuilder.array([ this.criarFormularioImagem() ]),
-      formasPagamento: this.formBuilder.array([
-
-      ]),
-      horario: this.formBuilder.array([
-        this.formBuilder.control('')
-      ]),
+      formasPagamento: this.criarFormularioPagamento(),
+      horario: this.formBuilder.group(this.criarFormularioHorario()),
     });
 
 
@@ -205,6 +236,51 @@ export class EstabelecimentosFormPage implements OnInit {
       numero: ['', Validators.required],
       complemento: ['']
     });
+  }
+
+
+
+  criarFormularioPagamento() {
+    return this.formBuilder.array([
+      this.formBuilder.group({id: FormaPagamentoTypeEnum.Dinheiro, nome: 'Dinheiro', isChecked: false}),
+      this.formBuilder.group({id: FormaPagamentoTypeEnum.Credito, nome: 'Cartão de crédito', isChecked: false}),
+      this.formBuilder.group({id: FormaPagamentoTypeEnum.Debito, nome: 'Cartão de débito', isChecked: false}),
+      this.formBuilder.group({id: FormaPagamentoTypeEnum.Ticket, nome: 'Ticket', isChecked: false}),
+      this.formBuilder.group({id: FormaPagamentoTypeEnum.Pix, nome: 'Pix', isChecked: false}),
+    ]);
+  }
+
+  criarFormularioHorario() {
+    return {
+      segunda: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      }),
+      terca: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      }),
+      quarta: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      }),
+      quinta: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      }),
+      sexta: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      }),
+      sabado: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      }),
+      domingo: this.formBuilder.group({
+        de: [''],
+        as: ['']
+      })
+    };
   }
 
   criarFormularioImagem(): FormGroup{
@@ -301,7 +377,7 @@ export class EstabelecimentosFormPage implements OnInit {
       this.formEstabelecimento.get('imagens').updateValueAndValidity();
       const reader = new FileReader();
       reader.onload = () => {
-        this.filesUrl.push(reader.result.toString());
+        this.imagensEstabelecimento.push({ imagem: reader.result.toString() });
       };
       reader.readAsDataURL(this.files[this.files.length-1]);
     }else{
@@ -311,7 +387,10 @@ export class EstabelecimentosFormPage implements OnInit {
         this.formEstabelecimento.get('imagens').updateValueAndValidity();
         const reader = new FileReader();
         reader.onload = () => {
-          this.filesUrl.push(reader.result.toString());
+          const fileImg = {
+            imagem: reader.result.toString()
+          };
+          this.imagensEstabelecimento.push(fileImg);
         };
         reader.readAsDataURL(this.files[this.files.length-1]);
       });
@@ -320,9 +399,12 @@ export class EstabelecimentosFormPage implements OnInit {
 
   removeImagem(i: number, key: string){
     // if (this.key) this.estabelecimentosService.removeLogo(this.fileLogoPath, this.key);
-
+    if (key){
+      this.estabelecimentosImagensService.remove(key, this.filesPath[i]);
+    }
     this.filesUrl.splice(i, 1);
     this.filesPath.splice(i, 1);
+    this.imagensEstabelecimento.splice(i, 1);
   }
 
 
