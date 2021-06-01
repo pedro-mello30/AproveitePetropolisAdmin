@@ -2,24 +2,24 @@ export const environment = {
   production: true,
   api: 'http://localhost:3000',
   firebaseConfig: {
-    apiKey: "AIzaSyBsRv5nvvBWaUxedWO78JUOWR9TYWqGxcU",
-    authDomain: "aproveitepetropolis-748a8.firebaseapp.com",
-    projectId: "aproveitepetropolis-748a8",
-    storageBucket: "aproveitepetropolis-748a8.appspot.com",
-    messagingSenderId: "886116317202",
-    appId: "1:886116317202:web:d53fc916e42728e6f040cb",
-    measurementId: "G-326KSMGZWZ"
+    apiKey: "AIzaSyD-PPTumI0L4s1HV6qvdA8FzjWU0Y-iSW0",
+    authDomain: "aproveitepetropolis-61eac.firebaseapp.com",
+    projectId: "aproveitepetropolis-61eac",
+    storageBucket: "aproveitepetropolis-61eac.appspot.com",
+    messagingSenderId: "905879134058",
+    appId: "1:905879134058:web:ddb0dea1d4c8e5db884f13",
+    measurementId: "G-DHK7MXWDP6"
   },
   adminFirebaseConfig: {
     "type": "service_account",
-    "project_id": "aproveitepetropolis-748a8",
-    "private_key_id": "74024c0708b9364c5bf4a8e9923cc3338763f063",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC5rOdEK3Civvsa\nnoX3Rp2Cw6mLOpMKS4fmwSi526bk2n1hh8K7kVfhww9KuysyL/MOHpY6J6ekELay\n6cklucfAkh2Tg6uUnV3CkhvN/tORP1fn0+0VZEf4FWFeTam18OZ/YdWU6cnciBbF\nQLhQe5xt9zCkCM42ywl9qo9tDhzGsWexDXVO306hHFWaHNCEi2NNbdrTTd0Q1BQo\nlOBzya5OiceLjdlVhtmP+ryw1zK0ibpE/aATGZ7xjDSMxnD+mHYG5XM8aGzkiNbo\nmDPVTp11Ig8p3gXG1NE7dDI1AiNJg3C7XoYGxMRMShVPY/d+c/MAdofEeYHyb177\nBsSvJjxfAgMBAAECggEAQlRWObAbCMiZA6VlzjRXyIMFakt+g8r/vZt7ZQnm0RKM\nf+7zzfXaIzh/mf7LK56dgYnDuPq5lI6z9a42wVdg2JZaInyDKxAckomHjUtfYR/z\n00mOBHpSi3l30yyDWA+7B/53Qj9ScYncOJMqRPYjp9UKd079++0EcvQfUKId/Yx9\no7PA3Yg7TC1nXVqWq4DJeNsb913aHE4TTpZPkiQLcoKE5zpyHOkHNklusnAapmv4\n6Ig1AI5mjIIf9YaicjT81YLfQ+BA5Dae0D4br/96uUxUzgnfeDFo5ICxqTfk54dr\nUCifDPofdVIXPLK1tgHyvV6sJm3sG9J1PI3umeJvQQKBgQD350h+0HemjmfxY/+M\nIxZC1lJn0k1BFhfMBftsA5V87GvwhBJz+dUyrNRsDTFMb0GwvjrGkh5kfipr+vUL\naJJoNe5ye5jCMQdr9JYgG6b/Pwfl8Ckw24wL+9kAgIz1GGAQatspfsYP4LuLyt6V\nsnaj+K2uaJjLl1AfTa6Gx4K2twKBgQC/vVUeMa0PYNt0aHq8ScHgdU6+xnXxYGzF\nFo3AzOOyeH0yHe1GktBEcKLIhvgHLYvtIoA4MFWlI+b2Gt2DOzque7ji2ZKDKB33\ntx1Ic1UvdSOsSHXra/Pc2KEIC5E8uCeWd5J1tP0gHBx2MtclbiGEDHL5aDB2kQX0\n2g3lYXA/mQKBgGxUzpJUSSUor/WFrGOx5YV5oPMrrITXwbhvmMo/2rCHpDerj2DM\n+US2z/ET5sovCDbTOl4R9mQV2jXrqe+9V9VgU/4FUuDxifu8G2qWiuiZw7rQsz9d\ngZqvCMo2YuKsLzada357ntPLckmJcrFaFoxbHJLNtI+rZOD5El5lixKLAoGAQ/4X\n2QU0oWdvavBB1dMx9S6kJfKqkFXpPFqrGduOQxOHEeaa5ZPaVuq6TvHNsn3sSMMb\nRNGfDViV5l/QfWDbhlRJU+hjlC79sYI12CNN6e5YIBfx+PHnIEGRmRDBCA8luq3c\nOfFcca6GSUPuF0/egr0HaHoR9Xmn6xQIKXdMHsECgYAapODWsdG+PYzRZYHE1f5D\nO7rxszfLTfbChKaaqiuHjXQJn/Eg5Cb//oPy6cRBE+n/pEjKa5FqEHAv8k1QUTCe\nhkSUTbu9Y4rwa3/HOArqvqTOtdBLGdnrUrVaj3T8SBszO4bLdAmcCIaK3NL73T9g\nahzzgNynSXHddmdaoGhUZw==\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-x2ne2@aproveitepetropolis-748a8.iam.gserviceaccount.com",
-    "client_id": "106735602122422429122",
+    "project_id": "aproveitepetropolis-61eac",
+    "private_key_id": "9d8f14d63962878fd91c70032a285332dd895f50",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgZWP3GY9uVeZB\nYFAeOMz6UzoUVubprY7XTfcqzVUgYLM4UJrNreWs8KV4cmSynKbR8Wyx00LmdNA9\nd/tlQniynAwtyG08RqwpbjJGNoEG5ZXwbRILUawDhbiMJ6Jy7b5VNE7OH2V1/wYj\n+bUFVFx74HYZz/dKmAy8d0+GkqxGJZGmehn889I9mPjPwPoZq/uOTARnwPV0bbMC\nGAo8gKI9Np6k/mGCLVTfzRzMMkP4bA1zwNKelU8nuNz9v565alwBg7PrirxtYxBU\nFDnnHBqXv0UKkvRdnoEDw7Jov7mRE1dB7a7xajnq2/PVZClCduzwfffBhAdZ0nXj\nFsRUie1NAgMBAAECggEACfZSL6pMQM+gBgZ742ymupOJw3KkU/Y+LXw/sk5fj6vB\n5ekHvGelIMkvldwRChD1wYtrs13KRXMS7gZyPFdVFM7haMSOmFRRZB9eiwLen7WJ\nyw2TNdXER9G55SafDeFbVYJytJW5oQsOcBSV3DdhqSYHX9INa3onLFuCunqIrbCV\nXKyT/JqNGBqLZBw0EIpLzAAY1R65I5B09kDyaO/F0RABmKG1Sbem6AiEusHiJFJ5\n/X6OBh4XCX00ioPgKulgiUFQc0oCUaZIxHGsm16wtlmdlRNHlCQOcEoZQ8S3BVti\nlLNr9PNA+O6WR3WgF4/nhEKUfpw91Kh/0uWS1i9R5wKBgQDg76Tlxhab8JIul70K\n0rSf2ZpnTQDXoaZYt/hVkGcpTJFd6gJaNHw6GX6Ha01hOLGoH0JD2wcV8FKQ1npX\nFODPunC4c69iAvgrGSAv6TxvjLYJW/dWjFpTqhzDiEx1idDovyDIlRlMeX6zCSzS\nXTE6hvCdt6TErB01+JuXIh9kuwKBgQC2jAHo4+hk9OghcIyGK43mPLwgiL6HJgqE\n6rERukUieXopg8csWe2RKAOBhNRaAoLv8eCq1YkOghFsZyRoVAiHfVPXjPWikuG7\n9YZSUG59WZElYACMNntT+a1gR0+Gb/LIkPNpNunyjorOBIqi00kWjoa7agS3UTSL\nE+7h3jnZlwKBgCKiY6aJkLOkIC4SaSZAeVVfoRmkzqtlFYL1mMQ7/tZqFrv6KzCO\ngk5D3KqnR/vfSeOUJJTkJbwoC96HV8EO0urJT0/naCrUQDgKn10hMZAPf3wDcBsg\nc0wMlm85DmTOup8LxtV7t7CByJNypzcg6FKVsnjmbPVndvv3cqWbuG+/AoGAUzjl\nLf2pV01n/sbG6ew1Vv/dbJ+q7QZkyVANxd0744mqLf8L8KZW7lRltMiP3zFB7I5D\nNN8BCwI1W0xyhrW45bw3Ww/CdImuK/i1chWFKdSJnZZ06Xd1JkWvyzL3iHzFHLco\noZENey2NDnt3kN/udEAqIIsm90QoRjeiMosTqKUCgYEAs1EyijDBn9tkFROWLLjm\npr47bXfr457m6nTUQKENhlbwlu6lvf2dGjw+FsalkkABw6id65GKxuXOdiU+Oksw\na3Yx3OZVpPJqBwhqT5GzUPo0emvrG9mcxd5eOJsUIM8MFxQhHoWcfZ+oAdUvi73t\n3rgA1L8XtKax81lwZgCiGOM=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-buahj@aproveitepetropolis-61eac.iam.gserviceaccount.com",
+    "client_id": "106411941768450388715",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-x2ne2%40aproveitepetropolis-748a8.iam.gserviceaccount.com"
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-buahj%40aproveitepetropolis-61eac.iam.gserviceaccount.com"
   }
 };

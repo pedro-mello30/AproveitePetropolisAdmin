@@ -27,7 +27,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _usuarios_form_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usuarios-form.page.scss */ "3iSI");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
-/* harmony import */ var _login_shared_usuario_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../login/shared/usuario-auth.service */ "E+93");
+/* harmony import */ var _shared_usuario_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/usuario.service */ "9y5M");
+/* harmony import */ var _core_services_toast_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../core/services/toast.service */ "Olgc");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "tyNb");
+
+
 
 
 
@@ -41,26 +45,83 @@ __webpack_require__.r(__webpack_exports__);
 //   credential: firebaseAdmin.credential.cert(environment.adminFirebaseConfig)
 // });
 let UsuariosFormPage = class UsuariosFormPage {
-    constructor(formBuilder, usuarioAuthService) {
+    constructor(formBuilder, usuariosService, route, router, toast) {
         this.formBuilder = formBuilder;
-        this.usuarioAuthService = usuarioAuthService;
+        this.usuariosService = usuariosService;
+        this.route = route;
+        this.router = router;
+        this.toast = toast;
         this.title = 'Novo Usuário';
+        this.key = null;
     }
     ngOnInit() {
-        this.criarFormulario();
+        const key = this.route.snapshot.paramMap.get('key');
+        if (key) {
+            this.key = key;
+            this.criarFormulario('edit');
+            this.title = "Editar Usuário";
+            const sub = this.usuariosService.getById(key).subscribe((usuario) => {
+                sub.unsubscribe();
+                this.key = usuario.uid;
+                this.formUsuario.patchValue({
+                    nome: usuario.displayName,
+                    email: usuario.email
+                });
+            });
+        }
+        else {
+            this.criarFormulario('new');
+        }
+        console.log(this.key);
     }
-    criarFormulario() {
-        this.formUsuario = this.formBuilder.group({
-            nome: [''],
-            email: [''],
-            senha: ['']
-        });
+    criarFormulario(type) {
+        if (type === 'new') {
+            this.formUsuario = this.formBuilder.group({
+                nome: [''],
+                email: [''],
+                password: ['']
+            });
+        }
+        else if (type === 'edit') {
+            this.formUsuario = this.formBuilder.group({
+                nome: [''],
+                email: [''],
+            });
+        }
     }
-    onSubmit() { }
+    onSubmit() {
+        if (this.formUsuario.valid) {
+            const formUser = this.formUsuario.value;
+            this.save(formUser);
+            this.toast.showSuccess('Membro salvo com sucesso');
+            this.router.navigate(['/usuarios']);
+        }
+    }
+    save(user) {
+        if (this.key === null) {
+            const newUser = {
+                nome: user.nome,
+                email: user.email,
+                password: user.password
+            };
+            this.usuariosService.create(newUser).subscribe();
+        }
+        else {
+            const updateUser = {
+                uid: this.key,
+                nome: user.nome,
+                email: user.email,
+            };
+            this.usuariosService.update(updateUser).subscribe();
+        }
+    }
 };
 UsuariosFormPage.ctorParameters = () => [
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"] },
-    { type: _login_shared_usuario_auth_service__WEBPACK_IMPORTED_MODULE_5__["UsuarioAuthService"] }
+    { type: _shared_usuario_service__WEBPACK_IMPORTED_MODULE_5__["UsuarioService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] },
+    { type: _core_services_toast_service__WEBPACK_IMPORTED_MODULE_6__["ToastService"] }
 ];
 UsuariosFormPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -70,6 +131,27 @@ UsuariosFormPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     })
 ], UsuariosFormPage);
 
+
+
+/***/ }),
+
+/***/ "0bLM":
+/*!********************************************!*\
+  !*** ./src/app/http-interceptors/index.ts ***!
+  \********************************************/
+/*! exports provided: httpInterceptorProviders */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "httpInterceptorProviders", function() { return httpInterceptorProviders; });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _auth_interceptor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth-interceptor */ "OhBw");
+
+
+const httpInterceptorProviders = [
+    { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HTTP_INTERCEPTORS"], useClass: _auth_interceptor__WEBPACK_IMPORTED_MODULE_1__["AuthInterceptor"], multi: true }
+];
 
 
 /***/ }),
@@ -157,7 +239,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Usuários</ion-title>\n    <ion-button slot=\"end\" class=\"ion-margin-end\" [routerLink]=\"['/usuarios/novo']\">Novo</ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <div *ngIf=\"usuarios.length == 0\" class=\"alert alert-warning\" role=\"alert\">\n          Nenhuma usuário cadastrado.\n        </div>\n        <div *ngIf=\"usuarios.length > 0\">\n          <ion-item *ngFor=\"let usuario of usuarios\">\n            <ion-label>{{usuario.nome}}</ion-label>\n            <ion-button slot=\"end\" color=\"primary\" [routerLink]=\"['/categorias/editar/', usuario._id]\">\n              <ion-icon slot=\"start\" ios=\"create-outline\" md=\"create-outline\"></ion-icon>\n              Editar\n            </ion-button>\n            <ion-button slot=\"end\" color=\"danger\" (click)=\"remove()\">\n              <ion-icon slot=\"start\" name=\"trash-outline\"></ion-icon>\n              Excluir\n            </ion-button>\n          </ion-item>\n\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Usuários</ion-title>\n    <ion-button slot=\"end\" class=\"ion-margin-end\" [routerLink]=\"['/usuarios/novo']\">Novo</ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <div *ngIf=\"(usuarios | async)?.length === 0\" class=\"alert alert-warning\" role=\"alert\">\n          Carregando membros...\n        </div>\n        <div *ngIf=\"(usuarios | async)?.length > 0\">\n          <ion-item *ngFor=\"let usuario of usuarios | async\">\n            <ion-label>{{usuario.displayName}}</ion-label>\n            <ion-button slot=\"end\" color=\"primary\" [routerLink]=\"['/usuarios/editar/', usuario.uid]\">\n              <ion-icon slot=\"start\" ios=\"create-outline\" md=\"create-outline\"></ion-icon>\n              Editar\n            </ion-button>\n<!--            <ion-button slot=\"end\" color=\"danger\" (click)=\"remove()\">-->\n<!--              <ion-icon slot=\"start\" name=\"trash-outline\"></ion-icon>-->\n<!--              Excluir-->\n<!--            </ion-button>-->\n          </ion-item>\n\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ }),
 
@@ -203,6 +285,57 @@ UsuariosListaPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"
 
 /***/ }),
 
+/***/ "9y5M":
+/*!****************************************************!*\
+  !*** ./src/app/usuarios/shared/usuario.service.ts ***!
+  \****************************************************/
+/*! exports provided: UsuarioService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuarioService", function() { return UsuarioService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "AytR");
+
+
+
+
+let UsuarioService = class UsuarioService {
+    constructor(http) {
+        this.http = http;
+    }
+    getAll() {
+        return this.http.get(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/membros`).toPromise();
+    }
+    getById(id) {
+        return this.http.get(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/membros/${id}`);
+    }
+    create(usuario) {
+        return this.http.post(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/membros`, usuario);
+    }
+    update(usuario) {
+        return this.http.put(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/membros/${usuario.uid}`, usuario);
+    }
+    delete(id) {
+        return this.http.delete(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/membros/${id}`);
+    }
+};
+UsuarioService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+];
+UsuarioService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], UsuarioService);
+
+
+
+/***/ }),
+
 /***/ "AytR":
 /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
@@ -218,27 +351,27 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    api: 'http://localhost:3000',
+    api: 'https://us-central1-aproveitepetropolis-61eac.cloudfunctions.net/api',
     firebaseConfig: {
-        apiKey: "AIzaSyBsRv5nvvBWaUxedWO78JUOWR9TYWqGxcU",
-        authDomain: "aproveitepetropolis-748a8.firebaseapp.com",
-        projectId: "aproveitepetropolis-748a8",
-        storageBucket: "aproveitepetropolis-748a8.appspot.com",
-        messagingSenderId: "886116317202",
-        appId: "1:886116317202:web:d53fc916e42728e6f040cb",
-        measurementId: "G-326KSMGZWZ"
+        apiKey: "AIzaSyD-PPTumI0L4s1HV6qvdA8FzjWU0Y-iSW0",
+        authDomain: "aproveitepetropolis-61eac.firebaseapp.com",
+        projectId: "aproveitepetropolis-61eac",
+        storageBucket: "aproveitepetropolis-61eac.appspot.com",
+        messagingSenderId: "905879134058",
+        appId: "1:905879134058:web:ddb0dea1d4c8e5db884f13",
+        measurementId: "G-DHK7MXWDP6"
     },
     adminFirebaseConfig: {
         "type": "service_account",
-        "project_id": "aproveitepetropolis-748a8",
-        "private_key_id": "74024c0708b9364c5bf4a8e9923cc3338763f063",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC5rOdEK3Civvsa\nnoX3Rp2Cw6mLOpMKS4fmwSi526bk2n1hh8K7kVfhww9KuysyL/MOHpY6J6ekELay\n6cklucfAkh2Tg6uUnV3CkhvN/tORP1fn0+0VZEf4FWFeTam18OZ/YdWU6cnciBbF\nQLhQe5xt9zCkCM42ywl9qo9tDhzGsWexDXVO306hHFWaHNCEi2NNbdrTTd0Q1BQo\nlOBzya5OiceLjdlVhtmP+ryw1zK0ibpE/aATGZ7xjDSMxnD+mHYG5XM8aGzkiNbo\nmDPVTp11Ig8p3gXG1NE7dDI1AiNJg3C7XoYGxMRMShVPY/d+c/MAdofEeYHyb177\nBsSvJjxfAgMBAAECggEAQlRWObAbCMiZA6VlzjRXyIMFakt+g8r/vZt7ZQnm0RKM\nf+7zzfXaIzh/mf7LK56dgYnDuPq5lI6z9a42wVdg2JZaInyDKxAckomHjUtfYR/z\n00mOBHpSi3l30yyDWA+7B/53Qj9ScYncOJMqRPYjp9UKd079++0EcvQfUKId/Yx9\no7PA3Yg7TC1nXVqWq4DJeNsb913aHE4TTpZPkiQLcoKE5zpyHOkHNklusnAapmv4\n6Ig1AI5mjIIf9YaicjT81YLfQ+BA5Dae0D4br/96uUxUzgnfeDFo5ICxqTfk54dr\nUCifDPofdVIXPLK1tgHyvV6sJm3sG9J1PI3umeJvQQKBgQD350h+0HemjmfxY/+M\nIxZC1lJn0k1BFhfMBftsA5V87GvwhBJz+dUyrNRsDTFMb0GwvjrGkh5kfipr+vUL\naJJoNe5ye5jCMQdr9JYgG6b/Pwfl8Ckw24wL+9kAgIz1GGAQatspfsYP4LuLyt6V\nsnaj+K2uaJjLl1AfTa6Gx4K2twKBgQC/vVUeMa0PYNt0aHq8ScHgdU6+xnXxYGzF\nFo3AzOOyeH0yHe1GktBEcKLIhvgHLYvtIoA4MFWlI+b2Gt2DOzque7ji2ZKDKB33\ntx1Ic1UvdSOsSHXra/Pc2KEIC5E8uCeWd5J1tP0gHBx2MtclbiGEDHL5aDB2kQX0\n2g3lYXA/mQKBgGxUzpJUSSUor/WFrGOx5YV5oPMrrITXwbhvmMo/2rCHpDerj2DM\n+US2z/ET5sovCDbTOl4R9mQV2jXrqe+9V9VgU/4FUuDxifu8G2qWiuiZw7rQsz9d\ngZqvCMo2YuKsLzada357ntPLckmJcrFaFoxbHJLNtI+rZOD5El5lixKLAoGAQ/4X\n2QU0oWdvavBB1dMx9S6kJfKqkFXpPFqrGduOQxOHEeaa5ZPaVuq6TvHNsn3sSMMb\nRNGfDViV5l/QfWDbhlRJU+hjlC79sYI12CNN6e5YIBfx+PHnIEGRmRDBCA8luq3c\nOfFcca6GSUPuF0/egr0HaHoR9Xmn6xQIKXdMHsECgYAapODWsdG+PYzRZYHE1f5D\nO7rxszfLTfbChKaaqiuHjXQJn/Eg5Cb//oPy6cRBE+n/pEjKa5FqEHAv8k1QUTCe\nhkSUTbu9Y4rwa3/HOArqvqTOtdBLGdnrUrVaj3T8SBszO4bLdAmcCIaK3NL73T9g\nahzzgNynSXHddmdaoGhUZw==\n-----END PRIVATE KEY-----\n",
-        "client_email": "firebase-adminsdk-x2ne2@aproveitepetropolis-748a8.iam.gserviceaccount.com",
-        "client_id": "106735602122422429122",
+        "project_id": "aproveitepetropolis-61eac",
+        "private_key_id": "9d8f14d63962878fd91c70032a285332dd895f50",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgZWP3GY9uVeZB\nYFAeOMz6UzoUVubprY7XTfcqzVUgYLM4UJrNreWs8KV4cmSynKbR8Wyx00LmdNA9\nd/tlQniynAwtyG08RqwpbjJGNoEG5ZXwbRILUawDhbiMJ6Jy7b5VNE7OH2V1/wYj\n+bUFVFx74HYZz/dKmAy8d0+GkqxGJZGmehn889I9mPjPwPoZq/uOTARnwPV0bbMC\nGAo8gKI9Np6k/mGCLVTfzRzMMkP4bA1zwNKelU8nuNz9v565alwBg7PrirxtYxBU\nFDnnHBqXv0UKkvRdnoEDw7Jov7mRE1dB7a7xajnq2/PVZClCduzwfffBhAdZ0nXj\nFsRUie1NAgMBAAECggEACfZSL6pMQM+gBgZ742ymupOJw3KkU/Y+LXw/sk5fj6vB\n5ekHvGelIMkvldwRChD1wYtrs13KRXMS7gZyPFdVFM7haMSOmFRRZB9eiwLen7WJ\nyw2TNdXER9G55SafDeFbVYJytJW5oQsOcBSV3DdhqSYHX9INa3onLFuCunqIrbCV\nXKyT/JqNGBqLZBw0EIpLzAAY1R65I5B09kDyaO/F0RABmKG1Sbem6AiEusHiJFJ5\n/X6OBh4XCX00ioPgKulgiUFQc0oCUaZIxHGsm16wtlmdlRNHlCQOcEoZQ8S3BVti\nlLNr9PNA+O6WR3WgF4/nhEKUfpw91Kh/0uWS1i9R5wKBgQDg76Tlxhab8JIul70K\n0rSf2ZpnTQDXoaZYt/hVkGcpTJFd6gJaNHw6GX6Ha01hOLGoH0JD2wcV8FKQ1npX\nFODPunC4c69iAvgrGSAv6TxvjLYJW/dWjFpTqhzDiEx1idDovyDIlRlMeX6zCSzS\nXTE6hvCdt6TErB01+JuXIh9kuwKBgQC2jAHo4+hk9OghcIyGK43mPLwgiL6HJgqE\n6rERukUieXopg8csWe2RKAOBhNRaAoLv8eCq1YkOghFsZyRoVAiHfVPXjPWikuG7\n9YZSUG59WZElYACMNntT+a1gR0+Gb/LIkPNpNunyjorOBIqi00kWjoa7agS3UTSL\nE+7h3jnZlwKBgCKiY6aJkLOkIC4SaSZAeVVfoRmkzqtlFYL1mMQ7/tZqFrv6KzCO\ngk5D3KqnR/vfSeOUJJTkJbwoC96HV8EO0urJT0/naCrUQDgKn10hMZAPf3wDcBsg\nc0wMlm85DmTOup8LxtV7t7CByJNypzcg6FKVsnjmbPVndvv3cqWbuG+/AoGAUzjl\nLf2pV01n/sbG6ew1Vv/dbJ+q7QZkyVANxd0744mqLf8L8KZW7lRltMiP3zFB7I5D\nNN8BCwI1W0xyhrW45bw3Ww/CdImuK/i1chWFKdSJnZZ06Xd1JkWvyzL3iHzFHLco\noZENey2NDnt3kN/udEAqIIsm90QoRjeiMosTqKUCgYEAs1EyijDBn9tkFROWLLjm\npr47bXfr457m6nTUQKENhlbwlu6lvf2dGjw+FsalkkABw6id65GKxuXOdiU+Oksw\na3Yx3OZVpPJqBwhqT5GzUPo0emvrG9mcxd5eOJsUIM8MFxQhHoWcfZ+oAdUvi73t\n3rgA1L8XtKax81lwZgCiGOM=\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-buahj@aproveitepetropolis-61eac.iam.gserviceaccount.com",
+        "client_id": "106411941768450388715",
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-x2ne2%40aproveitepetropolis-748a8.iam.gserviceaccount.com"
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-buahj%40aproveitepetropolis-61eac.iam.gserviceaccount.com"
     }
 };
 /*
@@ -361,6 +494,103 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "GLKn":
+/*!*************************************************!*\
+  !*** ./src/app/usuarios/shared/auth.service.ts ***!
+  \*************************************************/
+/*! exports provided: AuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "AytR");
+/* harmony import */ var jwt_decode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jwt-decode */ "EjJx");
+
+
+
+
+
+let AuthService = class AuthService {
+    constructor(httpBackend) {
+        this.httpBackend = httpBackend;
+        this.http = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"](this.httpBackend);
+    }
+    login(email, password) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                const response = yield this.http.post(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].api}/auth-admin/login`, { email, password }).toPromise();
+                if (response.access_token) {
+                    this.setAuthorizationToken(response.access_token);
+                    return true;
+                }
+                return false;
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+        });
+    }
+    setAuthorizationToken(token) {
+        localStorage.setItem('token', token);
+    }
+    removeAuthorizationToken() {
+        localStorage.removeItem('token');
+    }
+    getAuthorizationToken() {
+        return localStorage.getItem('token');
+    }
+    getUser() {
+        const token = this.getAuthorizationToken();
+        const decoded = Object(jwt_decode__WEBPACK_IMPORTED_MODULE_4__["default"])(token);
+        return {
+            email: decoded.email,
+            nome: decoded.nome,
+        };
+    }
+    getTokenExpirationDate(token) {
+        const decoded = Object(jwt_decode__WEBPACK_IMPORTED_MODULE_4__["default"])(token);
+        if (decoded.exp === undefined) {
+            return null;
+        }
+        const date = new Date(0);
+        date.setUTCSeconds(decoded.exp);
+        return date;
+    }
+    isTokenExpired(token) {
+        if (!token) {
+            return true;
+        }
+        const date = this.getTokenExpirationDate(token);
+        if (date === undefined) {
+            return false;
+        }
+        return !(date.valueOf() > new Date().valueOf());
+    }
+    isUserLoggedIn() {
+        const token = this.getAuthorizationToken();
+        if (token && !this.isTokenExpired(token)) {
+            return true;
+        }
+        return false;
+    }
+};
+AuthService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpBackend"] }
+];
+AuthService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], AuthService);
+
+
+
+/***/ }),
+
 /***/ "H/Xy":
 /*!************************************************************************!*\
   !*** ./src/app/usuarios/usuarios-form/usuarios-form-routing.module.ts ***!
@@ -455,6 +685,67 @@ AuthGuard = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("\n<form [formGroup]=\"formEsqueciSenha\" (ngSubmit)=\"onSubmit()\">\n  <ion-item>\n    <ion-label position=\"stacked\">E-mail</ion-label>\n    <ion-input type=\"email\" formControlName=\"email\"></ion-input>\n  </ion-item>\n\n  <div padding>\n    <ion-button color=\"primary\" expand=\"block\" type=\"submit\">Resetar minha senha</ion-button>\n  </div>\n</form>\n<ion-button expand=\"block\" color=\"dark\" fill=\"clear\" margin-top  [routerLink]=\"['/login']\">Entrar</ion-button>\n\n");
+
+/***/ }),
+
+/***/ "OhBw":
+/*!*******************************************************!*\
+  !*** ./src/app/http-interceptors/auth-interceptor.ts ***!
+  \*******************************************************/
+/*! exports provided: AuthInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthInterceptor", function() { return AuthInterceptor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _usuarios_shared_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../usuarios/shared/auth.service */ "GLKn");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+
+
+
+
+
+let AuthInterceptor = class AuthInterceptor {
+    constructor(authApiService) {
+        this.authApiService = authApiService;
+        this.urlsToNotUse = [
+            'https://viacep.com.br/ws'
+        ];
+    }
+    intercept(req, next) {
+        const token = this.authApiService.getAuthorizationToken();
+        let request = req;
+        if (req.url.indexOf('viacep') < 0) {
+            if (token && !this.authApiService.isTokenExpired(token)) {
+                request = req.clone({
+                    headers: req.headers.set('Authorization', `Bearer ${token}`)
+                });
+            }
+            return next.handle(request)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(erro => rxjs__WEBPACK_IMPORTED_MODULE_3__["Observable"].throw(erro.message)));
+        }
+        else {
+            return next.handle(request)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(erro => rxjs__WEBPACK_IMPORTED_MODULE_3__["Observable"].throw(erro.message)));
+        }
+    }
+    handlerError(error) {
+        if (error.error instanceof ErrorEvent) {
+            console.error('Ocorreu um erro:', error.error.message);
+        }
+    }
+};
+AuthInterceptor.ctorParameters = () => [
+    { type: _usuarios_shared_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }
+];
+AuthInterceptor = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
+], AuthInterceptor);
+
+
 
 /***/ }),
 
@@ -674,7 +965,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{title}}</ion-title>\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <form [formGroup]=\"formUsuario\" (ngSubmit)=\"onSubmit()\">\n          <ion-item>\n            <ion-label position=\"stacked\">Nome</ion-label>\n            <ion-input type=\"text\" formControlName=\"nome\"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label position=\"stacked\">E-mail</ion-label>\n            <ion-input type=\"email\" formControlName=\"email\"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label position=\"stacked\">Senha</ion-label>\n            <ion-input type=\"password\" formControlName=\"senha\"></ion-input>\n          </ion-item>\n          <div margin-vertical>\n            <ion-button color=\"primary\" expand=\"block\" type=\"submit\">Salvar</ion-button>\n          </div>\n        </form>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{title}}</ion-title>\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <form [formGroup]=\"formUsuario\" (ngSubmit)=\"onSubmit()\">\n          <ion-item>\n            <ion-label position=\"stacked\">Nome</ion-label>\n            <ion-input type=\"text\" autocomplete=\"off\" formControlName=\"nome\"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label position=\"stacked\">E-mail</ion-label>\n            <ion-input type=\"email\" autocomplete=\"off\" formControlName=\"email\"></ion-input>\n          </ion-item>\n          <ion-item *ngIf=\"key === null\">\n            <ion-label position=\"stacked\">Senha</ion-label>\n            <ion-input type=\"password\"  autocomplete=\"off\" formControlName=\"password\"></ion-input>\n          </ion-item>\n          <div margin-vertical>\n            <ion-button color=\"primary\" expand=\"block\" type=\"submit\">Salvar</ion-button>\n          </div>\n        </form>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -692,21 +983,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_usuarios_lista_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./usuarios-lista.page.html */ "6gee");
 /* harmony import */ var _usuarios_lista_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usuarios-lista.page.scss */ "Fwh9");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _shared_usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/usuario.service */ "9y5M");
+/* harmony import */ var _shared_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/auth.service */ "GLKn");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "qCKp");
+
+
+
 
 
 
 
 let UsuariosListaPage = class UsuariosListaPage {
-    constructor() {
-        this.usuarios = [
-            { nome: 'Usuário' }
-        ];
+    constructor(authApiService, usuariosService) {
+        this.authApiService = authApiService;
+        this.usuariosService = usuariosService;
     }
     ngOnInit() {
+        const user = {
+            email: "admin-user-api",
+            password: "admin-user-api"
+        };
+        this.authApiService.login(user.email, user.password);
+        this.loadUsuarios();
+        console.log(this.usuarios);
+    }
+    loadUsuarios() {
+        const result = this.usuariosService.getAll();
+        this.usuarios = Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["from"])(result);
     }
     remove() { }
 };
-UsuariosListaPage.ctorParameters = () => [];
+UsuariosListaPage.ctorParameters = () => [
+    { type: _shared_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"] },
+    { type: _shared_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"] }
+];
 UsuariosListaPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
         selector: 'app-usuarios-lista',
@@ -886,6 +1196,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/fire/database */ "sSZD");
 /* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/fire/storage */ "Vaw3");
 /* harmony import */ var _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @brunoc/ngx-viacep */ "bhdO");
+/* harmony import */ var _http_interceptors__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./http-interceptors */ "0bLM");
+
 
 
 
@@ -934,7 +1246,8 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_20__["NgxViacepModule"],
         ],
         providers: [
-            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicRouteStrategy"] }
+            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicRouteStrategy"] },
+            _http_interceptors__WEBPACK_IMPORTED_MODULE_21__["httpInterceptorProviders"]
         ],
         bootstrap: [
             _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],

@@ -19,12 +19,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _categorias_shared_categorias_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../categorias/shared/categorias.service */ "xMlV");
 /* harmony import */ var _core_services_toast_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../core/services/toast.service */ "Olgc");
 /* harmony import */ var _shared_estabelecimentos_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/estabelecimentos.service */ "7OnO");
-/* harmony import */ var _subcategorias_shared_subcategorias_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../subcategorias/shared/subcategorias.service */ "aw4o");
-/* harmony import */ var _shared_estabelecimentos_enderecos_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../shared/estabelecimentos-enderecos.service */ "uLwe");
-/* harmony import */ var _shared_estabelecimentos_imagens_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../shared/estabelecimentos-imagens.service */ "ia4h");
-/* harmony import */ var _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @brunoc/ngx-viacep */ "bhdO");
-/* harmony import */ var _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../shared/dias.type.enum */ "Kzbj");
-/* harmony import */ var _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../shared/forma-pagamento.type.enum */ "ThFy");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var _subcategorias_shared_subcategorias_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../subcategorias/shared/subcategorias.service */ "aw4o");
+/* harmony import */ var _shared_estabelecimentos_enderecos_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../shared/estabelecimentos-enderecos.service */ "uLwe");
+/* harmony import */ var _shared_estabelecimentos_imagens_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../shared/estabelecimentos-imagens.service */ "ia4h");
+/* harmony import */ var _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @brunoc/ngx-viacep */ "bhdO");
+/* harmony import */ var _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../shared/dias.type.enum */ "Kzbj");
+/* harmony import */ var _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../shared/forma-pagamento.type.enum */ "ThFy");
+/* harmony import */ var _usuarios_shared_usuario_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../usuarios/shared/usuario.service */ "9y5M");
+
+
 
 
 
@@ -41,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let EstabelecimentosFormPage = class EstabelecimentosFormPage {
-    constructor(formBuilder, route, router, estabelecimentosService, estabelecimentosImagensService, estabelecimentosEnderecosService, categoriaService, subcategoriaService, toast, viacep) {
+    constructor(formBuilder, route, router, estabelecimentosService, estabelecimentosImagensService, estabelecimentosEnderecosService, categoriaService, subcategoriaService, usuarioService, toast, viacep) {
         this.formBuilder = formBuilder;
         this.route = route;
         this.router = router;
@@ -50,36 +54,40 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
         this.estabelecimentosEnderecosService = estabelecimentosEnderecosService;
         this.categoriaService = categoriaService;
         this.subcategoriaService = subcategoriaService;
+        this.usuarioService = usuarioService;
         this.toast = toast;
         this.viacep = viacep;
         this.title = 'Novo Estabelecimento';
         this.fileLogo = null;
         this.logoUrl = '';
         this.fileLogoPath = '';
-        this.formaPagamentos = [
-            { nome: 'Dinheiro', value: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_14__["FormaPagamentoTypeEnum"].Dinheiro },
-            { nome: 'Cartão de crédito', value: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_14__["FormaPagamentoTypeEnum"].Credito },
-            { nome: 'Cartão de débito', value: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_14__["FormaPagamentoTypeEnum"].Debito },
-            { nome: 'Ticket', value: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_14__["FormaPagamentoTypeEnum"].Ticket },
-            { nome: 'Pix', value: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_14__["FormaPagamentoTypeEnum"].Pix },
-        ];
+        this.proprietarios = [];
+        // formaPagamentos = [
+        //   {nome: 'Dinheiro', value: FormaPagamentoTypeEnum.Dinheiro, isChecked: false},
+        //   {nome: 'Cartão de crédito', value: FormaPagamentoTypeEnum.Credito, isChecked: false},
+        //   {nome: 'Cartão de débito', value: FormaPagamentoTypeEnum.Debito, isChecked: false},
+        //   {nome: 'Ticket', value: FormaPagamentoTypeEnum.Ticket, isChecked: false},
+        //   {nome: 'Pix', value: FormaPagamentoTypeEnum.Pix, isChecked: false},
+        //   ];
         this.dias = [
-            { nome: 'Segunda-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Segunda },
-            { nome: 'Terça-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Terca },
-            { nome: 'Quarta-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Quarta },
-            { nome: 'Quinta-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Quinta },
-            { nome: 'Sexta-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Sexta },
-            { nome: 'Sábado', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Sabado },
-            { nome: 'Domingo', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_13__["DiasTypeEnum"].Domingo },
+            { nome: 'Segunda-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Segunda },
+            { nome: 'Terça-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Terca },
+            { nome: 'Quarta-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Quarta },
+            { nome: 'Quinta-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Quinta },
+            { nome: 'Sexta-feira', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Sexta },
+            { nome: 'Sábado', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Sabado },
+            { nome: 'Domingo', value: _shared_dias_type_enum__WEBPACK_IMPORTED_MODULE_14__["DiasTypeEnum"].Domingo },
         ];
         this.files = [];
         this.filesUrl = [];
         this.filesPath = [];
+        this.imagensEstabelecimento = [];
     }
     ngOnInit() {
         this.criarFormulario();
         this.criarGroupFormLogo();
         this.categorias = this.categoriaService.getAll();
+        this.membros = Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["from"])(this.usuarioService.getAll());
         const key = this.route.snapshot.paramMap.get('key');
         if (key) {
             this.title = 'Editar Estabelecimento';
@@ -94,6 +102,8 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
                     categoriaNome: estabelecimento.categoriaNome,
                     subcategoriaKey: estabelecimento.subcategoriaKey,
                     subcategoriaNome: estabelecimento.subcategoriaNome,
+                    proprietariosUid: estabelecimento.proprietariosUid,
+                    proprietariosEmail: estabelecimento.proprietariosEmail,
                     cnpj: estabelecimento.cnpj,
                     contato: {
                         telefone: estabelecimento.contato.telefone,
@@ -102,7 +112,37 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
                         facebook: estabelecimento.contato.facebook,
                         instagram: estabelecimento.contato.instagram,
                     },
-                    formasPagamento: estabelecimento.formasPagamento
+                    formasPagamento: estabelecimento.formasPagamento,
+                    horario: {
+                        segunda: {
+                            de: estabelecimento.horario.segunda.de,
+                            as: estabelecimento.horario.segunda.as
+                        },
+                        terca: {
+                            de: estabelecimento.horario.terca.de,
+                            as: estabelecimento.horario.terca.as
+                        },
+                        quarta: {
+                            de: estabelecimento.horario.quarta.de,
+                            as: estabelecimento.horario.quarta.as
+                        },
+                        quinta: {
+                            de: estabelecimento.horario.quinta.de,
+                            as: estabelecimento.horario.quinta.as
+                        },
+                        sexta: {
+                            de: estabelecimento.horario.sexta.de,
+                            as: estabelecimento.horario.sexta.as
+                        },
+                        sabado: {
+                            de: estabelecimento.horario.sabado.de,
+                            as: estabelecimento.horario.sabado.as
+                        },
+                        domingo: {
+                            de: estabelecimento.horario.domingo.de,
+                            as: estabelecimento.horario.domingo.as
+                        }
+                    }
                 });
                 const sub = this.estabelecimentosEnderecosService.getByField('estabelecimentoKey', this.key).subscribe((enderecos) => {
                     sub.unsubscribe();
@@ -123,6 +163,7 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
                 });
                 const subi = this.estabelecimentosImagensService.getByField('estabelecimentoKey', this.key).subscribe((imagens) => {
                     subi.unsubscribe();
+                    this.imagensEstabelecimento = imagens;
                     imagens.forEach((imagem) => {
                         this.filesUrl.push(imagem.imagem);
                         this.filesPath.push(imagem.filePath);
@@ -139,7 +180,10 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
     get categoriaKey() { return this.formEstabelecimento.get('categoriaKey'); }
     get subcategoriaNome() { return this.formEstabelecimento.get('subcategoriaNome'); }
     get subcategoriaKey() { return this.formEstabelecimento.get('subcategoriaKey'); }
+    get proprietariosUid() { return this.formEstabelecimento.get('proprietariosUid'); }
+    get proprietariosEmail() { return this.formEstabelecimento.get('proprietariosEmail'); }
     get enderecos() { return this.formEstabelecimento.get('enderecos'); }
+    get formasPagamento() { return this.formEstabelecimento.get('formasPagamento'); }
     get imagens() { return this.formEstabelecimento.get('imagens'); }
     criarFormulario() {
         this.formEstabelecimento = this.formBuilder.group({
@@ -149,6 +193,8 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
             categoriaNome: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             subcategoriaKey: [''],
             subcategoriaNome: [''],
+            proprietariosUid: [''],
+            proprietariosEmail: [''],
             cnpj: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             contato: this.formBuilder.group({
                 telefone: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
@@ -160,10 +206,8 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
             }),
             enderecos: this.formBuilder.array([this.criarFormularioEndereco()]),
             imagens: this.formBuilder.array([this.criarFormularioImagem()]),
-            formasPagamento: this.formBuilder.array([]),
-            horario: this.formBuilder.array([
-                this.formBuilder.control('')
-            ]),
+            formasPagamento: this.criarFormularioPagamento(),
+            horario: this.formBuilder.group(this.criarFormularioHorario()),
         });
     }
     criarGroupFormLogo() {
@@ -181,6 +225,47 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
             numero: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             complemento: ['']
         });
+    }
+    criarFormularioPagamento() {
+        return this.formBuilder.array([
+            this.formBuilder.group({ id: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_15__["FormaPagamentoTypeEnum"].Dinheiro, nome: 'Dinheiro', isChecked: false }),
+            this.formBuilder.group({ id: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_15__["FormaPagamentoTypeEnum"].Credito, nome: 'Cartão de crédito', isChecked: false }),
+            this.formBuilder.group({ id: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_15__["FormaPagamentoTypeEnum"].Debito, nome: 'Cartão de débito', isChecked: false }),
+            this.formBuilder.group({ id: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_15__["FormaPagamentoTypeEnum"].Ticket, nome: 'Ticket', isChecked: false }),
+            this.formBuilder.group({ id: _shared_forma_pagamento_type_enum__WEBPACK_IMPORTED_MODULE_15__["FormaPagamentoTypeEnum"].Pix, nome: 'Pix', isChecked: false }),
+        ]);
+    }
+    criarFormularioHorario() {
+        return {
+            segunda: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            }),
+            terca: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            }),
+            quarta: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            }),
+            quinta: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            }),
+            sexta: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            }),
+            sabado: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            }),
+            domingo: this.formBuilder.group({
+                de: [''],
+                as: ['']
+            })
+        };
     }
     criarFormularioImagem() {
         return this.formBuilder.group({
@@ -223,6 +308,19 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
             this.subcategoriaNome.setValue(subcategoria.nome);
         });
     }
+    setProprietariosEmail(event) {
+        if (event) {
+            this.proprietariosUid.patchValue(event);
+            const nomes = [];
+            this.proprietariosUid.value.forEach(id => {
+                const sub = this.usuarioService.getById(id).subscribe((user) => {
+                    sub.unsubscribe();
+                    nomes.push(user.email);
+                });
+            });
+            this.proprietariosEmail.patchValue(nomes);
+        }
+    }
     addEndereco() {
         // this.enderecos = this.formEstabelecimento.get('enderecos') as FormArray;
         this.enderecos.push(this.criarFormularioEndereco());
@@ -252,7 +350,7 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
             this.formEstabelecimento.get('imagens').updateValueAndValidity();
             const reader = new FileReader();
             reader.onload = () => {
-                this.filesUrl.push(reader.result.toString());
+                this.imagensEstabelecimento.push({ imagem: reader.result.toString() });
             };
             reader.readAsDataURL(this.files[this.files.length - 1]);
         }
@@ -262,7 +360,10 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
                 this.formEstabelecimento.get('imagens').updateValueAndValidity();
                 const reader = new FileReader();
                 reader.onload = () => {
-                    this.filesUrl.push(reader.result.toString());
+                    const fileImg = {
+                        imagem: reader.result.toString()
+                    };
+                    this.imagensEstabelecimento.push(fileImg);
                 };
                 reader.readAsDataURL(this.files[this.files.length - 1]);
             });
@@ -270,8 +371,12 @@ let EstabelecimentosFormPage = class EstabelecimentosFormPage {
     }
     removeImagem(i, key) {
         // if (this.key) this.estabelecimentosService.removeLogo(this.fileLogoPath, this.key);
+        if (key) {
+            this.estabelecimentosImagensService.remove(key, this.filesPath[i]);
+        }
         this.filesUrl.splice(i, 1);
         this.filesPath.splice(i, 1);
+        this.imagensEstabelecimento.splice(i, 1);
     }
     onCheckHorarioChange(event) {
         const formArray = this.formEstabelecimento.get('formasPagamento');
@@ -338,12 +443,13 @@ EstabelecimentosFormPage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
     { type: _shared_estabelecimentos_service__WEBPACK_IMPORTED_MODULE_8__["EstabelecimentosService"] },
-    { type: _shared_estabelecimentos_imagens_service__WEBPACK_IMPORTED_MODULE_11__["EstabelecimentosImagensService"] },
-    { type: _shared_estabelecimentos_enderecos_service__WEBPACK_IMPORTED_MODULE_10__["EstabelecimentosEnderecosService"] },
+    { type: _shared_estabelecimentos_imagens_service__WEBPACK_IMPORTED_MODULE_12__["EstabelecimentosImagensService"] },
+    { type: _shared_estabelecimentos_enderecos_service__WEBPACK_IMPORTED_MODULE_11__["EstabelecimentosEnderecosService"] },
     { type: _categorias_shared_categorias_service__WEBPACK_IMPORTED_MODULE_6__["CategoriasService"] },
-    { type: _subcategorias_shared_subcategorias_service__WEBPACK_IMPORTED_MODULE_9__["SubcategoriasService"] },
+    { type: _subcategorias_shared_subcategorias_service__WEBPACK_IMPORTED_MODULE_10__["SubcategoriasService"] },
+    { type: _usuarios_shared_usuario_service__WEBPACK_IMPORTED_MODULE_16__["UsuarioService"] },
     { type: _core_services_toast_service__WEBPACK_IMPORTED_MODULE_7__["ToastService"] },
-    { type: _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_12__["NgxViacepService"] }
+    { type: _brunoc_ngx_viacep__WEBPACK_IMPORTED_MODULE_13__["NgxViacepService"] }
 ];
 EstabelecimentosFormPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -366,7 +472,7 @@ EstabelecimentosFormPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{title}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <form [formGroup]=\"formEstabelecimento\" (ngSubmit)=\"onSubmit()\">\n\n          <ion-list>\n            <ion-list-header>Informações do Estabelecimento</ion-list-header>\n            <ion-item *ngIf=\"logoUrl ==''\">\n<!--              <ion-label position=\"stacked\">Foto</ion-label>-->\n              <ion-button color=\"primary\" (click)=\"logoInput.click()\">Adicionar Logo</ion-button>\n              <input type=\"file\" #logoInput formControlName=\"logo\" (change)=\"uploadLogo($event)\">\n            </ion-item>\n\n            <ion-item *ngIf=\"logoUrl !=''\">\n\n              <ion-thumbnail slot=\"start\">\n                <img [src]=\"logoUrl\">\n              </ion-thumbnail>\n              <ion-button color=\"danger\" (click)=\"removeLogo()\">Remover Logo</ion-button>\n            </ion-item>\n\n            <ion-item>\n              <ion-label position=\"stacked\">Nome</ion-label>\n              <ion-input type=\"text\" formControlName=\"nome\"></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-label position=\"stacked\">Categoria</ion-label>\n\n              <ion-select placeholder=\"Escolher\" formControlName=\"categoriaKey\" [selectedText]=\"formEstabelecimento.get('categoriaNome').value\" (ionChange)=\"setCategoriaNome($event.target.value)\">\n                <ion-select-option *ngFor=\"let categoria of categorias | async\" value=\"{{categoria.key}}\">{{categoria.nome}}</ion-select-option>\n              </ion-select>\n            </ion-item>\n\n            <ion-item *ngIf=\"(subcategorias | async)?.length > 0\">\n              <ion-label position=\"stacked\">Subcategoria</ion-label>\n\n              <ion-select placeholder=\"Escolher\" formControlName=\"subcategoriaKey\" [selectedText]=\"formEstabelecimento.get('subcategoriaNome').value\" (ionChange)=\"setSubcategoriaNome($event.target.value)\">\n                <ion-select-option *ngFor=\"let subcategoria of subcategorias | async\" value=\"{{subcategoria.key}}\">{{subcategoria.nome}}</ion-select-option>\n              </ion-select>\n            </ion-item>\n\n\n            <ion-item>\n              <ion-label position=\"stacked\">CNPJ</ion-label>\n              <ion-input type=\"text\" formControlName=\"cnpj\" ></ion-input>\n            </ion-item>\n          </ion-list>\n\n\n\n<!--          <div class=\"enderecos-content\">-->\n<!--            <div formArrayName=\"enderecos\" *ngFor=\"let endereco of formEstabelecimento.get('enderecos')['controls']; let i = index;\">-->\n<!--              <ion-list  [formGroupName]=\"i\" >-->\n<!--                <ion-list-header>Endereço {{ i+1 }}</ion-list-header>-->\n<!--&lt;!&ndash;                <ion-button color=\"danger\" (click)=\"removeEndereco(i)\">Remover Endereço</ion-button>&ndash;&gt;-->\n<!--                <ion-item>-->\n<!--                  <ion-label position=\"stacked\">Cep</ion-label>-->\n<!--                  <ion-input type=\"text\" formControlName=\"cep\"></ion-input>-->\n<!--                </ion-item>-->\n\n\n                <ion-list formGroupName=\"contato\">\n                  <ion-list-header>Contato</ion-list-header>\n                  <ion-item>\n                    <ion-label position=\"stacked\">Telefone</ion-label>\n      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                    <ion-input type=\"text\" formControlName=\"telefone\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">E-mail</ion-label>\n                    <ion-input type=\"text\" formControlName=\"email\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">Site</ion-label>\n                    <ion-input type=\"text\" formControlName=\"site\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">Facebook</ion-label>\n                    <ion-input type=\"text\" formControlName=\"facebook\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">Instagram</ion-label>\n                    <ion-input type=\"text\" formControlName=\"instagram\"></ion-input>\n                  </ion-item>\n                </ion-list>\n<!--              </ion-list>-->\n<!--            </div>-->\n<!--          </div>-->\n\n          <ion-list-header>Endereços</ion-list-header>\n          <ion-button class=\"btn-add-end ion-margin-start\" color=\"primary\" (click)=\"addEndereco()\">Adicionar Endereco</ion-button>\n          <div class=\"enderecos-content\">\n            <div formArrayName=\"enderecos\" *ngFor=\"let endereco of formEstabelecimento.get('enderecos')['controls']; let i = index;\">\n              <ion-list  [formGroupName]=\"i\" >\n                <ion-button *ngIf=\"i != 0\" class=\"btn-rmv-end\" color=\"danger\" (click)=\"removeEndereco(i)\"><ion-icon name=\"trash-outline\"></ion-icon></ion-button>\n                <ion-list-header>Endereço {{ i+1 }}</ion-list-header>\n                <ion-item>\n                  <ion-label position=\"stacked\">Cep</ion-label>\n                  <ion-input type=\"text\" formControlName=\"cep\" (ionBlur)=\"buscaCEP(i)\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Estado</ion-label>\n                  <ion-input type=\"text\" formControlName=\"estado\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Cidade</ion-label>\n                  <ion-input type=\"text\" formControlName=\"cidade\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Rua</ion-label>\n                  <ion-input type=\"text\" formControlName=\"rua\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Numero</ion-label>\n                  <ion-input type=\"text\" formControlName=\"numero\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Complemento</ion-label>\n                  <ion-input type=\"text\" formControlName=\"complemento\"></ion-input>\n                </ion-item>\n              </ion-list>\n            </div>\n          </div>\n\n\n\n          <ion-list formGroupName=\"formasPagamento\">\n            <ion-list-header>Formas de Pagamento</ion-list-header>\n            <ion-item *ngFor=\"let forma of formaPagamentos\">\n              <ion-label>{{forma.nome}}</ion-label>\n              <ion-checkbox slot=\"end\" [value]=\"forma.value\" (ionChange)=\"onCheckHorarioChange($event)\"></ion-checkbox>\n            </ion-item>\n          </ion-list>\n\n<!--          <ion-list formGroupName=\"horario\">-->\n<!--            <ion-list-header>Horário de funcionamento</ion-list-header>-->\n\n<!--            <ion-item *ngFor=\"let dia of dias\">-->\n<!--              <ion-label>{{dia.nome}}</ion-label>-->\n<!--              <ion-checkbox slot=\"end\" [value]=\"dia.value\" (ionChange)=\"onCheckHorarioChange($event)\"></ion-checkbox>-->\n<!--            </ion-item>-->\n<!--          </ion-list>-->\n\n          <div class=\"enderecos-content\">\n<!--            <div formArrayName=\"imagens\" *ngFor=\"let imagem of formEstabelecimento.get('imagens')['controls']; let i = index;\">-->\n            <div formArrayName=\"imagens\">\n              <ion-list [formGroupName]=\"0\">\n                <ion-list-header>Imagens</ion-list-header>\n\n                <ion-item>\n<!--                <ion-item *ngFor=\"let imagem of imagens.controls; let i=index\">-->\n                  <ion-button color=\"primary\" (click)=\"imagemInput.click()\">Adicionar Imagem</ion-button>\n                  <input type=\"file\" multiple #imagemInput  (change)=\"uploadImagem($event)\">\n                </ion-item>\n              </ion-list>\n            </div>\n\n            <ion-item *ngFor=\"let file of filesUrl; let i = index\">\n\n              <ion-thumbnail slot=\"start\">\n                <img [src]=\"file\">\n              </ion-thumbnail>\n              <ion-button color=\"danger\" (click)=\"removeImagem(i, 'file.key')\">Remover Imagem</ion-button>\n            </ion-item>\n          </div>\n\n          <div margin-vertical>\n            <ion-button color=\"primary\" expand=\"block\" type=\"submit\" [disabled]=\"formEstabelecimento.invalid\">Salvar</ion-button>\n          </div>\n        </form>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{title}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <form [formGroup]=\"formEstabelecimento\" (ngSubmit)=\"onSubmit()\">\n\n          <ion-list>\n            <ion-list-header>Informações do Estabelecimento</ion-list-header>\n            <ion-item *ngIf=\"logoUrl ==''\">\n<!--              <ion-label position=\"stacked\">Foto</ion-label>-->\n              <ion-button color=\"primary\" (click)=\"logoInput.click()\">Adicionar Logo</ion-button>\n              <input type=\"file\" #logoInput formControlName=\"logo\" (change)=\"uploadLogo($event)\">\n            </ion-item>\n\n            <ion-item *ngIf=\"logoUrl !=''\">\n\n              <ion-thumbnail slot=\"start\">\n                <img [src]=\"logoUrl\">\n              </ion-thumbnail>\n              <ion-button color=\"danger\" (click)=\"removeLogo()\">Remover Logo</ion-button>\n            </ion-item>\n\n            <ion-item>\n              <ion-label position=\"stacked\">Nome</ion-label>\n              <ion-input type=\"text\" formControlName=\"nome\"></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-label position=\"stacked\">Categoria</ion-label>\n\n              <ion-select placeholder=\"Escolher\" formControlName=\"categoriaKey\" [selectedText]=\"formEstabelecimento.get('categoriaNome').value\" (ionChange)=\"setCategoriaNome($event.target.value)\">\n                <ion-select-option *ngFor=\"let categoria of categorias | async\" value=\"{{categoria.key}}\">{{categoria.nome}}</ion-select-option>\n              </ion-select>\n            </ion-item>\n\n            <ion-item *ngIf=\"(subcategorias | async)?.length > 0\">\n              <ion-label position=\"stacked\">Subcategoria</ion-label>\n\n              <ion-select placeholder=\"Escolher\" formControlName=\"subcategoriaKey\" [selectedText]=\"formEstabelecimento.get('subcategoriaNome').value\" (ionChange)=\"setSubcategoriaNome($event.target.value)\">\n                <ion-select-option *ngFor=\"let subcategoria of subcategorias | async\" value=\"{{subcategoria.key}}\">{{subcategoria.nome}}</ion-select-option>\n              </ion-select>\n            </ion-item>\n\n\n            <ion-item>\n              <ion-label position=\"stacked\">CNPJ</ion-label>\n              <ion-input type=\"text\" formControlName=\"cnpj\" ></ion-input>\n            </ion-item>\n          </ion-list>\n\n          <ion-item>\n            <ion-label position=\"stacked\">Proprietários</ion-label>\n\n            <ion-select placeholder=\"Escolher\" formControlName=\"proprietariosUid\" multiple=\"true\" (ionChange)=\"setProprietariosEmail($event.target.value)\">\n              <ion-select-option *ngFor=\"let membro of membros | async\" value=\"{{membro.uid}}\" >{{membro.email}}</ion-select-option>\n            </ion-select>\n          </ion-item>\n\n\n\n<!--          <div class=\"enderecos-content\">-->\n<!--            <div formArrayName=\"enderecos\" *ngFor=\"let endereco of formEstabelecimento.get('enderecos')['controls']; let i = index;\">-->\n<!--              <ion-list  [formGroupName]=\"i\" >-->\n<!--                <ion-list-header>Endereço {{ i+1 }}</ion-list-header>-->\n<!--&lt;!&ndash;                <ion-button color=\"danger\" (click)=\"removeEndereco(i)\">Remover Endereço</ion-button>&ndash;&gt;-->\n<!--                <ion-item>-->\n<!--                  <ion-label position=\"stacked\">Cep</ion-label>-->\n<!--                  <ion-input type=\"text\" formControlName=\"cep\"></ion-input>-->\n<!--                </ion-item>-->\n\n\n                <ion-list formGroupName=\"contato\">\n                  <ion-list-header>Contato</ion-list-header>\n                  <ion-item>\n                    <ion-label position=\"stacked\">Telefone</ion-label>\n      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                    <ion-input type=\"text\" formControlName=\"telefone\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">E-mail</ion-label>\n                    <ion-input type=\"text\" formControlName=\"email\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">Site</ion-label>\n                    <ion-input type=\"text\" formControlName=\"site\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">Facebook</ion-label>\n                    <ion-input type=\"text\" formControlName=\"facebook\"></ion-input>\n                  </ion-item>\n\n                  <ion-item>\n                    <ion-label position=\"stacked\">Instagram</ion-label>\n                    <ion-input type=\"text\" formControlName=\"instagram\"></ion-input>\n                  </ion-item>\n                </ion-list>\n<!--              </ion-list>-->\n<!--            </div>-->\n<!--          </div>-->\n\n          <ion-list-header>Endereços</ion-list-header>\n          <ion-button class=\"btn-add-end ion-margin-start\" color=\"primary\" (click)=\"addEndereco()\">Adicionar Endereco</ion-button>\n          <div class=\"enderecos-content\">\n            <div formArrayName=\"enderecos\" *ngFor=\"let endereco of formEstabelecimento.get('enderecos')['controls']; let i = index;\">\n              <ion-list  [formGroupName]=\"i\" >\n                <ion-button *ngIf=\"i != 0\" class=\"btn-rmv-end\" color=\"danger\" (click)=\"removeEndereco(i)\"><ion-icon name=\"trash-outline\"></ion-icon></ion-button>\n                <ion-list-header>Endereço {{ i+1 }}</ion-list-header>\n                <ion-item>\n                  <ion-label position=\"stacked\">Cep</ion-label>\n                  <ion-input type=\"text\" formControlName=\"cep\" (ionBlur)=\"buscaCEP(i)\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Estado</ion-label>\n                  <ion-input type=\"text\" formControlName=\"estado\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Cidade</ion-label>\n                  <ion-input type=\"text\" formControlName=\"cidade\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Rua</ion-label>\n                  <ion-input type=\"text\" formControlName=\"rua\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Numero</ion-label>\n                  <ion-input type=\"text\" formControlName=\"numero\"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label position=\"stacked\">Complemento</ion-label>\n                  <ion-input type=\"text\" formControlName=\"complemento\"></ion-input>\n                </ion-item>\n              </ion-list>\n            </div>\n          </div>\n\n\n\n          <ion-list formArrayName=\"formasPagamento\">\n            <ion-list-header>Formas de Pagamento</ion-list-header>\n            <ion-item *ngFor=\"let forma of formasPagamento.controls; let i = index\" formGroupName=\"{{ i }}\">\n              <ion-label>{{ forma.get('nome').value }}</ion-label>\n              <ion-checkbox slot=\"end\" [formControl]=\"forma.get('isChecked')\"></ion-checkbox>\n            </ion-item>\n          </ion-list>\n\n<!--          <ion-list formGroupName=\"horario\">-->\n<!--            <ion-list-header>Horário de funcionamento</ion-list-header>-->\n\n<!--            <ion-item *ngFor=\"let dia of dias\">-->\n<!--              <ion-label>{{dia.nome}}</ion-label>-->\n<!--              <ion-checkbox slot=\"end\" [value]=\"dia.value\" (ionChange)=\"onCheckHorarioChange($event)\"></ion-checkbox>-->\n<!--            </ion-item>-->\n<!--          </ion-list>-->\n\n          <div class=\"enderecos-content\">\n<!--            <div formArrayName=\"imagens\" *ngFor=\"let imagem of formEstabelecimento.get('imagens')['controls']; let i = index;\">-->\n            <div formArrayName=\"imagens\">\n              <ion-list [formGroupName]=\"0\">\n                <ion-list-header>Imagens</ion-list-header>\n\n                <ion-item>\n<!--                <ion-item *ngFor=\"let imagem of imagens.controls; let i=index\">-->\n                  <ion-button color=\"primary\" (click)=\"imagemInput.click()\">Adicionar Imagem</ion-button>\n                  <input type=\"file\" multiple #imagemInput  (change)=\"uploadImagem($event)\">\n                </ion-item>\n              </ion-list>\n            </div>\n\n            <ion-item *ngFor=\"let file of imagensEstabelecimento; let i = index\">\n\n              <ion-thumbnail slot=\"start\">\n                <img [src]=\"file.imagem\">\n              </ion-thumbnail>\n              <ion-button color=\"danger\" (click)=\"removeImagem(i, file.key)\">Remover Imagem</ion-button>\n            </ion-item>\n          </div>\n\n\n\n          <ion-list formGroupName=\"horario\">\n            <ion-list-header>Horário</ion-list-header>\n\n            <div formGroupName=\"segunda\">\n              <p class=\"sub-title\">Segunda-feira</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n            <div formGroupName=\"terca\">\n              <p class=\"sub-title\">Terça-feira</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n            <div formGroupName=\"quarta\">\n              <p class=\"sub-title\">Quarta-feira</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n            <div formGroupName=\"quinta\">\n              <p class=\"sub-title\">Quinta-feira</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n            <div formGroupName=\"sexta\">\n              <p class=\"sub-title\">Sexta-feira</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n            <div formGroupName=\"sabado\">\n              <p class=\"sub-title\">Sábado</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n            <div formGroupName=\"domingo\">\n              <p class=\"sub-title\">Domingo</p>\n              <ion-grid>\n                <ion-row>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Abre às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"de\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"3\">\n                    <ion-item>\n                      <ion-label position=\"stacked\">Fecha às:</ion-label>\n                      <!--              <input type=\"text\" formControlName=\"telefone\" mask=\"(000) 000-0000\">-->\n                      <ion-input type=\"text\" formControlName=\"as\"></ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n            </div>\n\n\n\n\n          </ion-list>\n\n\n          <div margin-vertical>\n            <ion-button color=\"primary\" expand=\"block\" type=\"submit\" [disabled]=\"formEstabelecimento.invalid\">Salvar</ion-button>\n          </div>\n        </form>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ }),
 
@@ -545,7 +651,10 @@ let EstabelecimentosImagensService = class EstabelecimentosImagensService {
     }
     getByKey(key) {
     }
-    remove(key) {
+    remove(key, filePath) {
+        const ref = this.storage.ref(filePath);
+        ref.delete();
+        this.imagensRef.remove(key);
     }
     getByField(field, value) {
         const imagensRef = this.db.list(_core_shared_firebase_path__WEBPACK_IMPORTED_MODULE_3__["FirebasePath"].ESTABELECIMENTOS_IMAGENS, query => query
@@ -597,7 +706,7 @@ EstabelecimentosImagensService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__de
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("ion-list-header {\n  font-weight: bold;\n}\n\n.enderecos-content {\n  max-height: 750px;\n  overflow-y: auto;\n  padding: 10px;\n}\n\n.enderecos-content::-webkit-scrollbar {\n  width: 4px;\n}\n\n.enderecos-content::-webkit-scrollbar-thumb {\n  background-color: #d6b46a;\n  outline: 1px solid #ccccc;\n  border-radius: 3px;\n}\n\nion-list-header {\n  width: 80%;\n}\n\n.btn-add-end {\n  font-size: 10px;\n}\n\n.btn-rmv-end {\n  float: right;\n  font-size: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2VzdGFiZWxlY2ltZW50b3MtZm9ybS5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBQTtBQUNGOztBQUVBO0VBQ0UsaUJBQUE7RUFDQSxnQkFBQTtFQUNBLGFBQUE7QUFDRjs7QUFBRTtFQUNFLFVBQUE7QUFFSjs7QUFLRTtFQUNFLHlCQUFBO0VBQ0EseUJBQUE7RUFDQSxrQkFBQTtBQUhKOztBQU1BO0VBQ0UsVUFBQTtBQUhGOztBQUtBO0VBQ0UsZUFBQTtBQUZGOztBQUlBO0VBQ0UsWUFBQTtFQUNBLGVBQUE7QUFERiIsImZpbGUiOiJlc3RhYmVsZWNpbWVudG9zLWZvcm0ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWxpc3QtaGVhZGVye1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuLmVuZGVyZWNvcy1jb250ZW50e1xuICBtYXgtaGVpZ2h0OiA3NTBweDtcbiAgb3ZlcmZsb3cteTogYXV0bztcbiAgcGFkZGluZzogMTBweDtcbiAgJjo6LXdlYmtpdC1zY3JvbGxiYXJ7XG4gICAgd2lkdGg6IDRweDtcbiAgfVxuXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyLXRyYWNrIHtcbiAgICAvL2JveC1zaGFkb3c6IGluc2V0IDAgMCA2cHggcmdiYSgwLCAwLCAwLCAwLjMpO1xuICB9XG5cbiAgJjo6LXdlYmtpdC1zY3JvbGxiYXItdGh1bWIge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNkNmI0NmE7XG4gICAgb3V0bGluZTogMXB4IHNvbGlkICNjY2NjYztcbiAgICBib3JkZXItcmFkaXVzOiAzcHg7XG4gIH1cbn1cbmlvbi1saXN0LWhlYWRlcntcbiAgd2lkdGg6IDgwJTtcbn1cbi5idG4tYWRkLWVuZHtcbiAgZm9udC1zaXplOiAxMHB4O1xufVxuLmJ0bi1ybXYtZW5ke1xuICBmbG9hdDogcmlnaHQ7XG4gIGZvbnQtc2l6ZTogMTBweDtcbn1cbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("ion-list-header {\n  font-weight: bold;\n}\n\n.enderecos-content {\n  max-height: 750px;\n  overflow-y: auto;\n  padding: 10px;\n}\n\n.enderecos-content::-webkit-scrollbar {\n  width: 4px;\n}\n\n.enderecos-content::-webkit-scrollbar-thumb {\n  background-color: #d6b46a;\n  outline: 1px solid #ccccc;\n  border-radius: 3px;\n}\n\nion-list-header {\n  width: 80%;\n}\n\n.btn-add-end {\n  font-size: 10px;\n}\n\n.btn-rmv-end {\n  float: right;\n  font-size: 10px;\n}\n\n.sub-title {\n  margin-bottom: 0px;\n  font-size: 13px;\n  padding-left: 16px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2VzdGFiZWxlY2ltZW50b3MtZm9ybS5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBQTtBQUNGOztBQUVBO0VBQ0UsaUJBQUE7RUFDQSxnQkFBQTtFQUNBLGFBQUE7QUFDRjs7QUFBRTtFQUNFLFVBQUE7QUFFSjs7QUFLRTtFQUNFLHlCQUFBO0VBQ0EseUJBQUE7RUFDQSxrQkFBQTtBQUhKOztBQU1BO0VBQ0UsVUFBQTtBQUhGOztBQUtBO0VBQ0UsZUFBQTtBQUZGOztBQUlBO0VBQ0UsWUFBQTtFQUNBLGVBQUE7QUFERjs7QUFJQTtFQUNFLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0FBREYiLCJmaWxlIjoiZXN0YWJlbGVjaW1lbnRvcy1mb3JtLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImlvbi1saXN0LWhlYWRlcntcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG5cbi5lbmRlcmVjb3MtY29udGVudHtcbiAgbWF4LWhlaWdodDogNzUwcHg7XG4gIG92ZXJmbG93LXk6IGF1dG87XG4gIHBhZGRpbmc6IDEwcHg7XG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFye1xuICAgIHdpZHRoOiA0cHg7XG4gIH1cblxuICAmOjotd2Via2l0LXNjcm9sbGJhci10cmFjayB7XG4gICAgLy9ib3gtc2hhZG93OiBpbnNldCAwIDAgNnB4IHJnYmEoMCwgMCwgMCwgMC4zKTtcbiAgfVxuXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyLXRodW1iIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZDZiNDZhO1xuICAgIG91dGxpbmU6IDFweCBzb2xpZCAjY2NjY2M7XG4gICAgYm9yZGVyLXJhZGl1czogM3B4O1xuICB9XG59XG5pb24tbGlzdC1oZWFkZXJ7XG4gIHdpZHRoOiA4MCU7XG59XG4uYnRuLWFkZC1lbmR7XG4gIGZvbnQtc2l6ZTogMTBweDtcbn1cbi5idG4tcm12LWVuZHtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBmb250LXNpemU6IDEwcHg7XG59XG5cbi5zdWItdGl0bGV7XG4gIG1hcmdpbi1ib3R0b206IDBweDtcbiAgZm9udC1zaXplOiAxM3B4O1xuICBwYWRkaW5nLWxlZnQ6IDE2cHg7XG59XG4iXX0= */");
 
 /***/ }),
 

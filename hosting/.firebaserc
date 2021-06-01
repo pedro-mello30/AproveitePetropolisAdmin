@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "aproveitepetropolis-748a8"
+    "default": "aproveitepetropolis-61eac"
+  },
+  "targets": {
+    "aproveitepetropolis-61eac": {
+      "hosting": {
+        "administracao": [
+          "administracao"
+        ]
+      }
+    }
   }
 }
