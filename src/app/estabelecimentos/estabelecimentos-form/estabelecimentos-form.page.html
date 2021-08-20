@@ -57,7 +57,7 @@
           <ion-item>
             <ion-label position="stacked">Proprietários</ion-label>
 
-            <ion-select placeholder="Escolher" formControlName="proprietariosUid" multiple="true" (ionChange)="setProprietariosEmail($event.target.value)">
+            <ion-select placeholder="Escolher" formControlName="proprietariosUid" (ionChange)="setProprietariosEmail($event.target.value)">
               <ion-select-option *ngFor="let membro of membros | async" value="{{membro.uid}}" >{{membro.email}}</ion-select-option>
             </ion-select>
           </ion-item>

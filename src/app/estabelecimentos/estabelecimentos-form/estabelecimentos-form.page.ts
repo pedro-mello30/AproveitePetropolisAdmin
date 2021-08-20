@@ -332,14 +332,19 @@ export class EstabelecimentosFormPage implements OnInit {
   setProprietariosEmail(event){
     if (event){
       this.proprietariosUid.patchValue(event);
-      const nomes = [];
-      this.proprietariosUid.value.forEach(id => {
-        const sub = this.usuarioService.getById(id).subscribe((user: any) => {
-          sub.unsubscribe();
-          nomes.push(user.email);
-        });
+      // const nomes = [];
+      // this.proprietariosUid.value.forEach(id => {
+      //   const sub = this.usuarioService.getById(id).subscribe((user: any) => {
+      //     sub.unsubscribe();
+      //     nomes.push(user.email);
+      //   });
+      // });
+
+      const sub = this.usuarioService.getById(event).subscribe((user: any) => {
+        sub.unsubscribe();
+        this.proprietariosEmail.patchValue(user.email);
       });
-      this.proprietariosEmail.patchValue(nomes);
+
     }
   }
 
